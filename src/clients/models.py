@@ -60,6 +60,7 @@ class ClientDetail(BaseModel):
     """
     Class descriptor
     """
+    advisor_id_fk = models.ForeignKey('practises.AdvisorDetail', on_delete=models.CASCADE)
     title = models.CharField('Title', max_length=30, choices=ch_titles, default='not specified')
     initials = models.CharField('Initials', max_length=10)
     surnames = models.CharField('Surnames', max_length=100)
@@ -73,7 +74,7 @@ class ClientDetail(BaseModel):
         return f'{self.get_title_display()} {self.initials} {self.surnames}'
 
 
-class ContactDetail(BaseModel):
+class ClientContactDetail(BaseModel):
     """
     Class descriptor
     """
