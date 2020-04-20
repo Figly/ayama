@@ -83,7 +83,7 @@ class ClientContactDetail(BaseModel):
     telephone_work = models.CharField('Work Telephone Number', max_length=10, blank=True, null=True)
     cellphone_number = models.CharField('Cellphone Number', max_length=10)
     fax_number = models.CharField('Fax Number', max_length=10, blank=True, null=True)
-    email_address = models.CharField('Email Address', max_length=50)
+    email_address = models.EmailField('Email Address', max_length=50)
     residential_address_line_1 = models.CharField('Residential Address 1', max_length=100)
     residential_address_line_2 = models.CharField('Residential Address 2', max_length=100, blank=True, null=True)
     residential_code = models.IntegerField('Residential Code')
