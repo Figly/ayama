@@ -63,8 +63,8 @@ class ClientDetail(BaseModel):
     advisor_id_fk = models.ForeignKey('practises.AdvisorDetail', on_delete=models.CASCADE)
     title = models.CharField('Title', max_length=30, choices=ch_titles, default='not specified')
     initials = models.CharField('Initials', max_length=10)
-    surnames = models.CharField('Surnames', max_length=100)
-    names = models.CharField('Names', max_length=100)
+    surnames = models.CharField('Surname', max_length=100)
+    names = models.CharField('Name', max_length=100)
     known_as = models.CharField('Known As', max_length=50, blank=True, null=True)
     sa_id = models.BigIntegerField('RSA ID Number')
     passport_no = models.CharField('Passport Number', max_length=50, blank=True, null=True)
@@ -138,8 +138,8 @@ class Dependent(BaseModel):
     dateFormat = '%Y-%m-%d'
 
     client_id_fk = models.ForeignKey('ClientDetail', on_delete=models.CASCADE)
-    names = models.CharField('Names', max_length=100)
-    surnames = models.CharField('Surnames', max_length=100)
+    names = models.CharField('Name', max_length=100)
+    surnames = models.CharField('Surname', max_length=100)
     rsa_resident = models.CharField('RSA Resident', max_length=5, choices=ch_rsa_resident, default='yes')
     id_no = models.IntegerField('RSA ID Number')
     date_of_birth = models.DateField('Date of Birth', auto_now=False, auto_now_add=False)
