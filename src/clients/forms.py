@@ -35,8 +35,6 @@ class AddClientDetailForm(forms.ModelForm):
                 Column('passport_no', placeholder='Passport Number',
                        css_class='form-group col-md-6 mb-0'),
             ),
-
-            Submit("submit", "Submit", css_class="btn btn-lg btn-primary btn-block"),
         )
 
     class Meta:
@@ -104,8 +102,6 @@ class AddClientContactDetailForm(forms.ModelForm):
                 Column('postal_code', placeholder='Postal Code',
                        css_class='form-group col-md-3 mb-0'),
             ),
-
-            Submit("submit", "Submit", css_class="btn btn-lg btn-primary btn-block"),
         )
 
     class Meta:
@@ -156,7 +152,6 @@ class AddClientEmploymentetailForm(forms.ModelForm):
                      Column('group_life_cover', placeholder='Group Life Cover',
                             css_class='form-group col-md-6 mb-0'),
                      ),
-            Submit("submit", "Submit", css_class="btn btn-lg btn-primary btn-block"),
         )
 
     class Meta:
@@ -192,7 +187,6 @@ class AddClientRatesAndReturnForm(forms.ModelForm):
               Column('return_rate', placeholder='Return Rate',
                        css_class='form-group col-md-6 mb-0'),
                 ),
-            Submit("submit", "Submit", css_class="btn btn-lg btn-primary btn-block"),
         )
 
     class Meta:
@@ -238,7 +232,6 @@ class AddClientDependentDetailsForm(forms.ModelForm):
                      Column('other', placeholder='Other',
                             css_class='form-group col-md-6 mb-0'),
                      ),
-            Submit("submit", "Submit", css_class="btn btn-lg btn-primary btn-block"),
         )
 
     class Meta:

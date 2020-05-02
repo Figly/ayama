@@ -3,82 +3,26 @@ from __future__ import unicode_literals
 from django.urls import reverse_lazy, reverse
 from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin
-from . import forms
+from .forms import AddClientDetailForm, AddClientContactDetailForm, AddClientEmploymentetailForm, AddClientRatesAndReturnForm, AddClientDependentDetailsForm
 from . import models
+from formtools.wizard.views import SessionWizardView
+from django.http.response import HttpResponseRedirect
 
-class AddClientDetailView(LoginRequiredMixin, generic.CreateView):
-    template_name = "clients/add_client_detail.html"
-    form_class = forms.AddClientDetailForm
-    model = models.ClientDetail
-    form_valid_message = "Client successfully added."
+FORMS =[('0', AddClientDetailForm),
+        ('1', AddClientContactDetailForm),
+        ('2', AddClientEmploymentetailForm),
+        ('3', AddClientRatesAndReturnForm),
+        ('4', AddClientDependentDetailsForm),]
 
-    def form_valid(self, form):
-        model = form.save(commit=False)
-        return super(AddClientDetailView, self).form_valid(form)
+TEMPLATES = {"0":"clients/add_client_detail.html",
+        "1":"clients/add_client_contact_detail.html",
+        "2":"clients/add_client_employment_detail.html",
+        "3":"clients/add_client_rates_detail.html",
+        "4":"clients/add_client_dependent_detail.html"}
 
-    def get_success_url(self):
-        return reverse('clients:add-client-contact', kwargs={'cid':self.object.id,})
+class ClientWizard(SessionWizardView):
+    def get_template_names(self):
+        return TEMPLATES[self.steps.current]
 
-class AddClientContactDetailView(LoginRequiredMixin, generic.CreateView):
-    template_name = "clients/add_client_contact_detail.html"
-    form_class = forms.AddClientContactDetailForm
-    model = models.ClientContactDetail
-    form_valid_message = "Client contact details successfully added."
-
-    def get_initial(self):
-        return {'client_id_fk': self.kwargs['cid']}
-
-    def form_valid(self, form):
-        model = form.save(commit=False)
-        return super(AddClientContactDetailView, self).form_valid(form)
-
-    def get_success_url(self):
-        return reverse('clients:add-client-employment', kwargs={'cid':self.kwargs['cid'],})
-
-class AddClientEmploymentDetailView(LoginRequiredMixin, generic.CreateView):
-    template_name = "clients/add_client_employment_detail.html"
-    form_class = forms.AddClientEmploymentetailForm
-    model = models.EmploymentDetail
-    form_valid_message = "Client employment details successfully added."
-
-    def get_initial(self):
-        return {'client_id_fk': self.kwargs['cid']}
-
-    def form_valid(self, form):
-        model = form.save(commit=False)
-        return super(AddClientEmploymentDetailView, self).form_valid(form)
-
-    def get_success_url(self):
-        return reverse('clients:add-client-rates', kwargs={'cid':self.kwargs['cid'],})
-
-class AddClientRatesView(LoginRequiredMixin, generic.CreateView):
-    template_name = "clients/add_client_rates_detail.html"
-    form_class = forms.AddClientRatesAndReturnForm
-    model = models.RatesAndReturn
-    success_url = reverse_lazy("clients:add-client-dependent")
-    form_valid_message = "Client rates and return details successfully added."
-
-    def get_initial(self):
-        return {'client_id_fk': self.kwargs['cid']}
-
-    def form_valid(self, form):
-        model = form.save(commit=False)
-        return super(AddClientRatesView, self).form_valid(form)
-
-    def get_success_url(self):
-        return reverse('clients:add-client-dependent', kwargs={'cid':self.kwargs['cid'],})
-
-class AddClientDependentDetailView(LoginRequiredMixin, generic.CreateView):
-    template_name = "clients/add_client_dependent_detail.html"
-    form_class = forms.AddClientDependentDetailsForm
-    model = models.Dependent
-    success_url = reverse_lazy("home")
-    form_valid_message = "Client dependent details successfully added."
-
-    def get_initial(self):
-        return {'client_id_fk': self.kwargs['cid']}
-
-    def form_valid(self, form):
-        model = form.save(commit=False)
-        return super(AddClientDependentDetailView, self).form_valid(form)
-
+    def done(self, form_list, **kwargs):
+        return HttpResponseRedirect(reverse_lazy("home"))

@@ -83,6 +83,7 @@ INSTALLED_APPS = (
     "accounts",
     "clients",
     "practises",
+    'formtools',
 )
 
 MIDDLEWARE = [
