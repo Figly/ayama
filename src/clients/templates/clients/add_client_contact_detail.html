@@ -10,7 +10,7 @@
 {% block container %}
   <div class="container">
     <p>Step {{ wizard.steps.step1 }} of {{ wizard.steps.count }}</p>
-    <h3>Client Contact Details</h3>
+    <h3>Client Contact Details  {{ client_name }}</h3>
     <form action="" method="POST">{% csrf_token %}
       {{ wizard.management_form }}
       {% if wizard.form.forms %}
@@ -25,7 +25,7 @@
         {% if wizard.steps.prev %}
         <button name="wizard_goto_step" formnovalidate value="{{ wizard.steps.prev }}" class="btn btn-secondary btn-lg">{% trans "Previous" %}</button>
         {% endif %}
-        <button type="submit" class="btn btn-primary btn-lg">{% trans "Next" %}</button>
+        <button type="submit" formnovalidate class="btn btn-primary btn-lg">{% trans "Next" %}</button>
       </div>
     </form>
   </div>

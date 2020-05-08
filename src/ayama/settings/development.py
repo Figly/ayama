@@ -74,9 +74,9 @@ LOGGING = {
     },
     "loggers": {
         "django": {
-            "handlers": ["django_log_file"],
+            "handlers": ["console"],
             "propagate": True,
-            "level": "DEBUG",
+            'level': os.getenv('DJANGO_LOG_LEVEL', 'INFO'),
         },
         "project": {"handlers": ["proj_log_file"], "level": "DEBUG"},
     },

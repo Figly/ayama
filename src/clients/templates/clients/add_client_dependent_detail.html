@@ -10,7 +10,7 @@
 {% block container %}
   <div class="container">
     <p>Step {{ wizard.steps.step1 }} of {{ wizard.steps.count }}</p>
-    <h3>Dependent Details</h3>
+    <h3>Dependent Details  {{ client_name }}</h3>
     <form action="" method="POST">{% csrf_token %}
       {{ wizard.management_form }}
       {% if wizard.form.forms %}
