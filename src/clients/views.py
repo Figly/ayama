@@ -4,10 +4,10 @@ from django.urls import reverse_lazy, reverse
 from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .forms import AddClientDetailForm, AddClientContactDetailForm, AddClientEmploymentetailForm, AddClientRatesAndReturnForm, AddClientDependentDetailsForm
-from . import models
 from formtools.wizard.views import SessionWizardView
 from django.http.response import HttpResponseRedirect
-import logging
+from .models import ClientDetail, ClientContactDetail, EmploymentDetail, RatesAndReturn, Dependent
+from django.forms.models import construct_instance
 
 FORMS =[('0', AddClientDetailForm),
         ('1', AddClientContactDetailForm),
@@ -36,9 +36,32 @@ class ClientWizard(SessionWizardView):
             context.update({'client_name':' '.join(client_name)})
         return context
 
-    def done(self, form_list, **kwargs):
-        # client = form_list[0].cleaned_data['names']
-        # logger = logging.getLogger("django")
-        # logger.info(client)
+    def done(self, form_list, form_dict,**kwargs):
+        #models backing db
+        client = ClientDetail()
+        contactDetail = ClientContactDetail()
+        employmentDetail = EmploymentDetail()
+        rates = RatesAndReturn()
+        dependent = Dependent()
+
+        #form instances            
+        client = construct_instance(form_dict["0"], client, form_dict["0"]._meta.fields, form_dict["0"]._meta.exclude)
+        client.save()
+
+        contactDetail = construct_instance(form_dict["1"], contactDetail, form_dict["1"]._meta.fields, form_dict["1"]._meta.exclude)
+        contactDetail.client_id_fk = client
+        contactDetail.save()
+
+        employmentDetail = construct_instance(form_dict["2"], employmentDetail, form_dict["2"]._meta.fields, form_dict["2"]._meta.exclude)
+        employmentDetail.client_id_fk = client
+        employmentDetail.save()
+
+        rates = construct_instance(form_dict["3"], rates, form_dict["3"]._meta.fields, form_dict["3"]._meta.exclude)
+        rates.client_id_fk = client
+        rates.save()
+
+        dependent = construct_instance(form_dict["4"], dependent, form_dict["4"]._meta.fields, form_dict["4"]._meta.exclude)
+        dependent.client_id_fk = client
+        dependent.save()
 
         return HttpResponseRedirect(reverse_lazy("home"))
