@@ -41,3 +41,25 @@ class AddAdvisorContactDetailView(LoginRequiredMixin, generic.CreateView):
     def form_valid(self, form):
         model = form.save(commit=False)
         return super(AddAdvisorContactDetailView, self).form_valid(form)
+
+class AddAdministratorView(LoginRequiredMixin, generic.CreateView):
+    template_name = "practises/add_administrator.html"
+    form_class = forms.AddAdministratorDetailForm
+    model = models.AdministratorDetail
+    success_url = reverse_lazy("practises:add-administrator-contact")
+    form_valid_message = "Advisor contact details successfully added."
+
+    def form_valid(self, form):
+        model = form.save(commit=False)
+        return super(AddAdministratorView, self).form_valid(form)
+
+class AddAdministratorContactDetailView(LoginRequiredMixin, generic.CreateView):
+    template_name = "practises/add_administrator_contact_detail.html"
+    form_class = forms.AddAdministratorContactDetailForm
+    model = models.AdministratorContactDetail
+    success_url = reverse_lazy("home")
+    form_valid_message = "Advisor contact details successfully added."
+
+    def form_valid(self, form):
+        model = form.save(commit=False)
+        return super(AddAdministratorContactDetailView, self).form_valid(form)
