@@ -8,6 +8,8 @@ from formtools.wizard.views import SessionWizardView
 from django.http.response import HttpResponseRedirect
 from .models import ClientDetail, ClientContactDetail, EmploymentDetail, RatesAndReturn
 from django.forms.models import construct_instance
+from . import models
+from django.contrib import messages
 
 FORMS =[('0', AddClientDetailForm),
         ('1', AddClientContactDetailForm),
@@ -58,3 +60,17 @@ class ClientWizard(SessionWizardView):
         rates.save()
 
         return HttpResponseRedirect(reverse_lazy("home"))
+
+class AddClientDependentView(LoginRequiredMixin, generic.CreateView):
+    template_name = "clients/add_client_dependent_detail.html"
+    form_class = AddClientDependentDetailsForm
+    model = models.Dependent
+
+    def form_valid(self, form):
+        model = form.save(commit=False)
+        messages.add_message(self.request, messages.SUCCESS, 'dependent successfully added.')
+        if 'add-another' in self.request.POST:
+            self.success_url = reverse_lazy("clients:add-client-dependents")
+        elif 'submit' in self.request.POST:
+            self.success_url = reverse_lazy("home")
+        return super(AddClientDependentView, self).form_valid(form)
