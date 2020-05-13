@@ -6,3 +6,4 @@ django==2.2.6
 easy-thumbnails==2.6
 pillow==6.2.1
 pytz==2019.3
+django-formtools==2.2

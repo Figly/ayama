@@ -35,21 +35,19 @@ class AddClientDetailForm(forms.ModelForm):
                 Column('passport_no', placeholder='Passport Number',
                        css_class='form-group col-md-6 mb-0'),
             ),
-
-            Submit("submit", "Submit", css_class="btn btn-lg btn-primary btn-block"),
         )
 
     class Meta:
         model = ClientDetail
         fields = [
-            'advisor_id_fk',
-            'title',
-            'initials',
-            'surnames',
-            'names',
-            'known_as',
-            'sa_id',
-            'passport_no',
+              'advisor_id_fk',
+              'title',
+              'initials',
+              'surnames',
+              'names',
+              'known_as',
+              'sa_id',
+              'passport_no',
         ]
 
 
@@ -62,8 +60,6 @@ class AddClientContactDetailForm(forms.ModelForm):
         self.helper.layout = Layout(
 
             Row(
-                Column('client_id_fk', placeholder='Client',
-                       css_class='form-group col-md-6 mb-0'),
 
                 Column('telephone_home', placeholder='Home telephone number',
                        css_class='form-group col-md-6 mb-0'),
@@ -104,14 +100,11 @@ class AddClientContactDetailForm(forms.ModelForm):
                 Column('postal_code', placeholder='Postal Code',
                        css_class='form-group col-md-3 mb-0'),
             ),
-
-            Submit("submit", "Submit", css_class="btn btn-lg btn-primary btn-block"),
         )
 
     class Meta:
         model = ClientContactDetail
         fields = [
-            'client_id_fk',
             'telephone_home',
             'telephone_work',
             'cellphone_number',
@@ -134,8 +127,6 @@ class AddClientEmploymentetailForm(forms.ModelForm):
         self.helper.layout = Layout(
 
             Row(
-                Column('client_id_fk', placeholder='Client',
-                       css_class='form-group col-md-6 mb-0'),
 
                 Column('company_name', placeholder='Company',
                        css_class='form-group col-md-6 mb-0'),
@@ -156,13 +147,11 @@ class AddClientEmploymentetailForm(forms.ModelForm):
                      Column('group_life_cover', placeholder='Group Life Cover',
                             css_class='form-group col-md-6 mb-0'),
                      ),
-            Submit("submit", "Submit", css_class="btn btn-lg btn-primary btn-block"),
         )
 
     class Meta:
         model = EmploymentDetail
         fields = [
-            'client_id_fk',
             'company_name',
             'employment_date',
             'personnel_number',
@@ -180,8 +169,6 @@ class AddClientRatesAndReturnForm(forms.ModelForm):
         self.helper.layout = Layout(
 
             Row(
-                Column('client_id_fk', placeholder='Client',
-                       css_class='form-group col-md-6 mb-0'),
 
                 Column('inflation', placeholder='Inflation Rate',
                        css_class='form-group col-md-6 mb-0'),
@@ -192,13 +179,11 @@ class AddClientRatesAndReturnForm(forms.ModelForm):
               Column('return_rate', placeholder='Return Rate',
                        css_class='form-group col-md-6 mb-0'),
                 ),
-            Submit("submit", "Submit", css_class="btn btn-lg btn-primary btn-block"),
         )
 
     class Meta:
         model = RatesAndReturn
         fields = [
-            'client_id_fk',
             'inflation',
             'interest',
             'return_rate',
@@ -213,9 +198,6 @@ class AddClientDependentDetailsForm(forms.ModelForm):
         self.helper.layout = Layout(
 
             Row(
-                Column('client_id_fk', placeholder='Client',
-                       css_class='form-group col-md-6 mb-0'),
-
                 Column('names', placeholder='Names',
                        css_class='form-group col-md-6 mb-0'),
 
@@ -238,13 +220,11 @@ class AddClientDependentDetailsForm(forms.ModelForm):
                      Column('other', placeholder='Other',
                             css_class='form-group col-md-6 mb-0'),
                      ),
-            Submit("submit", "Submit", css_class="btn btn-lg btn-primary btn-block"),
         )
 
     class Meta:
         model = Dependent
         fields = [
-            'client_id_fk',
             'names',
             'surnames',
             'rsa_resident',
