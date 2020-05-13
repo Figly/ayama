@@ -6,20 +6,18 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from .forms import AddClientDetailForm, AddClientContactDetailForm, AddClientEmploymentetailForm, AddClientRatesAndReturnForm, AddClientDependentDetailsForm
 from formtools.wizard.views import SessionWizardView
 from django.http.response import HttpResponseRedirect
-from .models import ClientDetail, ClientContactDetail, EmploymentDetail, RatesAndReturn, Dependent
+from .models import ClientDetail, ClientContactDetail, EmploymentDetail, RatesAndReturn
 from django.forms.models import construct_instance
 
 FORMS =[('0', AddClientDetailForm),
         ('1', AddClientContactDetailForm),
         ('2', AddClientEmploymentetailForm),
-        ('3', AddClientRatesAndReturnForm),
-        ('4', AddClientDependentDetailsForm),]
+        ('3', AddClientRatesAndReturnForm),]
 
 TEMPLATES = {"0":"clients/add_client_detail.html",
         "1":"clients/add_client_contact_detail.html",
         "2":"clients/add_client_employment_detail.html",
-        "3":"clients/add_client_rates_detail.html",
-        "4":"clients/add_client_dependent_detail.html"}
+        "3":"clients/add_client_rates_detail.html"}
 
 class ClientWizard(SessionWizardView):
     def get_template_names(self):
@@ -42,7 +40,6 @@ class ClientWizard(SessionWizardView):
         contactDetail = ClientContactDetail()
         employmentDetail = EmploymentDetail()
         rates = RatesAndReturn()
-        dependent = Dependent()
 
         #form instances            
         client = construct_instance(form_dict["0"], client, form_dict["0"]._meta.fields, form_dict["0"]._meta.exclude)
@@ -59,9 +56,5 @@ class ClientWizard(SessionWizardView):
         rates = construct_instance(form_dict["3"], rates, form_dict["3"]._meta.fields, form_dict["3"]._meta.exclude)
         rates.client_id_fk = client
         rates.save()
-
-        dependent = construct_instance(form_dict["4"], dependent, form_dict["4"]._meta.fields, form_dict["4"]._meta.exclude)
-        dependent.client_id_fk = client
-        dependent.save()
 
         return HttpResponseRedirect(reverse_lazy("home"))
