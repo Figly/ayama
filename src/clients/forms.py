@@ -197,34 +197,39 @@ class AddClientDependentDetailsForm(forms.ModelForm):
         self.helper.form_tag = False
         self.helper.layout = Layout(
 
-            Row(
-                Column('names', placeholder='Names',
-                       css_class='form-group col-md-6 mb-0'),
-
-                Column('surnames', placeholder='surnames',
-                       css_class='form-group col-md-6 mb-0'),
-
-              Column('rsa_resident', placeholder='RSA Resident',
-                       css_class='form-group col-md-6 mb-0'),
-                ),
-              Row(
-                     Column('id_no', placeholder='ID Number',
+              Row( 
+                    Column('client_id_fk', placeholder='Client',
+                             css_class='form-group col-md-2 mb-0')),
+                     Row(
+                     Column('names', placeholder='Names',
                             css_class='form-group col-md-6 mb-0'),
 
-                     Column('date_of_birth', placeholder='Date Of Birth',
+                     Column('surnames', placeholder='surnames',
                             css_class='form-group col-md-6 mb-0'),
 
-                     Column('relationship', placeholder='Relationship',
-                            css_class='form-group col-md-6 mb-0'),
-
-                     Column('other', placeholder='Other',
+                     Column('rsa_resident', placeholder='RSA Resident',
                             css_class='form-group col-md-6 mb-0'),
                      ),
+                     Row(
+                            Column('id_no', placeholder='ID Number',
+                                   css_class='form-group col-md-6 mb-0'),
+
+                            Column('date_of_birth', placeholder='Date Of Birth',
+                                   css_class='form-group col-md-6 mb-0'),
+
+                            Column('relationship', placeholder='Relationship',
+                                   css_class='form-group col-md-6 mb-0'),
+
+                            Column('other', placeholder='Other',
+                                   css_class='form-group col-md-6 mb-0'),
+                            ),
+                          
         )
 
     class Meta:
         model = Dependent
         fields = [
+            'client_id_fk',
             'names',
             'surnames',
             'rsa_resident',
