@@ -1,15 +1,19 @@
 from __future__ import unicode_literals
 
-from django.urls import reverse_lazy, reverse
-from django.views import generic
-from django.contrib.auth.mixins import LoginRequiredMixin
-from .forms import AddClientDetailForm, AddClientContactDetailForm, AddClientEmploymentetailForm, AddClientRatesAndReturnForm, AddClientDependentDetailsForm
-from formtools.wizard.views import SessionWizardView
-from django.http.response import HttpResponseRedirect
-from .models import ClientDetail, ClientContactDetail, EmploymentDetail, RatesAndReturn
-from django.forms.models import construct_instance
-from . import models
 from django.contrib import messages
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.forms.models import construct_instance
+from django.http.response import HttpResponseRedirect
+from django.urls import reverse, reverse_lazy
+from django.views import generic
+from formtools.wizard.views import SessionWizardView
+
+from . import models
+from .forms import (AddClientContactDetailForm, AddClientDependentDetailsForm,
+                    AddClientDetailForm, AddClientEmploymentetailForm,
+                    AddClientRatesAndReturnForm)
+from .models import (ClientContactDetail, ClientDetail, EmploymentDetail,
+                     RatesAndReturn)
 
 FORMS =[('0', AddClientDetailForm),
         ('1', AddClientContactDetailForm),
@@ -22,7 +26,7 @@ TEMPLATES = {"0":"clients/add_client_detail.html",
         "3":"clients/add_client_rates_detail.html"}
 
 class ClientWizard(SessionWizardView):
-    def get_template_names(self):
+    def get_template_names(self): 
         return TEMPLATES[self.steps.current]
 
     def get_context_data(self, form, **kwargs):
@@ -58,7 +62,7 @@ class ClientWizard(SessionWizardView):
         rates = construct_instance(form_dict["3"], rates, form_dict["3"]._meta.fields, form_dict["3"]._meta.exclude)
         rates.client_id_fk = client
         rates.save()
-
+        messages.add_message(self.request, messages.SUCCESS, 'client successfully added.')
         return HttpResponseRedirect(reverse_lazy("home"))
 
 class AddClientDependentView(LoginRequiredMixin, generic.CreateView):

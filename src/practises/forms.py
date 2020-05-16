@@ -1,8 +1,9 @@
-from __future__ import unicode_literals
-from django import forms
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Layout, Submit, Row, Column, Field
-from .models import PractiseDetail, AdvisorDetail, AdvisorContactDetail, AdministratorDetail, AdministratorContactDetail
+from crispy_forms.layout import Column, Field, Layout, Row, Submit
+from django import forms
+
+from .models import (AdministratorContactDetail, AdministratorDetail,
+                     AdvisorContactDetail, AdvisorDetail, PractiseDetail)
 
 
 class AddPractiseDetailForm(forms.ModelForm):
@@ -34,8 +35,6 @@ class AddPractiseDetailForm(forms.ModelForm):
                 Column('postal_code', placeholder='Postal Code',
                        css_class='form-group col-md-3 mb-0'),
             ),
-
-            Submit("submit", "Submit", css_class="btn btn-lg btn-primary btn-block"),
         )
 
     class Meta:
@@ -52,8 +51,7 @@ class AddPractiseDetailForm(forms.ModelForm):
 
 
 class AddAdvisorDetailForm(forms.ModelForm):
-    employment_date = forms.DateField(
-        widget=forms.SelectDateWidget(empty_label=("Choose Year", "Choose Month", "Choose Day"), )
+    employment_date = forms.DateField(widget=forms.TextInput(attrs={'class': 'datepicker'})
     )
 
     def __init__(self, *args, **kwargs):
@@ -93,7 +91,6 @@ class AddAdvisorDetailForm(forms.ModelForm):
                        css_class='form-group col-md-3 mb-0'),
             ),
 
-            Submit("submit", "Submit", css_class="btn btn-lg btn-primary btn-block"),
         )
 
     class Meta:
@@ -114,36 +111,75 @@ class AddAdvisorDetailForm(forms.ModelForm):
 
 
 class AddAdvisorContactDetailForm(forms.ModelForm):
+       def __init__(self, *args, **kwargs):
+              super().__init__(*args, **kwargs)
+              self.helper = FormHelper()
+              self.helper.form_tag = False
+              self.helper.layout = Layout(
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.helper = FormHelper()
-        self.helper.form_tag = False
-        self.helper.layout = Layout(
+              Row(
 
-            Submit("submit", "Submit", css_class="btn btn-lg btn-primary btn-block"),
-        )
+                     Column('telephone_home', placeholder='Telephone home',
+                            css_class='form-group col-md-6 mb-0'),
 
-    class Meta:
-        model = AdvisorContactDetail
-        fields = [
-            'advisor_id_fk',
-            'telephone_home',
-            'telephone_work',
-            'cellphone_number',
-            'fax_number',
-            'email_address',
-            'residential_address_line_1',
-            'residential_address_line_2',
-            'residential_code',
-            'postal_address_line_1',
-            'postal_address_line_2',
-            'postal_code',
-        ]
+                     Column('telephone_work', placeholder='Telephone work',
+                            css_class='form-group col-md-6 mb-0'),
+                     ),
+              Row(
+                     Column('cellphone_number', placeholder='Cellphone number',
+                            css_class='form-group col-md-6 mb-0'),
+
+                     Column('fax_number', placeholder='Fax number',
+                            css_class='form-group col-md-6 mb-0'),
+
+                     Column('email_address', placeholder='Email',
+                            css_class='form-group col-md-6 mb-0'),
+                     ),
+
+
+              Row(
+
+                     Column('residential_address_line_1', placeholder='Residential Line 1',
+                            css_class='form-group col-md-6 mb-0'),
+                     Column('residential_address_line_2', placeholder='Residential Line 2',
+                            css_class='form-group col-md-6 mb-0'),
+              ),
+              Row(
+                     Column('residential_code', placeholder='Residential Code',
+                            css_class='form-group col-md-3 mb-0'),
+              ),
+              Row(
+                     Column('postal_address_line_1', placeholder='Postal Address Line 1',
+                            css_class='form-group col-md-6 mb-0'),
+                     Column('postal_address_line_2', placeholder='Postal Address Line 2',
+                            css_class='form-group col-md-6 mb-0'),
+              ),
+              Row(
+                     Column('postal_code', placeholder='Postal Code',
+                            css_class='form-group col-md-3 mb-0'),
+              ),
+              )
+
+
+       class Meta:
+              model = AdvisorContactDetail
+              fields = [
+              'telephone_home',
+              'telephone_work',
+              'cellphone_number',
+              'fax_number',
+              'email_address',
+              'residential_address_line_1',
+              'residential_address_line_2',
+              'residential_code',
+              'postal_address_line_1',
+              'postal_address_line_2',
+              'postal_code',
+              ]
+
 
 class AddAdministratorDetailForm(forms.ModelForm):
-    employment_date = forms.DateField(
-        widget=forms.SelectDateWidget(empty_label=("Choose Year", "Choose Month", "Choose Day"), )
+    employment_date = forms.DateField(widget=forms.TextInput(attrs={'class': 'datepicker'})
     )
 
     def __init__(self, *args, **kwargs):
@@ -154,8 +190,6 @@ class AddAdministratorDetailForm(forms.ModelForm):
 
             Row(
                 Column('practise_id_fk', placeholder='Practise',
-                       css_class='form-group col-md-2 mb-0'),
-                Column('advisor_id_fk', placeholder='Practise',
                        css_class='form-group col-md-2 mb-0'),
                 Column('title', placeholder='Title',
                        css_class='form-group col-md-2 mb-0'),
@@ -184,15 +218,12 @@ class AddAdministratorDetailForm(forms.ModelForm):
                 Column('personnel_number', placeholder='Personnel Number',
                        css_class='form-group col-md-3 mb-0'),
             ),
-
-            Submit("submit", "Submit", css_class="btn btn-lg btn-primary btn-block"),
         )
 
     class Meta:
         model = AdministratorDetail
         fields = [
             'practise_id_fk',
-            'advisor_id_fk',
             'title',
             'initials',
             'surnames',
@@ -214,23 +245,21 @@ class AddAdministratorContactDetailForm(forms.ModelForm):
         self.helper.layout = Layout(
 
             Row(
-                Column('adminstrator_id_fk', placeholder='Residential Line 1',
+
+                Column('telephone_home', placeholder='Telephone home',
                        css_class='form-group col-md-6 mb-0'),
 
-                Column('telephone_home', placeholder='Residential Line 1',
-                       css_class='form-group col-md-6 mb-0'),
-
-                Column('telephone_work', placeholder='Residential Line 1',
+                Column('telephone_work', placeholder='Telephone work',
                        css_class='form-group col-md-6 mb-0'),
                 ),
             Row(
-                Column('cellphone_number', placeholder='Residential Line 1',
+                Column('cellphone_number', placeholder='Cellphone number',
                        css_class='form-group col-md-6 mb-0'),
 
-                Column('fax_number', placeholder='Residential Line 1',
+                Column('fax_number', placeholder='Fax number',
                        css_class='form-group col-md-6 mb-0'),
 
-                Column('email_address', placeholder='Residential Line 1',
+                Column('email_address', placeholder='Email',
                        css_class='form-group col-md-6 mb-0'),
                 ),
 
@@ -256,15 +285,12 @@ class AddAdministratorContactDetailForm(forms.ModelForm):
                 Column('postal_code', placeholder='Postal Code',
                        css_class='form-group col-md-3 mb-0'),
             ),
-
-            Submit("submit", "Submit", css_class="btn btn-lg btn-primary btn-block"),
         )
 
 
     class Meta:
         model = AdministratorContactDetail
         fields = [
-            'adminstrator_id_fk',
             'telephone_home',
             'telephone_work',
             'cellphone_number',
@@ -277,4 +303,3 @@ class AddAdministratorContactDetailForm(forms.ModelForm):
             'postal_address_line_2',
             'postal_code',
         ]
-

@@ -1,9 +1,14 @@
 from __future__ import unicode_literals
-from django import forms
+
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Layout, Submit, Row, Column, Field
-from .models import ClientDetail, ClientContactDetail, EmploymentDetail, RatesAndReturn, Dependent
+from crispy_forms.layout import Column, Field, Layout, Row, Submit
+from django import forms
+
 from practises.models import AdvisorDetail
+
+from .models import (ClientContactDetail, ClientDetail, Dependent,
+                     EmploymentDetail, RatesAndReturn)
+
 
 class AddClientDetailForm(forms.ModelForm):
 
@@ -119,7 +124,8 @@ class AddClientContactDetailForm(forms.ModelForm):
         ]
 
 class AddClientEmploymentetailForm(forms.ModelForm):
-
+    employment_date = forms.DateField(widget=forms.TextInput(attrs={'class': 'datepicker'})
+    )
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper()

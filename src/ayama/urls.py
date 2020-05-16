@@ -1,11 +1,13 @@
-from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
+from django.contrib import admin
 from django.urls import include, path
-import profiles.urls
+
 import accounts.urls
-import practises.urls
 import clients.urls
+import practises.urls
+import profiles.urls
+
 from . import views
 
 # Personalized admin site settings like title and header

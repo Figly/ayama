@@ -1,7 +1,7 @@
 from datetime import datetime
-from django.utils.timezone import get_current_timezone
 
 from django.db import models
+from django.utils.timezone import get_current_timezone
 
 ch_titles = (
     ('mr', 'Mister'),
