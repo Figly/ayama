@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import ClientDetail, ContactDetail, EmploymentDetail, RatesAndReturn, Dependent
+from .models import ClientDetail, ClientContactDetail, EmploymentDetail, RatesAndReturn, Dependent
 
 
 class ClientDetailsAdmin(admin.ModelAdmin):
@@ -62,7 +62,7 @@ class DependentsAdmin(admin.ModelAdmin):
 
 
 admin.site.register(ClientDetail, ClientDetailsAdmin)
-admin.site.register(ContactDetail, ContactDetailsAdmin)
+admin.site.register(ClientContactDetail, ContactDetailsAdmin)
 admin.site.register(EmploymentDetail, EmploymentDetailsAdmin)
 admin.site.register(RatesAndReturn, RatesAndReturnsAdmin)
 admin.site.register(Dependent, DependentsAdmin)
