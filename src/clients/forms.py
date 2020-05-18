@@ -196,7 +196,8 @@ class AddClientRatesAndReturnForm(forms.ModelForm):
         ]
 
 class AddClientDependentDetailsForm(forms.ModelForm):
-
+    date_of_birth = forms.DateField(widget=forms.TextInput(attrs={'class': 'datepicker'})
+    )
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper()

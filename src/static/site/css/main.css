@@ -182,3 +182,16 @@ body>.navbar-transparent {
   z-index: 2;
 }
 
+.remove_breadcrumb_css { 
+    border-style: none; 
+    border-width: 0px; 
+    padding-left: 0px; 
+    background-color: transparent;
+}
+
+.remove_breadcrumb_btn_css{
+    font-size: inherit;
+    font-weight: inherit;
+    text-transform: inherit;
+    padding: 0px;
+}

@@ -9,9 +9,15 @@
 {% block content %}
 {% block container %}
   <div class="container">
-    <p>Step {{ wizard.steps.step1 }} of {{ wizard.steps.count }}</p>
-    <h3>Advisor Contact Detail  {{ advisor_name }}</h3>
     <form action="" method="POST">{% csrf_token %}
+      <p>Step {{ wizard.steps.step1 }} of {{ wizard.steps.count }}</p>  
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb remove_breadcrumb_css">
+          <li class="breadcrumb-item"><button  class="btn btn-link remove_breadcrumb_btn_css" formnovalidate role="link" name="wizard_goto_step" value="{{ wizard.steps.first }}">Advisor Details</button></li>
+          <li class="breadcrumb-item active" aria-current="page">Contact details</li>
+        </ol>
+      </nav>
+      <h3>Advisor Contact Detail  {{ advisor_name }}</h3>
       {{ wizard.management_form }}
       {% if wizard.form.forms %}
         {{ wizard.form.management_form }}
