@@ -1,10 +1,10 @@
 from __future__ import unicode_literals
 
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.views import generic
-from django.contrib.auth.mixins import LoginRequiredMixin
-from . import forms
-from . import models
+
+from . import forms, models
 
 
 class AddPractiseView(LoginRequiredMixin, generic.CreateView):
@@ -15,7 +15,7 @@ class AddPractiseView(LoginRequiredMixin, generic.CreateView):
     form_valid_message = "Practise successfully added."
 
     def form_valid(self, form):
-        model = form.save(commit=False)
+        model = form.save(commit=False)  # noqa
         return super(AddPractiseView, self).form_valid(form)
 
 
@@ -27,7 +27,7 @@ class AddAdvisorDetailView(LoginRequiredMixin, generic.CreateView):
     form_valid_message = "Advisor successfully added."
 
     def form_valid(self, form):
-        model = form.save(commit=False)
+        model = form.save(commit=False)  # noqa
         return super(AddAdvisorDetailView, self).form_valid(form)
 
 
@@ -39,8 +39,9 @@ class AddAdvisorContactDetailView(LoginRequiredMixin, generic.CreateView):
     form_valid_message = "Advisor contact details successfully added."
 
     def form_valid(self, form):
-        model = form.save(commit=False)
+        model = form.save(commit=False)  # noqa
         return super(AddAdvisorContactDetailView, self).form_valid(form)
+
 
 class AddAdministratorView(LoginRequiredMixin, generic.CreateView):
     template_name = "practises/add_administrator.html"
@@ -50,8 +51,9 @@ class AddAdministratorView(LoginRequiredMixin, generic.CreateView):
     form_valid_message = "Advisor contact details successfully added."
 
     def form_valid(self, form):
-        model = form.save(commit=False)
+        model = form.save(commit=False)  # noqa
         return super(AddAdministratorView, self).form_valid(form)
+
 
 class AddAdministratorContactDetailView(LoginRequiredMixin, generic.CreateView):
     template_name = "practises/add_administrator_contact_detail.html"
@@ -61,5 +63,5 @@ class AddAdministratorContactDetailView(LoginRequiredMixin, generic.CreateView):
     form_valid_message = "Advisor contact details successfully added."
 
     def form_valid(self, form):
-        model = form.save(commit=False)
+        model = form.save(commit=False)  # noqa
         return super(AddAdministratorContactDetailView, self).form_valid(form)

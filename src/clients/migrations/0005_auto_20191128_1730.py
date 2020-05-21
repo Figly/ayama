@@ -6,22 +6,21 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('clients', '0004_auto_20191126_0728'),
+        ("clients", "0004_auto_20191126_0728"),
     ]
 
     operations = [
-        migrations.RemoveField(
-            model_name='employmentdetail',
-            name='years_employed',
-        ),
+        migrations.RemoveField(model_name="employmentdetail", name="years_employed",),
         migrations.AddField(
-            model_name='employmentdetail',
-            name='employment_date',
-            field=models.DateField(default='2018-01-01', verbose_name='Employment Date'),
+            model_name="employmentdetail",
+            name="employment_date",
+            field=models.DateField(
+                default="2018-01-01", verbose_name="Employment Date"
+            ),
         ),
         migrations.AlterField(
-            model_name='dependent',
-            name='date_of_birth',
-            field=models.DateField(verbose_name='Date of Birth'),
+            model_name="dependent",
+            name="date_of_birth",
+            field=models.DateField(verbose_name="Date of Birth"),
         ),
     ]

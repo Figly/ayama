@@ -1,6 +1,8 @@
-from .base import *  # NOQA
-import sys
 import logging.config
+import os
+import sys
+
+from .base import BASE_DIR, INSTALLED_APPS, MIDDLEWARE, TEMPLATES
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -76,7 +78,7 @@ LOGGING = {
         "django": {
             "handlers": ["console"],
             "propagate": True,
-            'level': os.getenv('DJANGO_LOG_LEVEL', 'INFO'),
+            "level": os.getenv("DJANGO_LOG_LEVEL", "INFO"),
         },
         "project": {"handlers": ["proj_log_file"], "level": "DEBUG"},
     },
