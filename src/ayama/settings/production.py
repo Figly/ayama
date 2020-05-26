@@ -1,7 +1,8 @@
 # In production set the environment variable like this:
 #    DJANGO_SETTINGS_MODULE=ayama.settings.production
-from .base import *  # NOQA
 import logging.config
+
+from .base import BASE_DIR, TEMPLATES
 
 # For security and performance reasons, DEBUG is turned off
 DEBUG = False

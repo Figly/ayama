@@ -1,10 +1,11 @@
 from __future__ import unicode_literals
-from django.views import generic
-from django.shortcuts import get_object_or_404, redirect
+
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
-from . import forms
-from . import models
+from django.shortcuts import get_object_or_404, redirect
+from django.views import generic
+
+from . import forms, models
 
 
 class ShowProfile(LoginRequiredMixin, generic.TemplateView):

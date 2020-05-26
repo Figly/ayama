@@ -1,10 +1,11 @@
 from __future__ import unicode_literals
-from django.contrib.auth.forms import AuthenticationForm
-from django import forms
-from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Layout, Submit, HTML, Field
+
 from authtools import forms as authtoolsforms
+from crispy_forms.helper import FormHelper
+from crispy_forms.layout import HTML, Field, Layout, Submit
+from django import forms
 from django.contrib.auth import forms as authforms
+from django.contrib.auth.forms import AuthenticationForm
 from django.urls import reverse
 
 

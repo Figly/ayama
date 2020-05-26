@@ -9,4 +9,5 @@ app_name = "clients"
 urlpatterns = [
     path("clients/", ClientWizard.as_view([AddClientDetailForm, AddClientContactDetailForm, AddClientEmploymentetailForm, AddClientRatesAndReturnForm]), name="add-client"),
     path("add_client_dependents/", AddClientDependentView.as_view(), name="add-client-dependents")
+
 ]

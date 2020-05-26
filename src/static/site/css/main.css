@@ -182,7 +182,7 @@ body>.navbar-transparent {
   z-index: 2;
 }
 
-.remove_breadcrumb_css { 
+.remove_breadcrumb_css {
     border-style: none; 
     border-width: 0px; 
     padding-left: 0px; 
