@@ -90,7 +90,9 @@ class ClientWizard(SessionWizardView):
         )
         rates.client_id_fk = client
         rates.save()
-
+        messages.add_message(
+            self.request, messages.SUCCESS, "client successfully added."
+        )
         return HttpResponseRedirect(reverse_lazy("home"))
 
 

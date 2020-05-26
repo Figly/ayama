@@ -2,7 +2,7 @@ import logging.config
 import os
 import sys
 
-from .base import BASE_DIR, INSTALLED_APPS, MIDDLEWARE, TEMPLATES
+from .base import *  # noqa
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True

@@ -1,11 +1,12 @@
-import accounts.urls
-import clients.urls
-import practises.urls
-import profiles.urls
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
+
+import accounts.urls
+import clients.urls
+import practises.urls
+import profiles.urls
 
 from . import views
 

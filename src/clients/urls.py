@@ -1,6 +1,5 @@
 from django.urls import path
 
-from . import views
 from .forms import (
     AddClientContactDetailForm,
     AddClientDependentDetailsForm,
@@ -8,7 +7,7 @@ from .forms import (
     AddClientEmploymentetailForm,
     AddClientRatesAndReturnForm,
 )
-from .views import ClientWizard
+from .views import AddClientDependentView, ClientWizard
 
 app_name = "clients"
 urlpatterns = [
@@ -26,7 +25,7 @@ urlpatterns = [
     ),
     path(
         "add_client_dependents/",
-        views.AddClientDependentView.as_view(),
+        AddClientDependentView.as_view(),
         name="add-client-dependents",
     ),
 ]

@@ -68,7 +68,6 @@ class AdministratorDetail(BaseModel):
     """
 
     practise_id_fk = models.ForeignKey("PractiseDetail", on_delete=models.CASCADE)
-    advisor_id_fk = models.ForeignKey("AdvisorDetail", on_delete=models.CASCADE)
     title = models.CharField(
         "Title", max_length=30, choices=ch_titles, default="not specified"
     )
@@ -82,7 +81,7 @@ class AdministratorDetail(BaseModel):
     )
     position = models.CharField("Position", max_length=50, blank=True, null=True)
     employment_date = models.DateField(
-        "Employment Date", auto_now=False, auto_now_add=False
+        "Employment Date", auto_now=False, auto_now_add=False, default="2018-01-01"
     )
     personnel_number = models.CharField(
         "Personnel Number", max_length=50, blank=True, null=True
@@ -137,7 +136,7 @@ class AdvisorContactDetail(BaseModel):
     )
     cellphone_number = models.CharField("Cellphone Number", max_length=10)
     fax_number = models.CharField("Fax Number", max_length=10, blank=True, null=True)
-    email_address = models.CharField("Email Address", max_length=50)
+    email_address = models.EmailField("Email Address", max_length=50)
     residential_address_line_1 = models.CharField(
         "Residential Address 1", max_length=100
     )
@@ -172,7 +171,7 @@ class AdministratorContactDetail(BaseModel):
     )
     cellphone_number = models.CharField("Cellphone Number", max_length=10)
     fax_number = models.CharField("Fax Number", max_length=10, blank=True, null=True)
-    email_address = models.CharField("Email Address", max_length=50)
+    email_address = models.EmailField("Email Address", max_length=50)
     residential_address_line_1 = models.CharField(
         "Residential Address 1", max_length=100
     )
