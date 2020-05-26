@@ -6,12 +6,16 @@ from django import forms
 
 from practises.models import AdvisorDetail
 
-from .models import (ClientContactDetail, ClientDetail, Dependent,
-                     EmploymentDetail, RatesAndReturn)
+from .models import (
+    ClientContactDetail,
+    ClientDetail,
+    Dependent,
+    EmploymentDetail,
+    RatesAndReturn,
+)
 
 
 class AddClientDetailForm(forms.ModelForm):
-
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper()
@@ -168,7 +172,8 @@ class AddClientContactDetailForm(forms.ModelForm):
 
 
 class AddClientEmploymentetailForm(forms.ModelForm):
-    employment_date = forms.DateField(widget=forms.TextInput(attrs={'class': 'datepicker'})
+    employment_date = forms.DateField(
+        widget=forms.TextInput(attrs={"class": "datepicker"})
     )
 
     def __init__(self, *args, **kwargs):
@@ -259,7 +264,8 @@ class AddClientRatesAndReturnForm(forms.ModelForm):
 
 
 class AddClientDependentDetailsForm(forms.ModelForm):
-    date_of_birth = forms.DateField(widget=forms.TextInput(attrs={'class': 'datepicker'})
+    date_of_birth = forms.DateField(
+        widget=forms.TextInput(attrs={"class": "datepicker"})
     )
 
     def __init__(self, *args, **kwargs):

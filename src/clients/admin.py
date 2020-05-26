@@ -1,7 +1,12 @@
 from django.contrib import admin
 
-from .models import (ClientContactDetail, ClientDetail, Dependent,
-                     EmploymentDetail, RatesAndReturn)
+from .models import (
+    ClientContactDetail,
+    ClientDetail,
+    Dependent,
+    EmploymentDetail,
+    RatesAndReturn,
+)
 
 
 class ClientDetailsAdmin(admin.ModelAdmin):

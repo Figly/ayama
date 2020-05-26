@@ -14,11 +14,15 @@ class AddPractiseView(LoginRequiredMixin, generic.CreateView):
     def form_valid(self, form):
         model = form.save()
 
-        messages.add_message(self.request, messages.SUCCESS, 'practise successfully added.')
-        
-        if 'add-advisor' in self.request.POST:
-            self.success_url = reverse_lazy("practises:add-advisor", kwargs={'practise': model.id})
-        elif 'submit' in self.request.POST:
+        messages.add_message(
+            self.request, messages.SUCCESS, "practise successfully added."
+        )
+
+        if "add-advisor" in self.request.POST:
+            self.success_url = reverse_lazy(
+                "practises:add-advisor", kwargs={"practise": model.id}
+            )
+        elif "submit" in self.request.POST:
             self.success_url = reverse_lazy("home")
 
         return super(AddPractiseView, self).form_valid(form)

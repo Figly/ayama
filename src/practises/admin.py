@@ -1,7 +1,12 @@
 from django.contrib import admin
 
-from .models import (AdministratorContactDetail, AdministratorDetail,
-                     AdvisorContactDetail, AdvisorDetail, PractiseDetail)
+from .models import (
+    AdministratorContactDetail,
+    AdministratorDetail,
+    AdvisorContactDetail,
+    AdvisorDetail,
+    PractiseDetail,
+)
 
 
 class PractiseDetailAdmin(admin.ModelAdmin):

@@ -9,11 +9,14 @@ from django.views import generic
 from formtools.wizard.views import SessionWizardView
 
 from . import models
-from .forms import (AddClientContactDetailForm, AddClientDependentDetailsForm,
-                    AddClientDetailForm, AddClientEmploymentetailForm,
-                    AddClientRatesAndReturnForm)
-from .models import (ClientContactDetail, ClientDetail, EmploymentDetail,
-                     RatesAndReturn)
+from .forms import (
+    AddClientContactDetailForm,
+    AddClientDependentDetailsForm,
+    AddClientDetailForm,
+    AddClientEmploymentetailForm,
+    AddClientRatesAndReturnForm,
+)
+from .models import ClientContactDetail, ClientDetail, EmploymentDetail, RatesAndReturn
 
 FORMS = [
     ("0", AddClientDetailForm),
@@ -31,7 +34,7 @@ TEMPLATES = {
 
 
 class ClientWizard(SessionWizardView):
-    def get_template_names(self): 
+    def get_template_names(self):
         return TEMPLATES[self.steps.current]
 
     def get_context_data(self, form, **kwargs):
@@ -87,7 +90,9 @@ class ClientWizard(SessionWizardView):
         )
         rates.client_id_fk = client
         rates.save()
-        messages.add_message(self.request, messages.SUCCESS, 'client successfully added.')
+        messages.add_message(
+            self.request, messages.SUCCESS, "client successfully added."
+        )
         return HttpResponseRedirect(reverse_lazy("home"))
 
 

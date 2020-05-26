@@ -10,7 +10,7 @@
 {% block container %}
   <div class="container">
     <form action="" method="POST">{% csrf_token %}
-      <p>Step {{ wizard.steps.step1 }} of {{ wizard.steps.count }}</p>  
+      <p>Step {{ wizard.steps.step1 }} of {{ wizard.steps.count }}</p>
       <nav aria-label="breadcrumb">
         <ol class="breadcrumb remove_breadcrumb_css">
           <li class="breadcrumb-item"><button  class="btn btn-link remove_breadcrumb_btn_css" formnovalidate role="link" name="wizard_goto_step" value="{{ wizard.steps.first }}">Client Details</button></li>
