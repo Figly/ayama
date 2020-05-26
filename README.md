@@ -2,7 +2,7 @@
 
 # Ayama
 
-Ayama is a Financial Advisor CRM tool, built with the purpose of making client management for the financial advise industry simpler and more affordable. The current iteration has the sole purpose of managing client information and communication, with the provisio of introducing advisory capabilities and client self-management in later versions. 
+Ayama is a Financial Advisor CRM tool, built with the purpose of making client management for the financial advise industry simpler and more affordable. The current iteration has the sole purpose of managing client information and communication, with the provisio of introducing advisory capabilities and client self-management in later versions.
 
 It is built with Python 3 using the Django Web Framework.
 

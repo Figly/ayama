@@ -7,9 +7,14 @@ https://docs.djangoproject.com/en/dev/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/dev/ref/settings/
 """
-import os
-from django.urls import reverse_lazy
 from pathlib import Path
+
+# Use 12factor inspired environment variables or from a file
+import environ
+
+# For Bootstrap 3, change error alert to 'danger'
+from django.contrib import messages
+from django.urls import reverse_lazy
 
 # Build paths inside the project like this: BASE_DIR / "directory"
 
@@ -43,12 +48,8 @@ TEMPLATES = [
     }
 ]
 
-TEMPLATE_LOADERS = (
-    'django.template.loaders.app_directories.load_template_source',
-)
+TEMPLATE_LOADERS = ("django.template.loaders.app_directories.load_template_source",)
 
-# Use 12factor inspired environment variables or from a file
-import environ
 
 env = environ.Env()
 
@@ -65,7 +66,7 @@ if env_file.exists():
 # Raises ImproperlyConfigured exception if SECRET_KEY not in os.environ
 SECRET_KEY = env("SECRET_KEY")
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ["*"]
 
 # Application definition
 
@@ -83,7 +84,7 @@ INSTALLED_APPS = (
     "accounts",
     "clients",
     "practises",
-    'formtools',
+    "formtools",
 )
 
 MIDDLEWARE = [
@@ -129,8 +130,6 @@ STATIC_URL = "/static/"
 # Crispy Form Theme - Bootstrap 3
 CRISPY_TEMPLATE_PACK = "bootstrap3"
 
-# For Bootstrap 3, change error alert to 'danger'
-from django.contrib import messages
 
 MESSAGE_TAGS = {messages.ERROR: "danger"}
 
@@ -141,4 +140,4 @@ LOGIN_URL = reverse_lazy("accounts:login")
 
 THUMBNAIL_EXTENSION = "png"  # Or any extn for your thumbnails
 
-DATE_INPUT_FORMATS = ['%Y-%m-%d']
+DATE_INPUT_FORMATS = ["%Y-%m-%d"]
