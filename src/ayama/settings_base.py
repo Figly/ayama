@@ -8,6 +8,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/dev/ref/settings/
 """
 import os
+import socket
 from pathlib import Path
 
 # Use 12factor inspired environment variables or from a file
@@ -19,10 +20,10 @@ from django.urls import reverse_lazy
 
 # Build paths inside the project like this: BASE_DIR / "directory"
 
-BASE_DIR = Path(__file__).resolve().parent.parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent
 STATICFILES_DIRS = [str(BASE_DIR / "static")]
+print(STATICFILES_DIRS)
 MEDIA_ROOT = str(BASE_DIR / "media")
-MEDIA_URL = "/media/"
 
 # Use Django templates using the new Django 1.8 TEMPLATES settings
 TEMPLATES = [
@@ -51,11 +52,7 @@ TEMPLATES = [
 
 TEMPLATE_LOADERS = ("django.template.loaders.app_directories.load_template_source",)
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/dev/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-# Raises ImproperlyConfigured exception if SECRET_KEY not in os.environ
 SECRET_KEY = os.environ.get("SECRET_KEY", None)
 
 ALLOWED_HOSTS = ["*"]
@@ -93,27 +90,51 @@ ROOT_URLCONF = "ayama.urls"
 
 WSGI_APPLICATION = "ayama.wsgi.application"
 
-# Database
-# https://docs.djangoproject.com/en/dev/ref/settings/#databases
+if not os.environ.get('ENVIRONMENT', False):
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': 'db.sqlite3',
+        }
+    }
+else:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.postgresql_psycopg2",
+            "NAME": os.getenv("POSTGRES_DB", "ayama"),
+            "USER": os.getenv("POSTGRES_USER", "postgres"),
+            "PASSWORD": os.getenv("POSTGRES_PASSWORD", ""),
+            "HOST": os.getenv("AYAMA_POSTGRES_SERVICE_HOST", "ayama-postgres"),
+            "PORT": os.getenv("AYAMA_POSTGRES_SERVICE_PORT", 5432),
+        },
+    }
+    CACHES = {
+        "default": {
+            "BACKEND": "django_redis.cache.RedisCache",
+            "LOCATION": [
+                "redis://%s:%s"
+                % (
+                    os.getenv(
+                        "REDIS_HOST", os.getenv("AYAMA_REDIS_SERVICE_HOST", "ayama-redis")
+                    ),
+                    os.getenv("REDIS_PORT", os.getenv("AYAMA_REDIS_SERVICE_PORT", 6379)),
+                ),
+            ],
+            "OPTIONS": {
+                "DB": 1,
+                "PARSER_CLASS": "redis.connection.HiredisParser",
+                "CLIENT_CLASS": "django_redis.client.DefaultClient",
+                "CONNECTION_POOL_CLASS": "redis.BlockingConnectionPool",
+            },
+        },
+    }
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql_psycopg2",
-        "NAME": os.getenv("POSTGRES_DB", "ayama"),
-        "USER": os.getenv("POSTGRES_USER", "postgres"),
-        "PASSWORD": os.getenv("POSTGRES_PASSWORD", ""),
-        "HOST": os.getenv("AYAMA_POSTGRES_SERVICE_HOST", "ayama-postgres"),
-        "PORT": os.getenv("AYAMA_POSTGRES_SERVICE_PORT", 5432),
-    },
-}
 
-# Internationalization
-# https://docs.djangoproject.com/en/dev/topics/i18n/
+HOSTNAME = socket.gethostname()
 
-LANGUAGE_CODE = "en-us"
+LANGUAGE_CODE = "en-za"
 
-# TODO: set timezone to SA
-TIME_ZONE = "UTC"
+TIME_ZONE = "Africa/Johannesburg"
 
 USE_I18N = True
 
@@ -121,9 +142,22 @@ USE_L10N = True
 
 USE_TZ = True
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/dev/howto/static-files/
+DATETIME_FORMAT = "%Y-%m-%d %H:%M:%S"
+
+MEDIA_URL = "/media/"
 STATIC_URL = "/static/"
+
+STATICFILES_FINDERS = ['django.contrib.staticfiles.finders.FileSystemFinder',
+                       'django.contrib.staticfiles.finders.AppDirectoriesFinder', ]
+
+# LOCAL_BASE = "/"
+# STATIC_ROOT = LOCAL_BASE + "static"
+#
+# STATICFILES_DIRS = (
+#     os.path.join(BASE_DIR, 'static'),
+# )
+#
+# MEDIA_ROOT = LOCAL_BASE + "media"
 
 # Crispy Form Theme - Bootstrap 3
 CRISPY_TEMPLATE_PACK = "bootstrap3"
