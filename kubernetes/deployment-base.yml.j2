@@ -1,0 +1,184 @@
+{% for component in components %}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: "{{ app }}"
+    run: "{{ app }}-{{ component.name }}"
+    environment: "{{ environment }}"
+{%- for label, value in defaults.get('labels', {}).items() %}
+    {{ label }}: "{{ value }}"
+{%- endfor %}
+{%- for label, value in component.get('labels', {}).items() %}
+    {{ label }}: "{{ value }}"
+{%- endfor %}
+  name: "{{ app }}-{{ component.name }}"
+spec:
+  replicas: {{ component.get('replicas', {}).get(environment, defaults.replicas) }}
+  revisionHistoryLimit: 2
+  selector:
+    matchLabels:
+      app: "{{ app }}"
+      run: "{{ app }}-{{ component.name }}"
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 50%
+      maxUnavailable: 0
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: "{{ app }}"
+        run: "{{ app }}-{{ component.name }}"
+        environment: "{{ environment }}"
+{%- for label, value in defaults.get('labels', {}).items() %}
+        {{ label }}: "{{ value }}"
+{%- endfor %}
+{%- for label, value in component.get('labels', {}).items() %}
+        {{ label }}: "{{ value }}"
+{%- endfor %}
+    spec:
+{%- if environment != 'dev' %}
+{%- set target_nodepool = component.get('target_nodepool', {}).get(environment, defaults.get('target_nodepool', '')) %}
+{%- if target_nodepool %}
+      nodeSelector:
+        nodepool_type: "{{ target_nodepool }}"
+      tolerations:
+      - key: "nodepool_type"
+        operator: Equal
+        value: "{{ target_nodepool }}"
+        effect: NoSchedule
+{%- endif %}
+{%- endif %}
+      containers:
+        - image: "{{ image_url }}"
+          name: "{{ app }}-{{ component.name }}"
+          args: {{ component.get('args', []) }}
+{%- if component.name == 'app' %}
+          livenessProbe:
+            httpGet:
+              path: /healthz/
+              port: 8080
+              scheme: HTTP
+            timeoutSeconds: 5
+          readinessProbe:
+            httpGet:
+              path: /healthz/
+              port: 8080
+              scheme: HTTP
+            timeoutSeconds: 5
+          lifecycle:
+            preStop:
+              exec:
+                # SIGTERM triggers a quick exit; gracefully terminate instead
+                command: ["/bin/sh","-c","sleep 20"]
+{%- endif %}
+{%- if environment != 'dev' %}
+          resources: {{ component.get('resources', {}).get(environment, component.get('resources', {}).get('default', defaults.get('resources', {}))) }}
+{%- endif %}
+          volumeMounts:
+            - mountPath: /etc/gcloud/
+              name: credentials
+              readOnly: true
+{%- if environment == 'dev' %}
+            - mountPath: /usr/src/app
+              name: app
+{%- endif %}
+          env:
+            - name: GIT_HASH
+              value: "{{ git_sha }}"
+            - name: NEW_RELIC_APP_NAME
+              value: {{ app }}
+            - name: ENVIRONMENT
+              value: {{ environment }}
+          envFrom:
+          - configMapRef:
+              name: {{ app }}-env
+          - secretRef:
+              name: {{ app }}-env
+{%- if environment != 'dev' %}
+{%- if component.name == 'app' %}
+        - name: "{{ app }}-nginx"
+          image: "nginx:1.12-alpine"
+          resources:
+            requests:
+              cpu: 20m
+              memory: 64Mi
+          livenessProbe:
+            httpGet:
+              path: /healthz/
+              port: 80
+              scheme: HTTP
+            timeoutSeconds: 5
+            failureThreshold: 5
+          readinessProbe:
+            httpGet:
+              path: /healthz/
+              port: 80
+              scheme: HTTP
+            timeoutSeconds: 1
+            initialDelaySeconds: 5
+          ports:
+          - containerPort: 80
+          lifecycle:
+            preStop:
+              exec:
+                # SIGTERM triggers a quick exit; gracefully terminate instead
+                command: ["/bin/sh","-c","sleep 10; nginx -s quit; while killall -0 nginx; do sleep 1; done"]
+          volumeMounts:
+          - name: nginx-config
+            mountPath: /etc/nginx/conf.d/
+            readOnly: true
+        - name: "{{ app }}-nginx-exporter"
+          image: "nginx/nginx-prometheus-exporter:0.4.1"
+          resources:
+            requests:
+              cpu: 20m
+              memory: 64Mi
+          env:
+          - name: SCRAPE_URI
+            value: http://127.0.0.1:80/nginx_status
+          ports:
+          - containerPort: 9113
+        - name: "{{ app }}-statsd-exporter"
+          image: "prom/statsd-exporter:v0.12.2"
+          args:
+          - --statsd.mapping-config=/statsd/statsd.conf
+          resources:
+            requests:
+              cpu: 20m
+              memory: 64Mi
+          ports:
+          - name: statsd
+            containerPort: 9125
+          - name: web
+            containerPort: 9102
+          volumeMounts:
+          - name: statsd-config
+            mountPath: /statsd/
+            readOnly: true
+{%- endif %}
+{%- endif %}
+      volumes:
+        - name: credentials
+          secret:
+            secretName: ayama-credentials
+{%- if environment != 'dev' %}
+        - name: nginx-config
+          configMap:
+            defaultMode: 420
+            name: ayama-nginx-config
+        - name: statsd-config
+          configMap:
+            defaultMode: 420
+            name: ayama-statsd-config
+{%- endif %}
+{%- if environment == 'dev' %}
+        - name: app
+          hostPath:
+            path: "{{ source_path }}/src"
+{%- endif %}
+{% endfor %}
