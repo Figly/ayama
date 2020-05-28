@@ -2,10 +2,7 @@ import logging.config as config
 
 from .settings_base import *  # noqa
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv("DEBUG") == "True"
-
-if not os.environ.get('ENVIRONMENT', False):
+if not os.environ.get("ENVIRONMENT", False):
     TEMPLATES[0]["OPTIONS"].update({"debug": True})
 
     # Django Debug Toolbar
@@ -77,9 +74,7 @@ config.dictConfig(
             "file": {
                 "level": LOG_LEVEL,
                 "class": "logging.FileHandler",
-                "filename": os.path.join(
-                    os.getenv("AYAMA_LOG_DIR", "."), "ayama.log"
-                ),
+                "filename": os.path.join(os.getenv("AYAMA_LOG_DIR", "."), "ayama.log"),
                 "formatter": "detailed",
             },
         },

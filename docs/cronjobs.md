@@ -38,6 +38,6 @@ cron-jobs:
 ```
 
 You can add `dev: 1` under parallelism when running jobs on your local. Just remember to remove it after
-you're done developing. It won't be allowed in develop or master branches. 
+you're done developing. It won't be allowed in develop or master branches.
 
 That's it. Have fun.

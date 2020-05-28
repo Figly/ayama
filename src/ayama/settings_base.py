@@ -20,10 +20,11 @@ from django.urls import reverse_lazy
 
 # Build paths inside the project like this: BASE_DIR / "directory"
 
+DEBUG = os.getenv("DEBUG") == "True"
+
 BASE_DIR = Path(__file__).resolve().parent.parent
-STATICFILES_DIRS = [str(BASE_DIR / "static")]
-print(STATICFILES_DIRS)
-MEDIA_ROOT = str(BASE_DIR / "media")
+STATICFILES_DIRS = (os.path.join(BASE_DIR, "static"),)
+MEDIA_ROOT = str(os.path.join(BASE_DIR, "media"))
 
 # Use Django templates using the new Django 1.8 TEMPLATES settings
 TEMPLATES = [
@@ -51,7 +52,6 @@ TEMPLATES = [
 ]
 
 TEMPLATE_LOADERS = ("django.template.loaders.app_directories.load_template_source",)
-
 
 SECRET_KEY = os.environ.get("SECRET_KEY", None)
 
@@ -90,12 +90,9 @@ ROOT_URLCONF = "ayama.urls"
 
 WSGI_APPLICATION = "ayama.wsgi.application"
 
-if not os.environ.get('ENVIRONMENT', False):
+if not os.environ.get("ENVIRONMENT", False):
     DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': 'db.sqlite3',
-        }
+        "default": {"ENGINE": "django.db.backends.sqlite3", "NAME": "db.sqlite3"}
     }
 else:
     DATABASES = {
@@ -115,9 +112,12 @@ else:
                 "redis://%s:%s"
                 % (
                     os.getenv(
-                        "REDIS_HOST", os.getenv("AYAMA_REDIS_SERVICE_HOST", "ayama-redis")
+                        "REDIS_HOST",
+                        os.getenv("AYAMA_REDIS_SERVICE_HOST", "ayama-redis"),
                     ),
-                    os.getenv("REDIS_PORT", os.getenv("AYAMA_REDIS_SERVICE_PORT", 6379)),
+                    os.getenv(
+                        "REDIS_PORT", os.getenv("AYAMA_REDIS_SERVICE_PORT", 6379)
+                    ),
                 ),
             ],
             "OPTIONS": {
@@ -146,18 +146,6 @@ DATETIME_FORMAT = "%Y-%m-%d %H:%M:%S"
 
 MEDIA_URL = "/media/"
 STATIC_URL = "/static/"
-
-STATICFILES_FINDERS = ['django.contrib.staticfiles.finders.FileSystemFinder',
-                       'django.contrib.staticfiles.finders.AppDirectoriesFinder', ]
-
-# LOCAL_BASE = "/"
-# STATIC_ROOT = LOCAL_BASE + "static"
-#
-# STATICFILES_DIRS = (
-#     os.path.join(BASE_DIR, 'static'),
-# )
-#
-# MEDIA_ROOT = LOCAL_BASE + "media"
 
 # Crispy Form Theme - Bootstrap 3
 CRISPY_TEMPLATE_PACK = "bootstrap3"

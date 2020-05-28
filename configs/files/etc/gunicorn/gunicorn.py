@@ -1,6 +1,6 @@
 import os
 
-if os.environ.get('ENVIRONMENT', 'dev') != 'dev':
+if os.environ.get("ENVIRONMENT", "dev") != "dev":
     chdir = "/usr/src/app"
 
 bind = "0.0.0.0:8080"
