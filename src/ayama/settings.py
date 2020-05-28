@@ -1,13 +1,42 @@
 import logging.config as config
 
-from .base import *  # noqa
+from .settings_base import *  # noqa
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv("DEBUG") == "True"
 
-TEMPLATES[0]["OPTIONS"].update({"debug": True})
+if not os.environ.get('ENVIRONMENT', False):
+    TEMPLATES[0]["OPTIONS"].update({"debug": True})
 
-# Less strict password authentication and validation
+    # Django Debug Toolbar
+    INSTALLED_APPS += ("debug_toolbar",)
+
+    # Additional middleware introduced by debug toolbar
+    MIDDLEWARE += ["debug_toolbar.middleware.DebugToolbarMiddleware"]
+
+    # Show emails to console in DEBUG mode
+    EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+
+    # Show thumbnail generation errors
+    THUMBNAIL_DEBUG = True
+    # Allow internal IPs for debugging
+    INTERNAL_IPS = ["127.0.0.1", "0.0.0.1"]
+else:
+    # Cache the templates in memory for speed-up
+    loaders = [
+        (
+            "django.template.loaders.cached.Loader",
+            [
+                "django.template.loaders.filesystem.Loader",
+                "django.template.loaders.app_directories.Loader",
+            ],
+        )
+    ]
+
+    TEMPLATES[0]["OPTIONS"].update({"loaders": loaders})
+    TEMPLATES[0].update({"APP_DIRS": False})
+    STATIC_ROOT = str(BASE_DIR.parent / "site" / "static")
+
 PASSWORD_HASHERS = [
     "django.contrib.auth.hashers.PBKDF2PasswordHasher",
     "django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher",
@@ -24,20 +53,6 @@ AUTH_PASSWORD_VALIDATORS = [
     {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator"},
     {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator"},
 ]
-# Django Debug Toolbar
-INSTALLED_APPS += ("debug_toolbar",)
-
-# Additional middleware introduced by debug toolbar
-MIDDLEWARE += ["debug_toolbar.middleware.DebugToolbarMiddleware"]
-
-# Show emails to console in DEBUG mode
-EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
-
-# Show thumbnail generation errors
-THUMBNAIL_DEBUG = True
-
-# Allow internal IPs for debugging
-INTERNAL_IPS = ["127.0.0.1", "0.0.0.1"]
 
 LOGGING_CONFIG = None
 LOG_LEVEL = os.environ.get("AYAMA_LOG_LEVEL", "warning").upper()
