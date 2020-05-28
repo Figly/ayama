@@ -74,7 +74,9 @@ config.dictConfig(
             "file": {
                 "level": LOG_LEVEL,
                 "class": "logging.FileHandler",
-                "filename": os.path.join(os.getenv("AYAMA_LOG_DIR", "."), "ayama.log"),
+                "filename": os.path.join(
+                    os.getenv("AYAMA_LOG_DIR", "/logs"), "ayama.log"
+                ),
                 "formatter": "detailed",
             },
         },
