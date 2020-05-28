@@ -32,7 +32,15 @@ else:
 
     TEMPLATES[0]["OPTIONS"].update({"loaders": loaders})
     TEMPLATES[0].update({"APP_DIRS": False})
-    STATIC_ROOT = str(BASE_DIR.parent / "site" / "static")
+
+    # Setup static file serving
+    STATICFILES_FINDERS = [
+        "django.contrib.staticfiles.finders.FileSystemFinder",
+        "django.contrib.staticfiles.finders.AppDirectoriesFinder",
+    ]
+
+    LOCAL_BASE = "/"
+    STATIC_ROOT = LOCAL_BASE + "static"
 
 PASSWORD_HASHERS = [
     "django.contrib.auth.hashers.PBKDF2PasswordHasher",
@@ -74,9 +82,7 @@ config.dictConfig(
             "file": {
                 "level": LOG_LEVEL,
                 "class": "logging.FileHandler",
-                "filename": os.path.join(
-                    os.getenv("AYAMA_LOG_DIR", "/logs"), "ayama.log"
-                ),
+                "filename": os.path.join(os.getenv("AYAMA_LOG_DIR", "."), "ayama.log"),
                 "formatter": "detailed",
             },
         },

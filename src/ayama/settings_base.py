@@ -147,8 +147,8 @@ DATETIME_FORMAT = "%Y-%m-%d %H:%M:%S"
 MEDIA_URL = "/media/"
 STATIC_URL = "/static/"
 
-# Crispy Form Theme - Bootstrap 3
-CRISPY_TEMPLATE_PACK = "bootstrap3"
+# Crispy Form Theme - Bootstrap 4
+CRISPY_TEMPLATE_PACK = "bootstrap4"
 
 MESSAGE_TAGS = {messages.ERROR: "danger"}
 

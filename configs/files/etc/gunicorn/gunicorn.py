@@ -1,10 +1,8 @@
 import os
 
-if os.environ.get("ENVIRONMENT", "dev") != "dev":
-    chdir = "/usr/src/app"
-
 bind = "0.0.0.0:8080"
-loglevel = "ERROR"
+chdir = "/usr/src/app"
+loglevel = "DEBUG"
 max_requests = 10000
 max_requests_jitter = 1000
 worker_class = "gevent"
