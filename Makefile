@@ -25,3 +25,14 @@ app:
 staging:
 	./scripts/_build.sh staging
 	./scripts/deploy.sh staging
+
+collectstatic:
+	@eval $$(minikube docker-env) ;\
+	$(eval POD_NAME=$(shell sh -c "kubectl get pods | grep ayama-app | grep Running" | awk '{print $$1}'))
+	kubectl --context=minikube exec $(POD_NAME) --stdin --tty -- ./manage.py collectstatic
+
+
+migrate:
+	@eval $$(minikube docker-env) ;\
+	$(eval POD_NAME=$(shell sh -c "kubectl get pods | grep ayama-app | grep Running" | awk '{print $$1}'))
+	kubectl --context=minikube exec $(POD_NAME) --stdin --tty -- ./manage.py migrate

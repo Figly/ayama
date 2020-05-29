@@ -23,7 +23,10 @@ from django.urls import reverse_lazy
 DEBUG = os.getenv("DEBUG") == "True"
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-STATICFILES_DIRS = (os.path.join(BASE_DIR, "static"),)
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, "static"),
+    os.path.join(BASE_DIR, "ayama", "static"),
+)
 MEDIA_ROOT = str(os.path.join(BASE_DIR, "media"))
 
 # Use Django templates using the new Django 1.8 TEMPLATES settings

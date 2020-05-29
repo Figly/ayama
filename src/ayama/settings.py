@@ -39,8 +39,23 @@ else:
         "django.contrib.staticfiles.finders.AppDirectoriesFinder",
     ]
 
-    LOCAL_BASE = "/"
-    STATIC_ROOT = LOCAL_BASE + "static"
+    # Configure static and media file access on GCS
+    DEFAULT_FILE_STORAGE = "storages.backends.gcloud.GoogleCloudStorage"
+
+    # if os.environ.get('ENVIRONMENT') == 'staging':
+    GS_BUCKET_NAME = "ayama-staging-assets"
+    # elif os.environ.get('ENVIRONMENT') == 'production':
+    #     GS_BUCKET_NAME = 'ayama-production-assets'
+    # else:
+    #     pass
+
+    STATICFILES_STORAGE = "storages.backends.gcloud.GoogleCloudStorage"
+
+    # MEDIA_URL = 'https://storage.googleapis.com/ayama-staging-assets/media/'
+    # MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+
+    STATIC_URL = "https://storage.googleapis.com/ayama-staging-assets/"
+    # STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 
 PASSWORD_HASHERS = [
     "django.contrib.auth.hashers.PBKDF2PasswordHasher",

@@ -13,4 +13,4 @@ spec:
   selector:
     app: ayama
     run: ayama-app
-  type: NodePort
+  type: LoadBalancer
