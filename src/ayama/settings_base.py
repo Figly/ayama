@@ -25,7 +25,7 @@ DEBUG = os.getenv("DEBUG") == "True"
 BASE_DIR = Path(__file__).resolve().parent.parent
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
-    os.path.join(BASE_DIR, "ayama", "static"),
+    os.path.join(BASE_DIR, "media"),
 )
 MEDIA_ROOT = str(os.path.join(BASE_DIR, "media"))
 

@@ -11,7 +11,7 @@ components:
   - name: app
     replicas:
       production: 0
-      staging: 0
+      staging: 1
       dev: 1
     resources:
       production:

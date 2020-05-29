@@ -99,7 +99,7 @@ spec:
               name: {{ app }}-env
           - secretRef:
               name: {{ app }}-env
-{%- if environment != 'dev' %}
+{%- if environment == 'production' %}
 {%- if component.name == 'app' %}
         - name: "{{ app }}-nginx"
           image: "nginx:1.12-alpine"
@@ -166,7 +166,7 @@ spec:
         - name: credentials
           secret:
             secretName: ayama-credentials
-{%- if environment != 'dev' %}
+{%- if environment == 'production' %}
         - name: nginx-config
           configMap:
             defaultMode: 420
