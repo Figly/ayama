@@ -1,6 +1,7 @@
 from __future__ import unicode_literals
 
 from django.contrib import messages
+from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.forms.models import construct_instance
 from django.http.response import HttpResponseRedirect
@@ -51,15 +52,16 @@ class AdvisorWizard(SessionWizardView):
         # models backing db
         advisor = AdvisorDetail()
         advisorContact = AdvisorContactDetail()
+        User = get_user_model()
 
         # form instances
+
         advisor = construct_instance(
             form_dict["0"],
             advisor,
             form_dict["0"]._meta.fields,
             form_dict["0"]._meta.exclude,
         )
-        advisor.save()
 
         advisorContact = construct_instance(
             form_dict["1"],
@@ -67,6 +69,18 @@ class AdvisorWizard(SessionWizardView):
             form_dict["1"]._meta.fields,
             form_dict["1"]._meta.exclude,
         )
+
+        user = User.objects.create_user(email=advisorContact.email_address,username=advisorContact.email_address,
+                                 password="password", first_name = advisor.names, last_name = advisor.surnames, name = advisor.names + " " + advisor.surnames) #default password for now, to revise
+        user.is_advisor = True
+        user.is_administrator = False
+        user.is_staff = True
+        user.is_superuser = False
+        user.save()
+
+        advisor.user = user
+        advisor.save()
+
         advisorContact.advisor_id_fk = advisor
         advisorContact.save()
 
