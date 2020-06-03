@@ -5,18 +5,18 @@ metadata:
   creationTimestamp: null
   labels:
     app: "{{ app }}"
-    run: "{{ app }}-migration"
+    run: "{{ app }}-collectstatic"
     owner: ayama
-  name: "{{ app }}-migration"
+  name: "{{ app }}-collectstatic"
 spec:
   restartPolicy: Never
   containers:
   - image: "{{ image_url }}"
-    name: "{{ app }}-migration"
+    name: "{{ app }}-collectstatic"
     args:
     - python
     - manage.py
-    - migrate
+    - collectstatic
     - --noinput
     env:
     - name: GIT_HASH

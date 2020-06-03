@@ -36,3 +36,9 @@ migrate:
 	@eval $$(minikube docker-env) ;\
 	$(eval POD_NAME=$(shell sh -c "kubectl get pods | grep ayama-app | grep Running" | awk '{print $$1}'))
 	kubectl --context=minikube exec $(POD_NAME) --stdin --tty -- ./manage.py migrate
+
+scaleup:
+	gcloud container clusters resize carignan --node-pool aragon --num-nodes 1 --zone europe-west1-d
+
+scaledown:
+	gcloud container clusters resize carignan --node-pool aragon --num-nodes 0 --zone europe-west1-d
