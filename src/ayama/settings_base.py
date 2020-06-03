@@ -13,7 +13,6 @@ from pathlib import Path
 
 # Use 12factor inspired environment variables or from a file
 import environ
-
 # For Bootstrap 3, change error alert to 'danger'
 from django.contrib import messages
 from django.urls import reverse_lazy
@@ -156,7 +155,7 @@ CRISPY_TEMPLATE_PACK = "bootstrap4"
 MESSAGE_TAGS = {messages.ERROR: "danger"}
 
 # Authentication Settings
-AUTH_USER_MODEL = "authtools.User"
+AUTH_USER_MODEL = "practises.User"
 LOGIN_REDIRECT_URL = reverse_lazy("profiles:show_self")
 LOGIN_URL = reverse_lazy("accounts:login")
 

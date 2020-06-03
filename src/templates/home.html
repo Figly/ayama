@@ -24,9 +24,11 @@
       <div class="container">
       {% if user.is_authenticated %}
         {% if user.is_superuser %}
+          {% include "superusers/home.html" %}
+        {% elif user.is_administrator%}
           {% include "administration/home.html" %}
         {% else %}
-          {% include "staff/home.html" %}
+        {% include "advisors/home.html" %}
         {% endif %}
       {% endif %}
       </div>

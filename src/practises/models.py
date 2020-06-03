@@ -1,5 +1,7 @@
 from datetime import datetime
 
+from django.conf import settings
+from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.utils.timezone import get_current_timezone
 
@@ -11,7 +13,11 @@ ch_titles = (
     ("prof", "Professor"),
 )
 
-
+class User(AbstractUser):
+    is_administrator = models.BooleanField(default=False)
+    is_advisor = models.BooleanField(default=False)
+    name = models.CharField("Name", max_length=100)
+    
 class BaseModel(models.Model):
     dateFormat = "%Y-%m-%d %H:%M:%S"
 
@@ -67,6 +73,7 @@ class AdministratorDetail(BaseModel):
     Class descriptor
     """
 
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, primary_key=True)
     practise_id_fk = models.ForeignKey("PractiseDetail", on_delete=models.CASCADE)
     title = models.CharField(
         "Title", max_length=30, choices=ch_titles, default="not specified"
@@ -97,6 +104,7 @@ class AdvisorDetail(BaseModel):
     Class descriptor
     """
 
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, primary_key=True)
     practise_id_fk = models.ForeignKey("PractiseDetail", on_delete=models.CASCADE)
     title = models.CharField(
         "Title", max_length=30, choices=ch_titles, default="not specified"

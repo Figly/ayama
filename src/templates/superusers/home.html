@@ -1,4 +1,11 @@
 <div class="row">
+    <a href="{% url 'practises:add-practise' %}">
+        <div class="col-md-6 col-sm-6">
+            <div class="container">
+                <h2>Add Practise</h2>
+            </div>
+        </div>
+    </a>
     <a href="{% url 'practises:add-advisor' %}">
         <div class="col-md-6 col-sm-6">
             <div class="container">
@@ -6,10 +13,19 @@
             </div>
         </div>
     </a>
+</div>
+<div class="row">
     <a href="{% url 'clients:add-client' %}">
         <div class="col-md-6 col-sm-6">
             <div class="container">
                 <h2>Add Client</h2>
+            </div>
+        </div>
+    </a>
+    <a href="{% url 'practises:add-administrator' %}">
+        <div class="col-md-6 col-sm-6">
+            <div class="container">
+                <h2>Add Administrator</h2>
             </div>
         </div>
     </a>

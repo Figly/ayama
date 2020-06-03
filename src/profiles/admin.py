@@ -35,5 +35,4 @@ class NewUserAdmin(NamedUserAdmin):
         return format_html('<a href="{}">{}</a>'.format(url, "\xb6"))
 
 
-admin.site.unregister(User)
 admin.site.register(User, NewUserAdmin)
