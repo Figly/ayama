@@ -6,46 +6,38 @@ metadata:
   labels:
     app: "{{ app }}"
     run: "{{ app }}-migration"
-    environment: "{{ environment }}"
-{%- for label, value in defaults.get('labels', {}).items() %}
-    {{ label }}: "{{ value }}"
-{%- endfor %}
+    owner: ayama
   name: "{{ app }}-migration"
 spec:
   restartPolicy: Never
   containers:
-    - image: "{{ image_url }}"
-      name: "{{ app }}-migration"
-      args:
-        - python
-        - manage.py
-        - migrate
-      resources: {}
-      volumeMounts:
-        - mountPath: /etc/gcloud/
-          name: credentials
-          readOnly: true
-{%- if environment == 'dev' %}
-        - mountPath: /usr/src/app
-          name: app
-{%- endif %}
-      env:
-        - name: NEW_RELIC_APP_NAME
-          value: {{ app }}
-        - name: ENVIRONMENT
-          value: {{ environment }}
-      envFrom:
-      - configMapRef:
-          name: {{ app }}-env
-      - secretRef:
-          name: {{ app }}-env
+  - image: "{{ image_url }}"
+    name: "{{ app }}-migration"
+    args:
+    - python
+    - manage.py
+    - migrate
+    - --noinput
+    env:
+    - name: GIT_HASH
+      value: "{{ git_sha }}"
+    - name: NEW_RELIC_APP_NAME
+      value: {{ app }}
+    - name: ENVIRONMENT
+      value: {{ environment }}
+    envFrom:
+    - configMapRef:
+        name: {{ app }}-env
+    - secretRef:
+        name: {{ app }}-env
+    resources: {}
+{%- if environment != 'dev' %}
+    volumeMounts:
+    - mountPath: /etc/gcloud/
+      name: credentials
+      readOnly: true
   volumes:
-    - name: credentials
-      secret:
-        secretName: ayama-credentials
-{%- if environment == 'dev' %}
-    - name: app
-      hostPath:
-        path: "{{ source_path }}/src"
+  - name: credentials
+    secret:
+      secretName: cloudsql
 {%- endif %}
-status: {}
