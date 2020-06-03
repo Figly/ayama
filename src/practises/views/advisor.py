@@ -70,8 +70,14 @@ class AdvisorWizard(SessionWizardView):
             form_dict["1"]._meta.exclude,
         )
 
-        user = User.objects.create_user(email=advisorContact.email_address,username=advisorContact.email_address,
-                                 password="password", first_name = advisor.names, last_name = advisor.surnames, name = advisor.names + " " + advisor.surnames) #default password for now, to revise
+        user = User.objects.create_user(
+            email=advisorContact.email_address,
+            username=advisorContact.email_address,
+            password="password",
+            first_name=advisor.names,
+            last_name=advisor.surnames,
+            name=advisor.names + " " + advisor.surnames,
+        )  # default password for now, to revise
         user.is_advisor = True
         user.is_administrator = False
         user.is_staff = True

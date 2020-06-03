@@ -28,4 +28,4 @@ class BaseProfile(models.Model):
 @python_2_unicode_compatible
 class Profile(BaseProfile):
     def __str__(self):
-        return "{first_name}'s profile".format(self.user)
+        return "{first_name}'s profile".format(first_name=self.user)

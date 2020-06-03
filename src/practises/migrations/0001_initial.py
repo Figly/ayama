@@ -13,155 +13,528 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('auth', '0011_update_proxy_permissions'),
+        ("auth", "0011_update_proxy_permissions"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='User',
+            name="User",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('password', models.CharField(max_length=128, verbose_name='password')),
-                ('last_login', models.DateTimeField(blank=True, null=True, verbose_name='last login')),
-                ('is_superuser', models.BooleanField(default=False, help_text='Designates that this user has all permissions without explicitly assigning them.', verbose_name='superuser status')),
-                ('username', models.CharField(error_messages={'unique': 'A user with that username already exists.'}, help_text='Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.', max_length=150, unique=True, validators=[django.contrib.auth.validators.UnicodeUsernameValidator()], verbose_name='username')),
-                ('first_name', models.CharField(blank=True, max_length=30, verbose_name='first name')),
-                ('last_name', models.CharField(blank=True, max_length=150, verbose_name='last name')),
-                ('email', models.EmailField(blank=True, max_length=254, verbose_name='email address')),
-                ('is_staff', models.BooleanField(default=False, help_text='Designates whether the user can log into this admin site.', verbose_name='staff status')),
-                ('is_active', models.BooleanField(default=True, help_text='Designates whether this user should be treated as active. Unselect this instead of deleting accounts.', verbose_name='active')),
-                ('date_joined', models.DateTimeField(default=django.utils.timezone.now, verbose_name='date joined')),
-                ('is_administrator', models.BooleanField(default=False)),
-                ('is_advisor', models.BooleanField(default=False)),
-                ('name', models.CharField(max_length=100, verbose_name='Name')),
-                ('groups', models.ManyToManyField(blank=True, help_text='The groups this user belongs to. A user will get all permissions granted to each of their groups.', related_name='user_set', related_query_name='user', to='auth.Group', verbose_name='groups')),
-                ('user_permissions', models.ManyToManyField(blank=True, help_text='Specific permissions for this user.', related_name='user_set', related_query_name='user', to='auth.Permission', verbose_name='user permissions')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("password", models.CharField(max_length=128, verbose_name="password")),
+                (
+                    "last_login",
+                    models.DateTimeField(
+                        blank=True, null=True, verbose_name="last login"
+                    ),
+                ),
+                (
+                    "is_superuser",
+                    models.BooleanField(
+                        default=False,
+                        help_text="Designates that this user has all permissions without explicitly assigning them.",
+                        verbose_name="superuser status",
+                    ),
+                ),
+                (
+                    "username",
+                    models.CharField(
+                        error_messages={
+                            "unique": "A user with that username already exists."
+                        },
+                        help_text="Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.",
+                        max_length=150,
+                        unique=True,
+                        validators=[
+                            django.contrib.auth.validators.UnicodeUsernameValidator()
+                        ],
+                        verbose_name="username",
+                    ),
+                ),
+                (
+                    "first_name",
+                    models.CharField(
+                        blank=True, max_length=30, verbose_name="first name"
+                    ),
+                ),
+                (
+                    "last_name",
+                    models.CharField(
+                        blank=True, max_length=150, verbose_name="last name"
+                    ),
+                ),
+                (
+                    "email",
+                    models.EmailField(
+                        blank=True, max_length=254, verbose_name="email address"
+                    ),
+                ),
+                (
+                    "is_staff",
+                    models.BooleanField(
+                        default=False,
+                        help_text="Designates whether the user can log into this admin site.",
+                        verbose_name="staff status",
+                    ),
+                ),
+                (
+                    "is_active",
+                    models.BooleanField(
+                        default=True,
+                        help_text="Designates whether this user should be treated as active. Unselect this instead of deleting accounts.",
+                        verbose_name="active",
+                    ),
+                ),
+                (
+                    "date_joined",
+                    models.DateTimeField(
+                        default=django.utils.timezone.now, verbose_name="date joined"
+                    ),
+                ),
+                ("is_administrator", models.BooleanField(default=False)),
+                ("is_advisor", models.BooleanField(default=False)),
+                ("name", models.CharField(max_length=100, verbose_name="Name")),
+                (
+                    "groups",
+                    models.ManyToManyField(
+                        blank=True,
+                        help_text="The groups this user belongs to. A user will get all permissions granted to each of their groups.",
+                        related_name="user_set",
+                        related_query_name="user",
+                        to="auth.Group",
+                        verbose_name="groups",
+                    ),
+                ),
+                (
+                    "user_permissions",
+                    models.ManyToManyField(
+                        blank=True,
+                        help_text="Specific permissions for this user.",
+                        related_name="user_set",
+                        related_query_name="user",
+                        to="auth.Permission",
+                        verbose_name="user permissions",
+                    ),
+                ),
             ],
             options={
-                'verbose_name': 'user',
-                'verbose_name_plural': 'users',
-                'abstract': False,
+                "verbose_name": "user",
+                "verbose_name_plural": "users",
+                "abstract": False,
             },
-            managers=[
-                ('objects', django.contrib.auth.models.UserManager()),
-            ],
+            managers=[("objects", django.contrib.auth.models.UserManager())],
         ),
         migrations.CreateModel(
-            name='PractiseDetail',
+            name="PractiseDetail",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('modified_at', models.DateTimeField(auto_now=True)),
-                ('name', models.CharField(max_length=100, verbose_name='Practise Name')),
-                ('residential_address_line_1', models.CharField(max_length=100, verbose_name='Residential Address 1')),
-                ('residential_address_line_2', models.CharField(blank=True, max_length=100, null=True, verbose_name='Residential Address 2')),
-                ('residential_code', models.IntegerField(verbose_name='Residential Code')),
-                ('postal_address_line_1', models.CharField(max_length=100, verbose_name='Postal Address 1')),
-                ('postal_address_line_2', models.CharField(blank=True, max_length=100, null=True, verbose_name='Postal Address 2')),
-                ('postal_code', models.IntegerField(verbose_name='Postal Code')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("created_at", models.DateTimeField(auto_now_add=True)),
+                ("modified_at", models.DateTimeField(auto_now=True)),
+                (
+                    "name",
+                    models.CharField(max_length=100, verbose_name="Practise Name"),
+                ),
+                (
+                    "residential_address_line_1",
+                    models.CharField(
+                        max_length=100, verbose_name="Residential Address 1"
+                    ),
+                ),
+                (
+                    "residential_address_line_2",
+                    models.CharField(
+                        blank=True,
+                        max_length=100,
+                        null=True,
+                        verbose_name="Residential Address 2",
+                    ),
+                ),
+                (
+                    "residential_code",
+                    models.IntegerField(verbose_name="Residential Code"),
+                ),
+                (
+                    "postal_address_line_1",
+                    models.CharField(max_length=100, verbose_name="Postal Address 1"),
+                ),
+                (
+                    "postal_address_line_2",
+                    models.CharField(
+                        blank=True,
+                        max_length=100,
+                        null=True,
+                        verbose_name="Postal Address 2",
+                    ),
+                ),
+                ("postal_code", models.IntegerField(verbose_name="Postal Code")),
             ],
             options={
-                'get_latest_by': 'created_at',
-                'abstract': False,
-                'order_with_respect_to': 'created_at',
+                "get_latest_by": "created_at",
+                "abstract": False,
+                "order_with_respect_to": "created_at",
             },
         ),
         migrations.CreateModel(
-            name='AdvisorDetail',
+            name="AdvisorDetail",
             fields=[
-                ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('modified_at', models.DateTimeField(auto_now=True)),
-                ('user', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, primary_key=True, serialize=False, to=settings.AUTH_USER_MODEL)),
-                ('title', models.CharField(choices=[('mr', 'Mister'), ('mrs', 'Misses'), ('ms', 'Miss'), ('dr', 'Doctor'), ('prof', 'Professor')], default='not specified', max_length=30, verbose_name='Title')),
-                ('initials', models.CharField(max_length=10, verbose_name='Initials')),
-                ('surnames', models.CharField(max_length=100, verbose_name='Surnames')),
-                ('names', models.CharField(max_length=100, verbose_name='Names')),
-                ('known_as', models.CharField(blank=True, max_length=50, null=True, verbose_name='Known As')),
-                ('sa_id', models.BigIntegerField(verbose_name='RSA ID Number')),
-                ('passport_no', models.CharField(blank=True, max_length=50, null=True, verbose_name='Passport Number')),
-                ('position', models.CharField(blank=True, max_length=50, null=True, verbose_name='Position')),
-                ('employment_date', models.DateField(verbose_name='Employment Date')),
-                ('personnel_number', models.CharField(blank=True, max_length=50, null=True, verbose_name='Personnel Number')),
-                ('practise_id_fk', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='practises.PractiseDetail')),
+                ("created_at", models.DateTimeField(auto_now_add=True)),
+                ("modified_at", models.DateTimeField(auto_now=True)),
+                (
+                    "user",
+                    models.OneToOneField(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        primary_key=True,
+                        serialize=False,
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
+                (
+                    "title",
+                    models.CharField(
+                        choices=[
+                            ("mr", "Mister"),
+                            ("mrs", "Misses"),
+                            ("ms", "Miss"),
+                            ("dr", "Doctor"),
+                            ("prof", "Professor"),
+                        ],
+                        default="not specified",
+                        max_length=30,
+                        verbose_name="Title",
+                    ),
+                ),
+                ("initials", models.CharField(max_length=10, verbose_name="Initials")),
+                ("surnames", models.CharField(max_length=100, verbose_name="Surnames")),
+                ("names", models.CharField(max_length=100, verbose_name="Names")),
+                (
+                    "known_as",
+                    models.CharField(
+                        blank=True, max_length=50, null=True, verbose_name="Known As"
+                    ),
+                ),
+                ("sa_id", models.BigIntegerField(verbose_name="RSA ID Number")),
+                (
+                    "passport_no",
+                    models.CharField(
+                        blank=True,
+                        max_length=50,
+                        null=True,
+                        verbose_name="Passport Number",
+                    ),
+                ),
+                (
+                    "position",
+                    models.CharField(
+                        blank=True, max_length=50, null=True, verbose_name="Position"
+                    ),
+                ),
+                ("employment_date", models.DateField(verbose_name="Employment Date")),
+                (
+                    "personnel_number",
+                    models.CharField(
+                        blank=True,
+                        max_length=50,
+                        null=True,
+                        verbose_name="Personnel Number",
+                    ),
+                ),
+                (
+                    "practise_id_fk",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="practises.PractiseDetail",
+                    ),
+                ),
             ],
             options={
-                'get_latest_by': 'created_at',
-                'abstract': False,
-                'order_with_respect_to': 'created_at',
+                "get_latest_by": "created_at",
+                "abstract": False,
+                "order_with_respect_to": "created_at",
             },
         ),
         migrations.CreateModel(
-            name='AdvisorContactDetail',
+            name="AdvisorContactDetail",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('modified_at', models.DateTimeField(auto_now=True)),
-                ('telephone_home', models.CharField(blank=True, max_length=10, null=True, verbose_name='Home Telephone Number')),
-                ('telephone_work', models.CharField(blank=True, max_length=10, null=True, verbose_name='Work Telephone Number')),
-                ('cellphone_number', models.CharField(max_length=10, verbose_name='Cellphone Number')),
-                ('fax_number', models.CharField(blank=True, max_length=10, null=True, verbose_name='Fax Number')),
-                ('email_address', models.EmailField(max_length=50, verbose_name='Email Address')),
-                ('residential_address_line_1', models.CharField(max_length=100, verbose_name='Residential Address 1')),
-                ('residential_address_line_2', models.CharField(blank=True, max_length=100, null=True, verbose_name='Residential Address 2')),
-                ('residential_code', models.IntegerField(verbose_name='Residential Code')),
-                ('postal_address_line_1', models.CharField(max_length=100, verbose_name='Postal Address 1')),
-                ('postal_address_line_2', models.CharField(blank=True, max_length=100, null=True, verbose_name='Postal Address 2')),
-                ('postal_code', models.IntegerField(verbose_name='Postal Code')),
-                ('advisor_id_fk', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='practises.AdvisorDetail')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("created_at", models.DateTimeField(auto_now_add=True)),
+                ("modified_at", models.DateTimeField(auto_now=True)),
+                (
+                    "telephone_home",
+                    models.CharField(
+                        blank=True,
+                        max_length=10,
+                        null=True,
+                        verbose_name="Home Telephone Number",
+                    ),
+                ),
+                (
+                    "telephone_work",
+                    models.CharField(
+                        blank=True,
+                        max_length=10,
+                        null=True,
+                        verbose_name="Work Telephone Number",
+                    ),
+                ),
+                (
+                    "cellphone_number",
+                    models.CharField(max_length=10, verbose_name="Cellphone Number"),
+                ),
+                (
+                    "fax_number",
+                    models.CharField(
+                        blank=True, max_length=10, null=True, verbose_name="Fax Number"
+                    ),
+                ),
+                (
+                    "email_address",
+                    models.EmailField(max_length=50, verbose_name="Email Address"),
+                ),
+                (
+                    "residential_address_line_1",
+                    models.CharField(
+                        max_length=100, verbose_name="Residential Address 1"
+                    ),
+                ),
+                (
+                    "residential_address_line_2",
+                    models.CharField(
+                        blank=True,
+                        max_length=100,
+                        null=True,
+                        verbose_name="Residential Address 2",
+                    ),
+                ),
+                (
+                    "residential_code",
+                    models.IntegerField(verbose_name="Residential Code"),
+                ),
+                (
+                    "postal_address_line_1",
+                    models.CharField(max_length=100, verbose_name="Postal Address 1"),
+                ),
+                (
+                    "postal_address_line_2",
+                    models.CharField(
+                        blank=True,
+                        max_length=100,
+                        null=True,
+                        verbose_name="Postal Address 2",
+                    ),
+                ),
+                ("postal_code", models.IntegerField(verbose_name="Postal Code")),
+                (
+                    "advisor_id_fk",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="practises.AdvisorDetail",
+                    ),
+                ),
             ],
             options={
-                'get_latest_by': 'created_at',
-                'abstract': False,
-                'order_with_respect_to': 'created_at',
+                "get_latest_by": "created_at",
+                "abstract": False,
+                "order_with_respect_to": "created_at",
             },
         ),
         migrations.CreateModel(
-            name='AdministratorDetail',
+            name="AdministratorDetail",
             fields=[
-                ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('modified_at', models.DateTimeField(auto_now=True)),
-                ('user', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, primary_key=True, serialize=False, to=settings.AUTH_USER_MODEL)),
-                ('title', models.CharField(choices=[('mr', 'Mister'), ('mrs', 'Misses'), ('ms', 'Miss'), ('dr', 'Doctor'), ('prof', 'Professor')], default='not specified', max_length=30, verbose_name='Title')),
-                ('initials', models.CharField(max_length=10, verbose_name='Initials')),
-                ('surnames', models.CharField(max_length=100, verbose_name='Surnames')),
-                ('names', models.CharField(max_length=100, verbose_name='Names')),
-                ('known_as', models.CharField(blank=True, max_length=50, null=True, verbose_name='Known As')),
-                ('sa_id', models.BigIntegerField(verbose_name='RSA ID Number')),
-                ('passport_no', models.CharField(blank=True, max_length=50, null=True, verbose_name='Passport Number')),
-                ('position', models.CharField(blank=True, max_length=50, null=True, verbose_name='Position')),
-                ('employment_date', models.DateField(default='2018-01-01', verbose_name='Employment Date')),
-                ('personnel_number', models.CharField(blank=True, max_length=50, null=True, verbose_name='Personnel Number')),
-                ('practise_id_fk', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='practises.PractiseDetail')),
+                ("created_at", models.DateTimeField(auto_now_add=True)),
+                ("modified_at", models.DateTimeField(auto_now=True)),
+                (
+                    "user",
+                    models.OneToOneField(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        primary_key=True,
+                        serialize=False,
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
+                (
+                    "title",
+                    models.CharField(
+                        choices=[
+                            ("mr", "Mister"),
+                            ("mrs", "Misses"),
+                            ("ms", "Miss"),
+                            ("dr", "Doctor"),
+                            ("prof", "Professor"),
+                        ],
+                        default="not specified",
+                        max_length=30,
+                        verbose_name="Title",
+                    ),
+                ),
+                ("initials", models.CharField(max_length=10, verbose_name="Initials")),
+                ("surnames", models.CharField(max_length=100, verbose_name="Surnames")),
+                ("names", models.CharField(max_length=100, verbose_name="Names")),
+                (
+                    "known_as",
+                    models.CharField(
+                        blank=True, max_length=50, null=True, verbose_name="Known As"
+                    ),
+                ),
+                ("sa_id", models.BigIntegerField(verbose_name="RSA ID Number")),
+                (
+                    "passport_no",
+                    models.CharField(
+                        blank=True,
+                        max_length=50,
+                        null=True,
+                        verbose_name="Passport Number",
+                    ),
+                ),
+                (
+                    "position",
+                    models.CharField(
+                        blank=True, max_length=50, null=True, verbose_name="Position"
+                    ),
+                ),
+                (
+                    "employment_date",
+                    models.DateField(
+                        default="2018-01-01", verbose_name="Employment Date"
+                    ),
+                ),
+                (
+                    "personnel_number",
+                    models.CharField(
+                        blank=True,
+                        max_length=50,
+                        null=True,
+                        verbose_name="Personnel Number",
+                    ),
+                ),
+                (
+                    "practise_id_fk",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="practises.PractiseDetail",
+                    ),
+                ),
             ],
             options={
-                'get_latest_by': 'created_at',
-                'abstract': False,
-                'order_with_respect_to': 'created_at',
+                "get_latest_by": "created_at",
+                "abstract": False,
+                "order_with_respect_to": "created_at",
             },
         ),
         migrations.CreateModel(
-            name='AdministratorContactDetail',
+            name="AdministratorContactDetail",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('modified_at', models.DateTimeField(auto_now=True)),
-                ('telephone_home', models.CharField(blank=True, max_length=10, null=True, verbose_name='Home Telephone Number')),
-                ('telephone_work', models.CharField(blank=True, max_length=10, null=True, verbose_name='Work Telephone Number')),
-                ('cellphone_number', models.CharField(max_length=10, verbose_name='Cellphone Number')),
-                ('fax_number', models.CharField(blank=True, max_length=10, null=True, verbose_name='Fax Number')),
-                ('email_address', models.EmailField(max_length=50, verbose_name='Email Address')),
-                ('residential_address_line_1', models.CharField(max_length=100, verbose_name='Residential Address 1')),
-                ('residential_address_line_2', models.CharField(blank=True, max_length=100, null=True, verbose_name='Residential Address 2')),
-                ('residential_code', models.IntegerField(verbose_name='Residential Code')),
-                ('postal_address_line_1', models.CharField(max_length=100, verbose_name='Postal Address 1')),
-                ('postal_address_line_2', models.CharField(blank=True, max_length=100, null=True, verbose_name='Postal Address 2')),
-                ('postal_code', models.IntegerField(verbose_name='Postal Code')),
-                ('adminstrator_id_fk', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='practises.AdministratorDetail')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("created_at", models.DateTimeField(auto_now_add=True)),
+                ("modified_at", models.DateTimeField(auto_now=True)),
+                (
+                    "telephone_home",
+                    models.CharField(
+                        blank=True,
+                        max_length=10,
+                        null=True,
+                        verbose_name="Home Telephone Number",
+                    ),
+                ),
+                (
+                    "telephone_work",
+                    models.CharField(
+                        blank=True,
+                        max_length=10,
+                        null=True,
+                        verbose_name="Work Telephone Number",
+                    ),
+                ),
+                (
+                    "cellphone_number",
+                    models.CharField(max_length=10, verbose_name="Cellphone Number"),
+                ),
+                (
+                    "fax_number",
+                    models.CharField(
+                        blank=True, max_length=10, null=True, verbose_name="Fax Number"
+                    ),
+                ),
+                (
+                    "email_address",
+                    models.EmailField(max_length=50, verbose_name="Email Address"),
+                ),
+                (
+                    "residential_address_line_1",
+                    models.CharField(
+                        max_length=100, verbose_name="Residential Address 1"
+                    ),
+                ),
+                (
+                    "residential_address_line_2",
+                    models.CharField(
+                        blank=True,
+                        max_length=100,
+                        null=True,
+                        verbose_name="Residential Address 2",
+                    ),
+                ),
+                (
+                    "residential_code",
+                    models.IntegerField(verbose_name="Residential Code"),
+                ),
+                (
+                    "postal_address_line_1",
+                    models.CharField(max_length=100, verbose_name="Postal Address 1"),
+                ),
+                (
+                    "postal_address_line_2",
+                    models.CharField(
+                        blank=True,
+                        max_length=100,
+                        null=True,
+                        verbose_name="Postal Address 2",
+                    ),
+                ),
+                ("postal_code", models.IntegerField(verbose_name="Postal Code")),
+                (
+                    "adminstrator_id_fk",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="practises.AdministratorDetail",
+                    ),
+                ),
             ],
             options={
-                'get_latest_by': 'created_at',
-                'abstract': False,
-                'order_with_respect_to': 'created_at',
+                "get_latest_by": "created_at",
+                "abstract": False,
+                "order_with_respect_to": "created_at",
             },
         ),
     ]
