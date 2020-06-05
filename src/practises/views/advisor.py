@@ -77,12 +77,12 @@ class AdvisorWizard(SessionWizardView):
         user.is_staff = True
         user.is_superuser = False
         user.save()
-
         advisor.user = user
-        advisor.save()
 
-        advisorContact.advisor_id_fk = advisor
         advisorContact.save()
+        advisor.advisor_contact_fk = advisorContact
+
+        advisor.save()
 
         messages.add_message(
             self.request, messages.SUCCESS, "advisor successfully added."
