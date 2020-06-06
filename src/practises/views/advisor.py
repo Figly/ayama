@@ -10,7 +10,7 @@ from django.views import generic
 from formtools.wizard.views import SessionWizardView
 
 from ..forms import AddAdvisorContactDetailForm, AddAdvisorDetailForm
-from ..models import AdvisorContactDetail, AdvisorDetail
+from ..models import AdvisorContactDetail, AdvisorDetail, PractiseDetail
 
 FORMS = [
     ("0", AddAdvisorDetailForm),
@@ -24,6 +24,7 @@ TEMPLATES = {
 
 
 class AdvisorWizard(SessionWizardView):
+    User = get_user_model()
     def get_template_names(self):
         return TEMPLATES[self.steps.current]
 
@@ -31,14 +32,22 @@ class AdvisorWizard(SessionWizardView):
         self.practise = kwargs.get("practise", None)
         return super(AdvisorWizard, self).dispatch(request, *args, **kwargs)
 
+    def get_form(self, step=None, data=None, files=None):
+        form = super().get_form(step, data, files)
+        practise_id = self.request.user.Administrator.practise_id_fk.id
+        form.fields['practise_id_fk'].queryset = PractiseDetail.objects.filter(id = practise_id)
+        return form
+
     def get_form_initial(self, step):
+        self.initial_dict.get(self.steps.current, {})
         if self.steps.current == "0" and self.practise is not None:
-            self.initial_dict.get(self.steps.current, {})
+            return self.initial_dict.get(step, {"practise_id_fk": self.practise})
+        else:
+            self.practise = self.request.user.Administrator.practise_id_fk
             return self.initial_dict.get(step, {"practise_id_fk": self.practise})
 
     def get_context_data(self, form, **kwargs):
         context = super(AdvisorWizard, self).get_context_data(form=form, **kwargs)
-
         if self.steps.current != "0":
             advisor_name = []
             step0data = self.get_cleaned_data_for_step("0")
@@ -52,7 +61,6 @@ class AdvisorWizard(SessionWizardView):
         # models backing db
         advisor = AdvisorDetail()
         advisorContact = AdvisorContactDetail()
-        User = get_user_model()
 
         # form instances
 
@@ -89,3 +97,30 @@ class AdvisorWizard(SessionWizardView):
         )
 
         return HttpResponseRedirect(reverse_lazy("home"))
+
+class AdvisorlistView(generic.ListView):
+    template_name = "practises/advisor_list.html"
+    model = AdvisorDetail
+
+    def get_context_data(self, **kwargs):
+        context = super(AdvisorlistView, self).get_context_data(**kwargs)
+        user = self.request.user
+        if user.is_administrator:
+            advisors = AdvisorDetail.objects.filter(practise_id_fk = user.Administrator.practise_id_fk).select_related('advisor_contact_fk')
+            context = {'advisors':advisors}
+        elif user.is_superuser:
+            advisors = AdvisorDetail.objects.all().select_related('advisor_contact_fk')
+            context = {'advisors':advisors}
+        
+        return context
+
+class AdvisorSummaryView(generic.DetailView):
+    template_name = "practises/advisor_summary.html"
+    model = AdvisorDetail
+
+    def get_context_data(self, **kwargs):
+        context = super(AdvisorSummaryView, self).get_context_data(**kwargs)
+        advisor_id = self.kwargs["pk"]
+        advisor = AdvisorDetail.objects.get(user = advisor_id)
+        context = {'advisor':advisor}
+        return context
