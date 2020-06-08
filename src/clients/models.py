@@ -35,6 +35,7 @@ ch_relationship = (
     ("other", "Other"),
 )
 
+
 class BaseModel(models.Model):
     dateFormat = "%Y-%m-%d %H:%M:%S"
 
@@ -67,7 +68,6 @@ class ClientDetail(BaseModel):
     advisor_id_fk = models.ForeignKey(
         "practises.AdvisorDetail", on_delete=models.CASCADE
     )
-    client_contact_fk = models.ForeignKey("ClientContactDetail", on_delete=models.CASCADE)
     title = models.CharField(
         "Title", max_length=30, choices=ch_titles, default="not specified"
     )
@@ -79,9 +79,6 @@ class ClientDetail(BaseModel):
     passport_no = models.CharField(
         "Passport Number", max_length=50, blank=True, null=True
     )
-    client_employment_fk = models.ForeignKey("EmploymentDetail", on_delete=models.CASCADE)
-    client_rates_fk = models.ForeignKey("RatesAndReturn", on_delete=models.CASCADE)
-
 
     def __str__(self):
         """Return a human readable representation of the model instance."""
@@ -93,6 +90,7 @@ class ClientContactDetail(BaseModel):
     Class descriptor
     """
 
+    client_id_fk = models.ForeignKey("ClientDetail", on_delete=models.CASCADE)
     telephone_home = models.CharField(
         "Home Telephone Number", max_length=10, blank=True, null=True
     )
@@ -126,6 +124,8 @@ class EmploymentDetail(BaseModel):
     """
 
     dateFormat = "%Y-%m-%d"
+
+    client_id_fk = models.ForeignKey("ClientDetail", on_delete=models.CASCADE)
     company_name = models.CharField("Company Name", max_length=50)
     occupation = models.CharField("Occupation", max_length=50, blank=True, null=True)
     employment_date = models.DateField(
@@ -158,6 +158,7 @@ class RatesAndReturn(BaseModel):
     Class descriptor
     """
 
+    client_id_fk = models.ForeignKey("ClientDetail", on_delete=models.CASCADE)
     inflation = models.DecimalField(
         "Inflation", max_digits=5, decimal_places=2, blank=True, null=True
     )
@@ -177,8 +178,10 @@ class Dependent(BaseModel):
     """
     Class descriptor
     """
-    client_id_fk = models.ForeignKey("ClientDetail", on_delete=models.CASCADE, related_name='dependents')
+
     dateFormat = "%Y-%m-%d"
+
+    client_id_fk = models.ForeignKey("ClientDetail", on_delete=models.CASCADE)
     names = models.CharField("Name", max_length=100)
     surnames = models.CharField("Surname", max_length=100)
     rsa_resident = models.CharField(

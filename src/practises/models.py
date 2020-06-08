@@ -75,9 +75,6 @@ class AdministratorDetail(BaseModel):
 
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, primary_key=True)
     practise_id_fk = models.ForeignKey("PractiseDetail", on_delete=models.CASCADE)
-    adminstrator_contact_fk = models.ForeignKey(
-        "AdministratorContactDetail", on_delete=models.CASCADE
-    )   
     title = models.CharField(
         "Title", max_length=30, choices=ch_titles, default="not specified"
     )
@@ -109,7 +106,6 @@ class AdvisorDetail(BaseModel):
 
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, primary_key=True)
     practise_id_fk = models.ForeignKey("PractiseDetail", on_delete=models.CASCADE)
-    advisor_contact_fk = models.ForeignKey("AdvisorContactDetail", on_delete=models.CASCADE)
     title = models.CharField(
         "Title", max_length=30, choices=ch_titles, default="not specified"
     )
@@ -138,6 +134,8 @@ class AdvisorContactDetail(BaseModel):
     """
     Class descriptor
     """
+
+    advisor_id_fk = models.ForeignKey("AdvisorDetail", on_delete=models.CASCADE)
     telephone_home = models.CharField(
         "Home Telephone Number", max_length=10, blank=True, null=True
     )
@@ -162,7 +160,7 @@ class AdvisorContactDetail(BaseModel):
 
     def __str__(self):
         """Return a human readable representation of the model instance."""
-        return f"{self.email_address}"
+        return f"{self.advisor_id_fk} {self.email_address}"
 
 
 class AdministratorContactDetail(BaseModel):
@@ -170,6 +168,9 @@ class AdministratorContactDetail(BaseModel):
     Class descriptor
     """
 
+    adminstrator_id_fk = models.ForeignKey(
+        "AdministratorDetail", on_delete=models.CASCADE
+    )
     telephone_home = models.CharField(
         "Home Telephone Number", max_length=10, blank=True, null=True
     )
@@ -194,4 +195,4 @@ class AdministratorContactDetail(BaseModel):
 
     def __str__(self):
         """Return a human readable representation of the model instance."""
-        return f"{self.email_address}"
+        return f"{self.adminstrator_id_fk} {self.email_address}"
