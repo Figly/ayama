@@ -1,0 +1,69 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: ayama
+    run: ayama-redis
+  name: ayama-redis
+spec:
+  revisionHistoryLimit: 2
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ayama
+      run: ayama-redis
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  template:
+    metadata:
+      labels:
+        run: "ayama-redis"
+        app: ayama
+    spec:
+      containers:
+        - image: redis:5.0.5-alpine
+          imagePullPolicy: IfNotPresent
+          name: redis
+          ports:
+          - containerPort: 6379
+          resources:
+            limits:
+              memory: 100Mi
+            requests:
+              cpu: 20m
+              memory: 50Mi
+          livenessProbe:
+            exec:
+              command:
+              - redis-cli
+              - ping
+            initialDelaySeconds: 30
+            timeoutSeconds: 5
+          readinessProbe:
+            exec:
+              command:
+              - redis-cli
+              - ping
+            initialDelaySeconds: 5
+            timeoutSeconds: 1
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: ayama
+    run: ayama-redis
+  name: ayama-redis
+spec:
+  ports:
+  - port: 6379
+    protocol: TCP
+    targetPort: 6379
+  selector:
+    app: ayama
+    run: ayama-redis
+  type: ClusterIP

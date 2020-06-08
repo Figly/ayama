@@ -14,6 +14,7 @@ class BaseProfile(models.Model):
     slug = models.UUIDField(default=uuid.uuid4, blank=True, editable=False)
     # Add more user profile fields here. Make sure they are nullable
     # or with default values
+    # TODO: change to push to GCS
     picture = models.ImageField(
         "Profile picture", upload_to="profile_pics/%Y-%m-%d/", null=True, blank=True
     )
