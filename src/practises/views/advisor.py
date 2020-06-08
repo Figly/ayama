@@ -10,8 +10,7 @@ from django.views import generic
 from formtools.wizard.views import SessionWizardView
 
 from ..forms import AddAdvisorContactDetailForm, AddAdvisorDetailForm
-from ..models import (AdministratorDetail, AdvisorContactDetail, AdvisorDetail,
-                      PractiseDetail)
+from ..models import AdvisorContactDetail, AdvisorDetail, PractiseDetail
 
 FORMS = [
     ("0", AddAdvisorDetailForm),
@@ -25,6 +24,7 @@ TEMPLATES = {
 
 
 class AdvisorWizard(SessionWizardView):
+    User = get_user_model()
     def get_template_names(self):
         return TEMPLATES[self.steps.current]
 
@@ -34,14 +34,8 @@ class AdvisorWizard(SessionWizardView):
 
     def get_form(self, step=None, data=None, files=None):
         form = super().get_form(step, data, files)
-
-        if self.steps.current == "0" and step == None:
-            if self.request.user.is_superuser:
-                form.fields['practise_id_fk'].queryset = PractiseDetail.objects.all()
-            elif self.request.user.is_administrator:
-                practise_id = self.request.user.Administrator.practise_id_fk.id
-                form.fields['practise_id_fk'].queryset = PractiseDetail.objects.filter(id = practise_id).all()
-        
+        practise_id = self.request.user.Administrator.practise_id_fk.id
+        form.fields['practise_id_fk'].queryset = PractiseDetail.objects.filter(id = practise_id)
         return form
 
     def get_form_initial(self, step):
@@ -64,7 +58,6 @@ class AdvisorWizard(SessionWizardView):
         return context
 
     def done(self, form_list, form_dict, **kwargs):
-        User = get_user_model()
         # models backing db
         advisor = AdvisorDetail()
         advisorContact = AdvisorContactDetail()
