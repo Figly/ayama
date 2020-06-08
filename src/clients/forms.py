@@ -6,13 +6,8 @@ from django import forms
 
 from practises.models import AdvisorDetail
 
-from .models import (
-    ClientContactDetail,
-    ClientDetail,
-    Dependent,
-    EmploymentDetail,
-    RatesAndReturn,
-)
+from .models import (ClientContactDetail, ClientDetail, Dependent,
+                     EmploymentDetail, RatesAndReturn)
 
 
 class AddClientDetailForm(forms.ModelForm):
@@ -279,8 +274,7 @@ class AddClientDependentDetailsForm(forms.ModelForm):
                     placeholder="Client",
                     css_class="form-group col-md-2 mb-0",
                 )
-            ),
-            Row(
+            ),Row(
                 Column(
                     "names", placeholder="Names", css_class="form-group col-md-6 mb-0"
                 ),

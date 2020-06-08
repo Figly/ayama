@@ -1,5 +1,7 @@
 from __future__ import unicode_literals
 
+import logging
+
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.forms.models import construct_instance
@@ -8,15 +10,13 @@ from django.urls import reverse, reverse_lazy
 from django.views import generic
 from formtools.wizard.views import SessionWizardView
 
-from . import models
-from .forms import (
-    AddClientContactDetailForm,
-    AddClientDependentDetailsForm,
-    AddClientDetailForm,
-    AddClientEmploymentetailForm,
-    AddClientRatesAndReturnForm,
-)
-from .models import ClientContactDetail, ClientDetail, EmploymentDetail, RatesAndReturn
+from practises.models import AdvisorDetail
+
+from .forms import (AddClientContactDetailForm, AddClientDependentDetailsForm,
+                    AddClientDetailForm, AddClientEmploymentetailForm,
+                    AddClientRatesAndReturnForm)
+from .models import (ClientContactDetail, ClientDetail, Dependent,
+                     EmploymentDetail, RatesAndReturn)
 
 FORMS = [
     ("0", AddClientDetailForm),
@@ -36,8 +36,23 @@ TEMPLATES = {
 class ClientWizard(SessionWizardView):
     def get_template_names(self):
         return TEMPLATES[self.steps.current]
+    
+    def get_form(self, step=None, data=None, files=None):
+        form = super(ClientWizard, self).get_form(step, data, files)
+        user = self.request.user
+
+        if self.steps.current == "0" and step == None:
+            if user.is_advisor:
+                advisor_id = user.id
+                form.fields['advisor_id_fk'].queryset = AdvisorDetail.objects.filter(user_id = advisor_id)
+            elif user.is_administrator:
+                practise_id = user.Administrator.practise_id_fk
+                form.fields['advisor_id_fk'].queryset = AdvisorDetail.objects.filter(practise_id_fk = practise_id)
+        
+        return form
 
     def get_context_data(self, form, **kwargs):
+        user = self.request.user
         context = super(ClientWizard, self).get_context_data(form=form, **kwargs)
         if self.steps.current != "0":
             client_name = []
@@ -56,21 +71,12 @@ class ClientWizard(SessionWizardView):
         rates = RatesAndReturn()
 
         # form instances
-        client = construct_instance(
-            form_dict["0"],
-            client,
-            form_dict["0"]._meta.fields,
-            form_dict["0"]._meta.exclude,
-        )
-        client.save()
-
         contactDetail = construct_instance(
             form_dict["1"],
             contactDetail,
             form_dict["1"]._meta.fields,
             form_dict["1"]._meta.exclude,
         )
-        contactDetail.client_id_fk = client
         contactDetail.save()
 
         employmentDetail = construct_instance(
@@ -79,7 +85,6 @@ class ClientWizard(SessionWizardView):
             form_dict["2"]._meta.fields,
             form_dict["2"]._meta.exclude,
         )
-        employmentDetail.client_id_fk = client
         employmentDetail.save()
 
         rates = construct_instance(
@@ -88,8 +93,20 @@ class ClientWizard(SessionWizardView):
             form_dict["3"]._meta.fields,
             form_dict["3"]._meta.exclude,
         )
-        rates.client_id_fk = client
         rates.save()
+
+        client = construct_instance(
+            form_dict["0"],
+            client,
+            form_dict["0"]._meta.fields,
+            form_dict["0"]._meta.exclude,
+        )
+
+        client.client_contact_fk = contactDetail
+        client.client_employment_fk = employmentDetail
+        client.client_rates_fk = rates
+        client.save()
+
         messages.add_message(
             self.request, messages.SUCCESS, "client successfully added."
         )
@@ -99,7 +116,18 @@ class ClientWizard(SessionWizardView):
 class AddClientDependentView(LoginRequiredMixin, generic.CreateView):
     template_name = "clients/add_client_dependent_detail.html"
     form_class = AddClientDependentDetailsForm
-    model = models.Dependent
+    model = Dependent
+
+    def get_form(self, *args, **kwargs):
+        form = super(AddClientDependentView, self).get_form(*args, **kwargs)
+        user = self.request.user
+        if user.is_advisor:
+            advisor_id = user.id
+            form.fields['client_id_fk'].queryset = user.Advisor.clients
+        elif user.is_administrator:
+            advisors = AdvisorDetail.objects.filter(practise_id_fk = user.Administrator.practise_id_fk)
+            form.fields['client_id_fk'].queryset = ClientDetail.objects.filter(advisor_id_fk__in = advisors)
+        return form
 
     def form_valid(self, form):
         model = form.save(commit=False)  # noqa
@@ -111,3 +139,35 @@ class AddClientDependentView(LoginRequiredMixin, generic.CreateView):
         elif "submit" in self.request.POST:
             self.success_url = reverse_lazy("home")
         return super(AddClientDependentView, self).form_valid(form)
+
+class ClientlistView(generic.ListView):
+    template_name = "clients/client_list.html"
+    model = ClientDetail
+
+    def get_context_data(self, **kwargs):
+        context = super(ClientlistView, self).get_context_data(**kwargs)
+        user = self.request.user
+
+        if user.is_superuser:
+            clients = ClientDetail.objects.all().select_related('client_contact_fk')
+        elif user.is_administrator:
+            practise_id = user.Administrator.practise_id_fk
+            advisors = AdvisorDetail.objects.filter(practise_id_fk= practise_id)
+            clients = ClientDetail.objects.filter(advisor_id_fk__in = advisors).select_related('client_contact_fk')
+        elif user.is_advisor:
+            clients = ClientDetail.objects.filter(advisor_id_fk = user.id).select_related('client_contact_fk')
+
+        context = {'clients':clients}
+        return context
+
+class ClientSummaryView(generic.DetailView):
+    template_name = "clients/client_summary.html"
+    model = ClientDetail
+
+    def get_context_data(self, **kwargs):
+        context = super(ClientSummaryView, self).get_context_data(**kwargs)
+        client_id = self.kwargs["pk"]
+        client = ClientDetail.objects.get(id = client_id)
+
+        context = {'client':client}
+        return context

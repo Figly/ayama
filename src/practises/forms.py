@@ -2,13 +2,8 @@ from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Column, Field, Layout, Row, Submit
 from django import forms
 
-from .models import (
-    AdministratorContactDetail,
-    AdministratorDetail,
-    AdvisorContactDetail,
-    AdvisorDetail,
-    PractiseDetail,
-)
+from .models import (AdministratorContactDetail, AdministratorDetail,
+                     AdvisorContactDetail, AdvisorDetail, PractiseDetail)
 
 
 class AddPractiseDetailForm(forms.ModelForm):
@@ -79,7 +74,7 @@ class AddAdvisorDetailForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper()
-        self.helper.form_tag = False
+        self.helper.form_tag = False            
         self.helper.layout = Layout(
             Row(
                 Column(
@@ -157,6 +152,7 @@ class AddAdvisorDetailForm(forms.ModelForm):
             "employment_date",
             "personnel_number",
         ]
+
 
 
 class AddAdvisorContactDetailForm(forms.ModelForm):
