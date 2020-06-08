@@ -65,7 +65,7 @@ class ClientDetail(BaseModel):
     """
 
     advisor_id_fk = models.ForeignKey(
-        "practises.AdvisorDetail", on_delete=models.CASCADE, related_name="clients"
+        "practises.AdvisorDetail", on_delete=models.CASCADE
     )
     client_contact_fk = models.ForeignKey("ClientContactDetail", on_delete=models.CASCADE)
     title = models.CharField(

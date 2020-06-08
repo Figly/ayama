@@ -3,7 +3,6 @@
 
 {% block content %}
 {% block container %}
-<div class="container">
   <h1>Client List</h1>
     {% if clients %}
     <table class="table">
@@ -26,7 +25,7 @@
         <tbody>
             <tr scope="row">
                 <td>{{ client.id }}</td>
-                <td><a href="{% url 'clients:client-summary' pk=client.id %}">{{ client.names }}</a></td>
+                <td>{{ client.names }}</td>
                 <td>{{ client.surnames }}</td>
                 <td>{{ client.client_contact_fk.email_address }}</td>
                 {% if user.is_superuser %}
@@ -42,7 +41,6 @@
     </table>
     {% else %}
     <p>No Clients to Display</p>
-</div>
   {% endif %}       
 {% endblock %}
 {% endblock %}

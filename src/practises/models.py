@@ -73,8 +73,8 @@ class AdministratorDetail(BaseModel):
     Class descriptor
     """
 
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, primary_key=True, related_name="Administrator")
-    practise_id_fk = models.ForeignKey("PractiseDetail", on_delete=models.CASCADE, related_name="Practise")
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, primary_key=True)
+    practise_id_fk = models.ForeignKey("PractiseDetail", on_delete=models.CASCADE)
     adminstrator_contact_fk = models.ForeignKey(
         "AdministratorContactDetail", on_delete=models.CASCADE
     )   
@@ -107,7 +107,7 @@ class AdvisorDetail(BaseModel):
     Class descriptor
     """
 
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, primary_key=True, related_name="Advisor")
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, primary_key=True)
     practise_id_fk = models.ForeignKey("PractiseDetail", on_delete=models.CASCADE)
     advisor_contact_fk = models.ForeignKey("AdvisorContactDetail", on_delete=models.CASCADE)
     title = models.CharField(
