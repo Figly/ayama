@@ -56,7 +56,7 @@ TEMPLATES = [
 
 TEMPLATE_LOADERS = ("django.template.loaders.app_directories.load_template_source",)
 
-SECRET_KEY = os.environ.get("SECRET_KEY", None)
+SECRET_KEY = os.environ.get("SECRET_KEY", "notsosecretdevkey")
 
 ALLOWED_HOSTS = ["*"]
 
