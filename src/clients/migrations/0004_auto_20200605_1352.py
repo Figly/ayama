@@ -7,33 +7,35 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('clients', '0003_auto_20200603_1525'),
+        ("clients", "0003_auto_20200603_1525"),
     ]
 
     operations = [
-        migrations.RemoveField(
-            model_name='dependent',
-            name='client_id_fk',
-        ),
-        migrations.RemoveField(
-            model_name='ratesandreturn',
-            name='client_id_fk',
+        migrations.RemoveField(model_name="dependent", name="client_id_fk",),
+        migrations.RemoveField(model_name="ratesandreturn", name="client_id_fk",),
+        migrations.AddField(
+            model_name="clientdetail",
+            name="client_dependents",
+            field=models.ManyToManyField(to="clients.Dependent"),
         ),
         migrations.AddField(
-            model_name='clientdetail',
-            name='client_dependents',
-            field=models.ManyToManyField(to='clients.Dependent'),
-        ),
-        migrations.AddField(
-            model_name='clientdetail',
-            name='client_employment_fk',
-            field=models.ForeignKey(default=1, on_delete=django.db.models.deletion.CASCADE, to='clients.EmploymentDetail'),
+            model_name="clientdetail",
+            name="client_employment_fk",
+            field=models.ForeignKey(
+                default=1,
+                on_delete=django.db.models.deletion.CASCADE,
+                to="clients.EmploymentDetail",
+            ),
             preserve_default=False,
         ),
         migrations.AddField(
-            model_name='clientdetail',
-            name='client_rates_fk',
-            field=models.ForeignKey(default=1, on_delete=django.db.models.deletion.CASCADE, to='clients.RatesAndReturn'),
+            model_name="clientdetail",
+            name="client_rates_fk",
+            field=models.ForeignKey(
+                default=1,
+                on_delete=django.db.models.deletion.CASCADE,
+                to="clients.RatesAndReturn",
+            ),
             preserve_default=False,
         ),
     ]

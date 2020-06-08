@@ -7,18 +7,19 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('clients', '0005_remove_employmentdetail_client_id_fk'),
+        ("clients", "0005_remove_employmentdetail_client_id_fk"),
     ]
 
     operations = [
-        migrations.RemoveField(
-            model_name='clientdetail',
-            name='client_dependents',
-        ),
+        migrations.RemoveField(model_name="clientdetail", name="client_dependents",),
         migrations.AddField(
-            model_name='dependent',
-            name='client_id_fk',
-            field=models.ForeignKey(default=1, on_delete=django.db.models.deletion.CASCADE, to='clients.ClientDetail'),
+            model_name="dependent",
+            name="client_id_fk",
+            field=models.ForeignKey(
+                default=1,
+                on_delete=django.db.models.deletion.CASCADE,
+                to="clients.ClientDetail",
+            ),
             preserve_default=False,
         ),
     ]

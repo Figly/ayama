@@ -1,10 +1,18 @@
 from django.urls import path
 
-from .forms import (AddClientContactDetailForm, AddClientDependentDetailsForm,
-                    AddClientDetailForm, AddClientEmploymentetailForm,
-                    AddClientRatesAndReturnForm)
-from .views import (AddClientDependentView, ClientlistView, ClientSummaryView,
-                    ClientWizard)
+from .forms import (
+    AddClientContactDetailForm,
+    AddClientDependentDetailsForm,
+    AddClientDetailForm,
+    AddClientEmploymentetailForm,
+    AddClientRatesAndReturnForm,
+)
+from .views import (
+    AddClientDependentView,
+    ClientlistView,
+    ClientSummaryView,
+    ClientWizard,
+)
 
 app_name = "clients"
 urlpatterns = [
@@ -25,9 +33,6 @@ urlpatterns = [
         AddClientDependentView.as_view(),
         name="add-client-dependents",
     ),
-    path('clients_list/', ClientlistView.as_view(), name='clients-list'),
-    path(
-        "client_summary/<pk>/",
-        ClientSummaryView.as_view(), name='client-summary'
-    ),
+    path("clients_list/", ClientlistView.as_view(), name="clients-list"),
+    path("client_summary/<pk>/", ClientSummaryView.as_view(), name="client-summary"),
 ]

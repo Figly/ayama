@@ -13,11 +13,13 @@ ch_titles = (
     ("prof", "Professor"),
 )
 
+
 class User(AbstractUser):
     is_administrator = models.BooleanField(default=False)
     is_advisor = models.BooleanField(default=False)
     name = models.CharField("Name", max_length=100)
-    
+
+
 class BaseModel(models.Model):
     dateFormat = "%Y-%m-%d %H:%M:%S"
 
@@ -73,11 +75,18 @@ class AdministratorDetail(BaseModel):
     Class descriptor
     """
 
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, primary_key=True, related_name="Administrator")
-    practise_id_fk = models.ForeignKey("PractiseDetail", on_delete=models.CASCADE, related_name="Practise")
+    user = models.OneToOneField(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        primary_key=True,
+        related_name="Administrator",
+    )
+    practise_id_fk = models.ForeignKey(
+        "PractiseDetail", on_delete=models.CASCADE, related_name="Practise"
+    )
     adminstrator_contact_fk = models.ForeignKey(
         "AdministratorContactDetail", on_delete=models.CASCADE
-    )   
+    )
     title = models.CharField(
         "Title", max_length=30, choices=ch_titles, default="not specified"
     )
@@ -107,9 +116,18 @@ class AdvisorDetail(BaseModel):
     Class descriptor
     """
 
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, primary_key=True, related_name="Advisor")
-    practise_id_fk = models.ForeignKey("PractiseDetail", on_delete=models.CASCADE,  related_name="Advisors")
-    advisor_contact_fk = models.ForeignKey("AdvisorContactDetail", on_delete=models.CASCADE)
+    user = models.OneToOneField(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        primary_key=True,
+        related_name="Advisor",
+    )
+    practise_id_fk = models.ForeignKey(
+        "PractiseDetail", on_delete=models.CASCADE, related_name="Advisors"
+    )
+    advisor_contact_fk = models.ForeignKey(
+        "AdvisorContactDetail", on_delete=models.CASCADE
+    )
     title = models.CharField(
         "Title", max_length=30, choices=ch_titles, default="not specified"
     )
@@ -138,6 +156,7 @@ class AdvisorContactDetail(BaseModel):
     """
     Class descriptor
     """
+
     telephone_home = models.CharField(
         "Home Telephone Number", max_length=10, blank=True, null=True
     )

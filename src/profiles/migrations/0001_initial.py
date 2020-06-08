@@ -11,21 +11,46 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('practises', '0001_initial'),
+        ("practises", "0001_initial"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Profile',
+            name="Profile",
             fields=[
-                ('user', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, primary_key=True, serialize=False, to=settings.AUTH_USER_MODEL)),
-                ('slug', models.UUIDField(blank=True, default=uuid.uuid4, editable=False)),
-                ('picture', models.ImageField(blank=True, null=True, upload_to='profile_pics/%Y-%m-%d/', verbose_name='Profile picture')),
-                ('bio', models.CharField(blank=True, max_length=200, null=True, verbose_name='Short Bio')),
-                ('email_verified', models.BooleanField(default=False, verbose_name='Email verified')),
+                (
+                    "user",
+                    models.OneToOneField(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        primary_key=True,
+                        serialize=False,
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
+                (
+                    "slug",
+                    models.UUIDField(blank=True, default=uuid.uuid4, editable=False),
+                ),
+                (
+                    "picture",
+                    models.ImageField(
+                        blank=True,
+                        null=True,
+                        upload_to="profile_pics/%Y-%m-%d/",
+                        verbose_name="Profile picture",
+                    ),
+                ),
+                (
+                    "bio",
+                    models.CharField(
+                        blank=True, max_length=200, null=True, verbose_name="Short Bio"
+                    ),
+                ),
+                (
+                    "email_verified",
+                    models.BooleanField(default=False, verbose_name="Email verified"),
+                ),
             ],
-            options={
-                'abstract': False,
-            },
+            options={"abstract": False},
         ),
     ]

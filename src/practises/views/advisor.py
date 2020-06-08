@@ -10,8 +10,12 @@ from django.views import generic
 from formtools.wizard.views import SessionWizardView
 
 from ..forms import AddAdvisorContactDetailForm, AddAdvisorDetailForm
-from ..models import (AdministratorDetail, AdvisorContactDetail, AdvisorDetail,
-                      PractiseDetail)
+from ..models import (
+    AdministratorDetail,
+    AdvisorContactDetail,
+    AdvisorDetail,
+    PractiseDetail,
+)
 
 FORMS = [
     ("0", AddAdvisorDetailForm),
@@ -35,13 +39,15 @@ class AdvisorWizard(SessionWizardView):
     def get_form(self, step=None, data=None, files=None):
         form = super().get_form(step, data, files)
 
-        if self.steps.current == "0" and step == None:
+        if self.steps.current == "0" and step is None:
             if self.request.user.is_superuser:
-                form.fields['practise_id_fk'].queryset = PractiseDetail.objects.all()
+                form.fields["practise_id_fk"].queryset = PractiseDetail.objects.all()
             elif self.request.user.is_administrator:
                 practise_id = self.request.user.Administrator.practise_id_fk.id
-                form.fields['practise_id_fk'].queryset = PractiseDetail.objects.filter(id = practise_id).all()
-        
+                form.fields["practise_id_fk"].queryset = PractiseDetail.objects.filter(
+                    id=practise_id
+                ).all()
+
         return form
 
     def get_form_initial(self, step):
@@ -85,8 +91,14 @@ class AdvisorWizard(SessionWizardView):
             form_dict["1"]._meta.exclude,
         )
 
-        user = User.objects.create_user(email=advisorContact.email_address,username=advisorContact.email_address,
-                                 password="password", first_name = advisor.names, last_name = advisor.surnames, name = advisor.names + " " + advisor.surnames) #default password for now, to revise
+        user = User.objects.create_user(
+            email=advisorContact.email_address,
+            username=advisorContact.email_address,
+            password="password",
+            first_name=advisor.names,
+            last_name=advisor.surnames,
+            name=advisor.names + " " + advisor.surnames,
+        )  # default password for now, to revise
         user.is_advisor = True
         user.is_administrator = False
         user.is_staff = True
@@ -105,6 +117,7 @@ class AdvisorWizard(SessionWizardView):
 
         return HttpResponseRedirect(reverse_lazy("home"))
 
+
 class AdvisorlistView(generic.ListView):
     template_name = "practises/advisor_list.html"
     model = AdvisorDetail
@@ -113,13 +126,16 @@ class AdvisorlistView(generic.ListView):
         context = super(AdvisorlistView, self).get_context_data(**kwargs)
         user = self.request.user
         if user.is_administrator:
-            advisors = AdvisorDetail.objects.filter(practise_id_fk = user.Administrator.practise_id_fk).select_related('advisor_contact_fk')
-            context = {'advisors':advisors}
+            advisors = AdvisorDetail.objects.filter(
+                practise_id_fk=user.Administrator.practise_id_fk
+            ).select_related("advisor_contact_fk")
+            context = {"advisors": advisors}
         elif user.is_superuser:
-            advisors = AdvisorDetail.objects.all().select_related('advisor_contact_fk')
-            context = {'advisors':advisors}
-        
+            advisors = AdvisorDetail.objects.all().select_related("advisor_contact_fk")
+            context = {"advisors": advisors}
+
         return context
+
 
 class AdvisorSummaryView(generic.DetailView):
     template_name = "practises/advisor_summary.html"
@@ -128,6 +144,6 @@ class AdvisorSummaryView(generic.DetailView):
     def get_context_data(self, **kwargs):
         context = super(AdvisorSummaryView, self).get_context_data(**kwargs)
         advisor_id = self.kwargs["pk"]
-        advisor = AdvisorDetail.objects.get(user = advisor_id)
-        context = {'advisor':advisor}
+        advisor = AdvisorDetail.objects.get(user=advisor_id)
+        context = {"advisor": advisor}
         return context
