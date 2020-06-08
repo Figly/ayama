@@ -1,7 +1,5 @@
 from __future__ import unicode_literals
 
-import logging
-
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.forms.models import construct_instance
