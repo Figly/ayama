@@ -108,7 +108,7 @@ class AdvisorDetail(BaseModel):
     """
 
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, primary_key=True, related_name="Advisor")
-    practise_id_fk = models.ForeignKey("PractiseDetail", on_delete=models.CASCADE,  related_name="Advisors")
+    practise_id_fk = models.ForeignKey("PractiseDetail", on_delete=models.CASCADE)
     advisor_contact_fk = models.ForeignKey("AdvisorContactDetail", on_delete=models.CASCADE)
     title = models.CharField(
         "Title", max_length=30, choices=ch_titles, default="not specified"

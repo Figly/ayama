@@ -37,22 +37,20 @@ class ClientWizard(SessionWizardView):
     def get_template_names(self):
         return TEMPLATES[self.steps.current]
     
-    def get_form(self, step=None, data=None, files=None):
-        form = super(ClientWizard, self).get_form(step, data, files)
-        user = self.request.user
-
-        if self.steps.current == "0" and step == None:
-            if user.is_advisor:
-                advisor_id = user.id
-                form.fields['advisor_id_fk'].queryset = AdvisorDetail.objects.filter(user_id = advisor_id)
-            elif user.is_administrator:
-                practise_id = user.Administrator.practise_id_fk
-                form.fields['advisor_id_fk'].queryset = AdvisorDetail.objects.filter(practise_id_fk = practise_id)
-        
-        return form
+    # def get_form(self, step=None, data=None, files=None):
+    #     form = super().get_form(step, data, files)
+    #     user = self.request.user
+    #     if self.steps.current == "0":
+    #         if user.is_advisor:
+    #             advisor_id = user.id
+    #             form.fields['advisor_id_fk'].queryset = AdvisorDetail.objects.filter(user_id = advisor_id)
+    #             return form
+    #         elif user.is_administrator:
+    #             practise_id = user.Administrator.practise_id_fk
+    #             form.fields['advisor_id_fk'].queryset = AdvisorDetail.objects.filter(practise_id_fk = practise_id)
+    #             return form
 
     def get_context_data(self, form, **kwargs):
-        user = self.request.user
         context = super(ClientWizard, self).get_context_data(form=form, **kwargs)
         if self.steps.current != "0":
             client_name = []
@@ -117,17 +115,6 @@ class AddClientDependentView(LoginRequiredMixin, generic.CreateView):
     template_name = "clients/add_client_dependent_detail.html"
     form_class = AddClientDependentDetailsForm
     model = Dependent
-
-    def get_form(self, *args, **kwargs):
-        form = super(AddClientDependentView, self).get_form(*args, **kwargs)
-        user = self.request.user
-        if user.is_advisor:
-            advisor_id = user.id
-            form.fields['client_id_fk'].queryset = user.Advisor.clients
-        elif user.is_administrator:
-            advisors = AdvisorDetail.objects.filter(practise_id_fk = user.Administrator.practise_id_fk)
-            form.fields['client_id_fk'].queryset = ClientDetail.objects.filter(advisor_id_fk__in = advisors)
-        return form
 
     def form_valid(self, form):
         model = form.save(commit=False)  # noqa
