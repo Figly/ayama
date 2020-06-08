@@ -9,8 +9,7 @@ from django.urls import reverse_lazy
 from django.views import generic
 from formtools.wizard.views import SessionWizardView
 
-from ..forms import (AddAdministratorContactDetailForm,
-                     AddAdministratorDetailForm)
+from ..forms import AddAdministratorContactDetailForm, AddAdministratorDetailForm
 from ..models import AdministratorContactDetail, AdministratorDetail
 
 FORMS = [
@@ -44,7 +43,7 @@ class AdministratorWizard(SessionWizardView):
         administrator = AdministratorDetail()
         administratorContactDetail = AdministratorContactDetail()
         User = get_user_model()
-        
+
         # form instances
         administrator = construct_instance(
             form_dict["0"],
@@ -60,10 +59,15 @@ class AdministratorWizard(SessionWizardView):
             form_dict["1"]._meta.exclude,
         )
 
+        User = User.objects.create_user(
+            email=administratorContactDetail.email_address,
+            username=administratorContactDetail.email_address,
+            password="password",
+            first_name=administrator.names,
+            last_name=administrator.surnames,
+            name=administrator.names + " " + administrator.surnames,
+        )  # default password for now, to revise
 
-        User = User.objects.create_user(email=administratorContactDetail.email_address,username=administratorContactDetail.email_address,
-                                 password="password", first_name = administrator.names, last_name = administrator.surnames, name = administrator.names + " " + administrator.surnames) #default password for now, to revise
-                                
         User.is_advisor = False
         User.is_administrator = True
         User.is_staff = True

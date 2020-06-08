@@ -9,27 +9,30 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('clients', '0001_initial'),
-        ('practises', '0001_initial'),
+        ("clients", "0001_initial"),
+        ("practises", "0001_initial"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='clientdetail',
-            name='advisor_id_fk',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='practises.AdvisorDetail'),
+            model_name="clientdetail",
+            name="advisor_id_fk",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                to="practises.AdvisorDetail",
+            ),
         ),
         migrations.AlterOrderWithRespectTo(
-            name='clientdetail',
-            order_with_respect_to='created_at',
+            name="clientdetail", order_with_respect_to="created_at",
         ),
         migrations.AddField(
-            model_name='clientcontactdetail',
-            name='client_id_fk',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='clients.ClientDetail'),
+            model_name="clientcontactdetail",
+            name="client_id_fk",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE, to="clients.ClientDetail"
+            ),
         ),
         migrations.AlterOrderWithRespectTo(
-            name='clientcontactdetail',
-            order_with_respect_to='created_at',
+            name="clientcontactdetail", order_with_respect_to="created_at",
         ),
     ]
