@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+{% block container %}
+<div class="container">
+  <h1>Client List</h1>
+    {% if clients %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Name</th>
+                <th scope="col">Surname</th>
+                <th scope="col">Email</th>
+                {%if user.is_superuser %}
+                <th scope="col">Practise</th>
+                <th scope="col">Advisor</th>
+                {% endif %}
+                {%if user.is_administrator %}
+                <th scope="col">Advisor</th>
+                {% endif %}
+            </tr>
+        </thead>
+        {% for client in clients %}
+        <tbody>
+            <tr scope="row">
+                <td>{{ client.id }}</td>
+                <td><a href="{% url 'clients:client-summary' pk=client.id %}">{{ client.names }}</a></td>
+                <td>{{ client.surnames }}</td>
+                <td>{{ client.client_contact_fk.email_address }}</td>
+                {% if user.is_superuser %}
+                <td>{{ client.advisor_id_fk.practise_id_fk}}</td>
+                <td>{{ client.advisor_id_fk}}</td>
+                {% endif %}
+                {%if user.is_administrator %}
+                <td>{{ client.advisor_id_fk}}</td>
+                {% endif %}
+            </tr>
+        </tbody>
+        {% endfor %}
+    </table>
+    {% else %}
+    <p>No Clients to Display</p>
+</div>
+  {% endif %}
+{% endblock %}
+{% endblock %}

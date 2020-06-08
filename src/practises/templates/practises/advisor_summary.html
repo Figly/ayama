@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+{% block container %}
+    {% if advisor %}
+    <div class="container" style="font-size: larger;" >
+        <h1>Advisor Details</h1>
+        <div class="container">
+            <div class="row">
+                <h2>Personal Details</h2>
+                <div class="col-md-6 col-sm-6">
+                        <p><strong>Title:</strong></p> {{advisor.title}}
+                        <p><strong>Name:</strong></p> {{advisor.names}}
+                        <p><strong>Surname:</strong></p> {{advisor.surnames}}
+                        <p><strong>Known as:</strong></p> {{advisor.known_as}}
+                        <p><strong>ID number:</strong></p> {{advisor.sa_id}}
+                        <p><strong>Passport No:</strong></p> {{advisor.passport_no}}
+                </div>
+                <div class="col-md-6 col-sm-6">
+                    <p><strong>Position:</strong></p> {{advisor.position}}
+                    <p><strong>Employment Date:</strong></p> {{advisor.employment_date}}
+                    <p><strong>Personnel No:</strong></p> {{advisor.personnel_number}}
+                    <p><strong>No of clients:</strong></p> {{advisor.clients.count}}
+                </div>
+            </div>
+            <div class="row">
+                <h2>Contact Details</h2>
+                <div class="col-md-6 col-sm-6">
+                        <p><strong>Telephone home:</strong></p> {{advisor.advisor_contact_fk.telephone_home}}
+                        <p><strong>Telephone work:</strong></p> {{advisor.advisor_contact_fk.telephone_work}}
+                        <p><strong>Cellphone:</strong></p> {{advisor.advisor_contact_fk.cellphone_number}}
+                        <p><strong>Postal Address:</strong></p> {{client.advisor_contact_fk.postal_address_line_1}}
+                </div>
+                <div class="col-md-6 col-sm-6">
+                    <p><strong>Fax Number:</strong></p> {{advisor.advisor_contact_fk.fax_number}}
+                    <p><strong>Email Address:</strong></p> {{advisor.advisor_contact_fk.email_address}}
+                    <p><strong>Residential Address:</strong></p> {{advisor.advisor_contact_fk.residential_address_line_1}}
+                </div>
+            </div>
+        </div>
+</div>
+  {% endif %}
+{% endblock %}
+{% endblock %}

@@ -73,12 +73,12 @@ class AdministratorWizard(SessionWizardView):
         User.is_staff = True
         User.is_superuser = False
         User.save()
-
         administrator.user = User
-        administrator.save()
 
-        administratorContactDetail.adminstrator_id_fk = administrator
         administratorContactDetail.save()
+        administrator.adminstrator_contact_fk = administratorContactDetail
+
+        administrator.save()
 
         messages.add_message(
             self.request, messages.SUCCESS, "administrator successfully added."
