@@ -20,22 +20,14 @@ db:
 app:
 	kubectl --context=minikube apply -f kubernetes/once-off/dev
 	./scripts/_build.sh dev
+	./scripts/migrate.sh dev
 	./scripts/deploy.sh dev
 
 staging:
 	./scripts/_build.sh staging
+	./scripts/migrate.sh staging
 	./scripts/deploy.sh staging
-
-collectstatic:
-	@eval $$(minikube docker-env) ;\
-	$(eval POD_NAME=$(shell sh -c "kubectl get pods | grep ayama-app | grep Running" | awk '{print $$1}'))
-	kubectl --context=minikube exec $(POD_NAME) --stdin --tty -- ./manage.py collectstatic
-
-
-migrate:
-	@eval $$(minikube docker-env) ;\
-	$(eval POD_NAME=$(shell sh -c "kubectl get pods | grep ayama-app | grep Running" | awk '{print $$1}'))
-	kubectl --context=minikube exec $(POD_NAME) --stdin --tty -- ./manage.py migrate
+	./scripts/collectstatic.sh staging
 
 scaleup:
 	gcloud container clusters resize carignan --node-pool aragon --num-nodes 1 --zone europe-west1-d
