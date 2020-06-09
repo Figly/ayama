@@ -1,0 +1,43 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: null
+  labels:
+    app: "{{ app }}"
+    run: "{{ app }}-collectstatic"
+    owner: ayama
+  name: "{{ app }}-collectstatic"
+spec:
+  restartPolicy: Never
+  containers:
+  - image: "{{ image_url }}"
+    name: "{{ app }}-collectstatic"
+    args:
+    - python
+    - manage.py
+    - collectstatic
+    - --noinput
+    env:
+    - name: GIT_HASH
+      value: "{{ git_sha }}"
+    - name: NEW_RELIC_APP_NAME
+      value: {{ app }}
+    - name: ENVIRONMENT
+      value: {{ environment }}
+    envFrom:
+    - configMapRef:
+        name: {{ app }}-env
+    - secretRef:
+        name: {{ app }}-env
+    resources: {}
+{%- if environment != 'dev' %}
+    volumeMounts:
+    - mountPath: /etc/gcloud/
+      name: credentials
+      readOnly: true
+  volumes:
+  - name: credentials
+    secret:
+      secretName: ayama-credentials
+{%- endif %}

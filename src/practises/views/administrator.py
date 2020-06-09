@@ -1,6 +1,7 @@
 from __future__ import unicode_literals
 
 from django.contrib import messages
+from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.forms.models import construct_instance
 from django.http.response import HttpResponseRedirect
@@ -41,6 +42,7 @@ class AdministratorWizard(SessionWizardView):
         # models backing db
         administrator = AdministratorDetail()
         administratorContactDetail = AdministratorContactDetail()
+        User = get_user_model()
 
         # form instances
         administrator = construct_instance(
@@ -49,7 +51,6 @@ class AdministratorWizard(SessionWizardView):
             form_dict["0"]._meta.fields,
             form_dict["0"]._meta.exclude,
         )
-        administrator.save()
 
         administratorContactDetail = construct_instance(
             form_dict["1"],
@@ -57,8 +58,27 @@ class AdministratorWizard(SessionWizardView):
             form_dict["1"]._meta.fields,
             form_dict["1"]._meta.exclude,
         )
-        administratorContactDetail.adminstrator_id_fk = administrator
+
+        User = User.objects.create_user(
+            email=administratorContactDetail.email_address,
+            username=administratorContactDetail.email_address,
+            password="password",
+            first_name=administrator.names,
+            last_name=administrator.surnames,
+            name=administrator.names + " " + administrator.surnames,
+        )  # default password for now, to revise
+
+        User.is_advisor = False
+        User.is_administrator = True
+        User.is_staff = True
+        User.is_superuser = False
+        User.save()
+        administrator.user = User
+
         administratorContactDetail.save()
+        administrator.adminstrator_contact_fk = administratorContactDetail
+
+        administrator.save()
 
         messages.add_message(
             self.request, messages.SUCCESS, "administrator successfully added."
