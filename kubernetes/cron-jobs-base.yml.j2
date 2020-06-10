@@ -79,7 +79,7 @@ spec:
 {%- if environment == 'dev' %}
             - name: app
               hostPath:
-                path: "{{ source_path }}/src"
+                path: "{{ source_path }}"
 {%- endif %}
           restartPolicy: Never
       parallelism: {{ job.get('parallelism', {}).get(environment, 0) }}

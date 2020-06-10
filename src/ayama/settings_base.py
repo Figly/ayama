@@ -77,6 +77,7 @@ INSTALLED_APPS = (
     "clients",
     "practises",
     "formtools",
+    "comms",
 )
 
 MIDDLEWARE = [
@@ -132,6 +133,9 @@ else:
         },
     }
 
+# Email settings
+EMAIL_BACKEND = "sendgrid_backend.SendgridBackend"
+SENDGRID_API_KEY = os.getenv("SENDGRID_API_KEY")
 
 HOSTNAME = socket.gethostname()
 
