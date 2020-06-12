@@ -3,7 +3,10 @@ import logging.config as config
 from .settings_base import *  # noqa
 
 # TODO: should catch if dev or staging
-if not os.environ.get("ENVIRONMENT", False):
+if not os.environ.get("ENVIRONMENT", False) or os.environ.get("ENVIRONMENT") in [
+    "dev",
+    "staging",
+]:
     TEMPLATES[0]["OPTIONS"].update({"debug": True})
 
     # Django Debug Toolbar
@@ -16,6 +19,10 @@ if not os.environ.get("ENVIRONMENT", False):
     THUMBNAIL_DEBUG = True
     # Allow internal IPs for debugging
     INTERNAL_IPS = ["127.0.0.1", "0.0.0.1"]
+
+    # Emails in sandbox mode
+    SENDGRID_SANDBOX_MODE_IN_DEBUG = True
+    SENDGRID_ECHO_TO_STDOUT = True
 
 else:
     # Emails in sandbox mode
