@@ -10,12 +10,8 @@ from django.views import generic
 from formtools.wizard.views import SessionWizardView
 
 from ..forms import AddAdvisorContactDetailForm, AddAdvisorDetailForm
-from ..models import (
-    AdministratorDetail,
-    AdvisorContactDetail,
-    AdvisorDetail,
-    PractiseDetail,
-)
+from ..models import (AdministratorDetail, AdvisorContactDetail, AdvisorDetail,
+                      PractiseDetail)
 
 FORMS = [
     ("0", AddAdvisorDetailForm),
@@ -38,7 +34,6 @@ class AdvisorWizard(SessionWizardView):
 
     def get_form(self, step=None, data=None, files=None):
         form = super().get_form(step, data, files)
-
         if self.steps.current == "0" and step is None:
             if self.request.user.is_superuser:
                 form.fields["practise_id_fk"].queryset = PractiseDetail.objects.all()
@@ -50,11 +45,11 @@ class AdvisorWizard(SessionWizardView):
 
         return form
 
-    def get_form_initial(self, step):
+    def get_form_initial(self, step):      
         self.initial_dict.get(self.steps.current, {})
         if self.steps.current == "0" and self.practise is not None:
             return self.initial_dict.get(step, {"practise_id_fk": self.practise})
-        else:
+        elif self.request.user.is_administrator:
             self.practise = self.request.user.Administrator.practise_id_fk
             return self.initial_dict.get(step, {"practise_id_fk": self.practise})
 
