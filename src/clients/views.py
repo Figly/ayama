@@ -10,20 +10,11 @@ from formtools.wizard.views import SessionWizardView
 
 from practises.models import AdvisorDetail
 
-from .forms import (
-    AddClientContactDetailForm,
-    AddClientDependentDetailsForm,
-    AddClientDetailForm,
-    AddClientEmploymentetailForm,
-    AddClientRatesAndReturnForm,
-)
-from .models import (
-    ClientContactDetail,
-    ClientDetail,
-    Dependent,
-    EmploymentDetail,
-    RatesAndReturn,
-)
+from .forms import (AddClientContactDetailForm, AddClientDependentDetailsForm,
+                    AddClientDetailForm, AddClientEmploymentetailForm,
+                    AddClientRatesAndReturnForm)
+from .models import (ClientCommunication, ClientContactDetail, ClientDetail,
+                     Dependent, EmploymentDetail, RatesAndReturn)
 
 FORMS = [
     ("0", AddClientDetailForm),
@@ -80,6 +71,7 @@ class ClientWizard(SessionWizardView):
         contactDetail = ClientContactDetail()
         employmentDetail = EmploymentDetail()
         rates = RatesAndReturn()
+        clientComm = ClientCommunication()
 
         # form instances
         contactDetail = construct_instance(
@@ -112,6 +104,9 @@ class ClientWizard(SessionWizardView):
             form_dict["0"]._meta.fields,
             form_dict["0"]._meta.exclude,
         )
+
+        clientComm.save()
+        client.client_comms_fk = clientComm
 
         client.client_contact_fk = contactDetail
         client.client_employment_fk = employmentDetail

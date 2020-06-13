@@ -86,7 +86,7 @@ class ClientDetail(BaseModel):
         "EmploymentDetail", on_delete=models.CASCADE
     )
     client_rates_fk = models.ForeignKey("RatesAndReturn", on_delete=models.CASCADE)
-
+    client_comms_fk = models.ForeignKey("ClientCommunication", on_delete=models.CASCADE)
     def __str__(self):
         """Return a human readable representation of the model instance."""
         return f"{self.get_title_display()} {self.initials} {self.surnames}"
@@ -200,6 +200,28 @@ class Dependent(BaseModel):
     )
     other = models.CharField("Other", max_length=100, blank=True, null=True)
 
+    def __str__(self):
+        """Return a human readable representation of the model instance."""
+        return f"{self.names} {self.surnames}"
+
+
+class ClientCommunication(BaseModel):
+    """
+    Class descriptor
+    """
+    last_date_email = models.DateField(
+        "Last date email", auto_now=False, auto_now_add=False, default=None, blank=True, null=True
+    )
+
+    last_date_sms = models.DateField(
+        "Last date SMS", auto_now=False, auto_now_add=False, default=None, blank=True, null=True
+    )
+    last_date_call = models.DateField(
+        "Last date call", auto_now=False, auto_now_add=False, default=None, blank=True, null=True
+    )
+    last_date_face_to_face = models.DateField(
+        "Last date face to face", auto_now=False, auto_now_add=False, default=None, blank=True, null=True
+    )
     def __str__(self):
         """Return a human readable representation of the model instance."""
         return f"{self.names} {self.surnames}"
