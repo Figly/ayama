@@ -9,7 +9,8 @@ from django.urls import reverse_lazy
 from django.views import generic
 from formtools.wizard.views import SessionWizardView
 
-from ..forms import AddAdministratorContactDetailForm, AddAdministratorDetailForm
+from ..forms import (AddAdministratorContactDetailForm,
+                     AddAdministratorDetailForm)
 from ..models import AdministratorContactDetail, AdministratorDetail
 
 FORMS = [
@@ -75,9 +76,11 @@ class AdministratorWizard(SessionWizardView):
         User.save()
         administrator.user = User
 
+        administratorContactDetail.modified_by = self.request.user
         administratorContactDetail.save()
         administrator.adminstrator_contact_fk = administratorContactDetail
 
+        administrator.modified_by =  self.request.user
         administrator.save()
 
         messages.add_message(

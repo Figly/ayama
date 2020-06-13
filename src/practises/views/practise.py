@@ -12,7 +12,9 @@ class AddPractiseView(LoginRequiredMixin, generic.CreateView):
     model = models.PractiseDetail
 
     def form_valid(self, form):
-        model = form.save()
+        model = form.save(commit=False)
+        model.modified_by = self.request.user
+        model.save()
 
         messages.add_message(
             self.request, messages.SUCCESS, "practise successfully added."
@@ -26,3 +28,21 @@ class AddPractiseView(LoginRequiredMixin, generic.CreateView):
             self.success_url = reverse_lazy("home")
 
         return super(AddPractiseView, self).form_valid(form)
+
+class EditPractiseView(LoginRequiredMixin, generic.UpdateView):
+    template_name = "practises/edit_practise_detail.html"
+    model = models.PractiseDetail
+    fields = ('name', 'residential_address_line_1', 
+    'residential_address_line_2', 'residential_code', 'postal_address_line_1',
+    'postal_address_line_2', 'postal_code',)
+    
+    def form_valid(self, form):
+        model = form.save(commit=False)
+        model.modified_by = self.request.user
+        model.save
+        
+        messages.add_message(
+            self.request, messages.SUCCESS, "practise successfully edited."
+        )
+        self.success_url = reverse_lazy("home")
+        return super(EditPractiseView, self).form_valid(form)

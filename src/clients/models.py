@@ -1,5 +1,6 @@
 from datetime import datetime
 
+from django.conf import settings
 from django.db import models
 from django.utils.timezone import get_current_timezone
 
@@ -41,6 +42,7 @@ class BaseModel(models.Model):
 
     created_at = models.DateTimeField(auto_now_add=True)
     modified_at = models.DateTimeField(auto_now=True)
+    modified_by = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE)
 
     class Meta:
         get_latest_by = "created_at"

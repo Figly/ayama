@@ -1,22 +1,15 @@
 from django.urls import path
 
-from .forms import (
-    AddAdministratorContactDetailForm,
-    AddAdministratorDetailForm,
-    AddAdvisorContactDetailForm,
-    AddAdvisorDetailForm,
-)
-from .views import (
-    AddPractiseView,
-    AdministratorWizard,
-    AdvisorlistView,
-    AdvisorSummaryView,
-    AdvisorWizard,
-)
+from .forms import (AddAdministratorContactDetailForm,
+                    AddAdministratorDetailForm, AddAdvisorContactDetailForm,
+                    AddAdvisorDetailForm)
+from .views import (AddPractiseView, AdministratorWizard, AdvisorlistView,
+                    AdvisorSummaryView, AdvisorWizard, EditPractiseView)
 
 app_name = "practises"
 urlpatterns = [
     path("add_practise/", AddPractiseView.as_view(), name="add-practise"),
+    path("edit_practise/<pk>/", EditPractiseView.as_view(), name="edit-practise"),
     path(
         "advisor/",
         AdvisorWizard.as_view([AddAdvisorDetailForm, AddAdvisorContactDetailForm]),

@@ -100,10 +100,12 @@ class AdvisorWizard(SessionWizardView):
         user.is_superuser = False
         user.save()
         advisor.user = user
-
+        
+        advisorContact.modified_by = self.request.user
         advisorContact.save()
         advisor.advisor_contact_fk = advisorContact
 
+        advisor.modified_by =  self.request.user
         advisor.save()
 
         messages.add_message(
