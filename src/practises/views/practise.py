@@ -1,5 +1,6 @@
 from braces.views import LoginRequiredMixin
 from django.contrib import messages
+from django.http.response import HttpResponseRedirect
 from django.urls import reverse_lazy
 from django.views import generic
 
@@ -37,6 +38,10 @@ class EditPractiseView(LoginRequiredMixin, generic.UpdateView):
     'postal_address_line_2', 'postal_code',)
     
     def form_valid(self, form):
+        if "cancel" in self.request.POST:
+            url = reverse_lazy("home")
+            return HttpResponseRedirect(url)
+            
         model = form.save(commit=False)
         model.modified_by = self.request.user
         model.save
