@@ -8,6 +8,7 @@
 {% block content %}
 {% block container %}
     <div class="container">
+        <h3>Edit Details</h3>
         <form action="" method="POST">
         {% csrf_token %}
         {{ form|crispy }}

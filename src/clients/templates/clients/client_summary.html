@@ -8,7 +8,14 @@
         <h1>Client Details</h1>
         <div class="container">
             <div class="row">
-                <h2>Personal Details</h2> <a href="{% url 'clients:edit-client-details' pk=client.id %}"><span class="glyphicon glyphicon-pencil"></a>
+                <div class="col-md-12 col-sm-12"> 
+                    <div class="col-md-6 col-sm-6">
+                        <h2>Personal Details</h2>
+                    </div>
+                    <div class="col-md-6 col-sm-6">
+                        <a href="{% url 'clients:edit-client-details' pk=client.id %}"><span class="glyphicon glyphicon-pencil icon-edit-customer"></a>
+                    </div>
+                </div>
                 <div class="col-md-6 col-sm-6">
                         <p><strong>Title:</strong></p> {{client.title}}
                         <p><strong>Name:</strong></p> {{client.names}}
@@ -21,7 +28,14 @@
                 </div>
             </div>
             <div class="row">
-                <h2>Contact Details</h2><a href="{% url 'clients:edit-client-contact' pk=client.client_contact_fk.id %}"><span class="glyphicon glyphicon-pencil"></a>
+                <div class="col-md-12 col-sm-12"> 
+                    <div class="col-md-6 col-sm-6">
+                        <h2>Contact Details</h2>
+                    </div>
+                    <div class="col-md-6 col-sm-6">
+                        <a href="{% url 'clients:edit-client-contact' pk=client.client_contact_fk.id %}"><span class="glyphicon glyphicon-pencil icon-edit-customer"></a>
+                    </div>
+                </div>
                 <div class="col-md-6 col-sm-6">
                         <p><strong>Telephone home:</strong></p> {{client.client_contact_fk.telephone_home}}
                         <p><strong>Telephone work:</strong></p> {{client.client_contact_fk.telephone_work}}
@@ -35,7 +49,14 @@
                 </div>
             </div>
             <div class="row">
-                <h2>Employment Detail</h2><a href="{% url 'clients:edit-client-employment' pk=client.client_employment_fk.id %}"><span class="glyphicon glyphicon-pencil"></span></a>
+                <div class="col-md-12 col-sm-12"> 
+                    <div class="col-md-6 col-sm-6">
+                        <h2>Employment Detail</h2>
+                    </div>
+                    <div class="col-md-6 col-sm-6">
+                        <a href="{% url 'clients:edit-client-employment' pk=client.client_employment_fk.id %}"><span class="glyphicon glyphicon-pencil icon-edit-customer"></span></a>
+                    </div>
+                </div>
                 <div class="col-md-6 col-sm-6">
                         <p><strong>Company Name:</strong></p> {{client.client_employment_fk.company_name}}
                         <p><strong>Occupation:</strong></p> {{client.client_employment_fk.occupation}}
@@ -49,8 +70,15 @@
                 </div>
             </div>
             <div class="row">
-                <h2>Rates and Return</h2><a href="{% url 'clients:edit-client-rates' pk=client.client_rates_fk.id %}"><span class="glyphicon glyphicon-pencil"></a>
-                <div class="col-md-6 col-sm-6">
+                <div class="col-md-12 col-sm-12"> 
+                    <div class="col-md-6 col-sm-6">
+                        <h2>Rates and Return</h2>
+                    </div>
+                    <div class="col-md-6 col-sm-6">
+                        <a href="{% url 'clients:edit-client-rates' pk=client.client_rates_fk.id %}"><span class="glyphicon glyphicon-pencil icon-edit-customer"></a>
+                    </div>
+                </div>
+                 <div class="col-md-6 col-sm-6">
                         <p><strong>Inflation:</strong></p> {{client.client_rates_fk.inflation}}
                         <p><strong>Interest:</strong></p> {{client.client_rates_fk.interest}}
                         <p><strong>Return Rate:</strong></p> {{client.client_rates_fk.return_rate}}
@@ -60,8 +88,19 @@
             <div class="row">
                 <h2>Dependents</h2>
                 {% for dependent in client.dependents.all %}
+                
+
+                <div class="col-md-12 col-sm-12"> 
                     <div class="col-md-6 col-sm-6">
-                        <h3>{{dependent.names}}</h3><a href="{% url 'clients:edit-client-dependent' pk=dependent.id %}"><span class="glyphicon glyphicon-pencil"></a>
+                        <h3>{{dependent.names}}</h3>
+                    </div>
+                    <div class="col-md-6 col-sm-6">
+                        <a href="{% url 'clients:edit-client-dependent' pk=dependent.id %}"><span class="glyphicon glyphicon-pencil icon-edit-customer"></a>
+                    </div>
+                </div>
+
+                    <div class="col-md-6 col-sm-6">
+                        
                         <p><strong>Surname:</strong></p> {{dependent.surnames}}
                         <p><strong>ID Number:</strong></p> {{dependent.id_no}}
                         <p><strong>South African Resident:</strong></p> {{dependent.rsa_resident}}
