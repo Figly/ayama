@@ -1,13 +1,14 @@
 from __future__ import unicode_literals
 
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.forms.models import construct_instance
 from django.http.response import HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
 from django.views import generic
-from formtools.wizard.views import SessionWizardView
 
+from formtools.wizard.views import SessionWizardView
 from practises.models import AdvisorDetail
 
 from .forms import (AddClientContactDetailForm, AddClientDependentDetailsForm,
@@ -30,8 +31,7 @@ TEMPLATES = {
     "3": "clients/add_client_rates_detail.html",
 }
 
-
-class ClientWizard(SessionWizardView):
+class ClientWizard(LoginRequiredMixin, SessionWizardView):
     def get_template_names(self):
         return TEMPLATES[self.steps.current]
 
@@ -118,7 +118,6 @@ class ClientWizard(SessionWizardView):
         )
         return HttpResponseRedirect(reverse_lazy("home"))
 
-
 class AddClientDependentView(LoginRequiredMixin, generic.CreateView):
     template_name = "clients/add_client_dependent_detail.html"
     form_class = AddClientDependentDetailsForm
@@ -152,7 +151,7 @@ class AddClientDependentView(LoginRequiredMixin, generic.CreateView):
         return super(AddClientDependentView, self).form_valid(form)
 
 
-class ClientlistView(generic.ListView):
+class ClientlistView(LoginRequiredMixin,generic.ListView):
     template_name = "clients/client_list.html"
     model = ClientDetail
 
@@ -177,7 +176,7 @@ class ClientlistView(generic.ListView):
         return context
 
 
-class ClientSummaryView(generic.DetailView):
+class ClientSummaryView(LoginRequiredMixin,generic.DetailView):
     template_name = "clients/client_summary.html"
     model = ClientDetail
 
