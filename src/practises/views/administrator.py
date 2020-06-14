@@ -88,3 +88,75 @@ class AdministratorWizard(SessionWizardView):
         )
 
         return HttpResponseRedirect(reverse_lazy("home"))
+
+class AministratorlistView(generic.ListView):
+    template_name = "practises/administrator_list.html"
+    model = AdministratorDetail
+
+    def get_context_data(self, **kwargs):
+        context = super(AministratorlistView, self).get_context_data(**kwargs)
+        user = self.request.user
+        if user.is_superuser:
+            administrators = AdministratorDetail.objects.all().select_related("adminstrator_contact_fk")
+            context = {"administrators": administrators}
+        elif user.is_superuser:
+            return HttpResponseRedirect(reverse_lazy("home"))
+
+        return context
+
+
+class AdministratorSummaryView(generic.DetailView):
+    template_name = "practises/administrator_summary.html"
+    model = AdministratorDetail
+
+    def get_context_data(self, **kwargs):
+        context = super(AdministratorSummaryView, self).get_context_data(**kwargs)
+        administrator_id = self.kwargs["pk"]
+        administrator = AdministratorDetail.objects.get(user=administrator_id)
+        context = {"administrator": administrator}
+        return context
+
+class EditAdministratorDetailView(LoginRequiredMixin, generic.UpdateView):
+    template_name = "practises/edit_administrator_detail.html"
+    model = AdministratorDetail
+    fields = ('title', 'initials', 
+    'surnames', 'names', 'known_as',
+    'sa_id', 'passport_no','position', 'employment_date', 'personnel_number')
+    
+    def form_valid(self, form):
+        if "cancel" in self.request.POST:
+            url = reverse_lazy("home")
+            return HttpResponseRedirect(url)
+            
+        model = form.save(commit=False)
+        model.modified_by = self.request.user
+        model.save
+        
+        messages.add_message(
+            self.request, messages.SUCCESS, "administrator details successfully edited."
+        )
+        self.success_url = reverse_lazy("home")
+        return super(EditAdministratorDetailView, self).form_valid(form)
+
+class EditAdministratorContactView(LoginRequiredMixin, generic.UpdateView):
+    template_name = "practises/edit_administrator_detail.html"
+    model = AdministratorContactDetail
+    fields = ('telephone_home', 'telephone_work', 
+    'cellphone_number', 'fax_number', 'email_address',
+    'residential_address_line_1', 'residential_address_line_2','residential_code', 
+    'postal_address_line_1', 'postal_address_line_2','postal_code')
+    
+    def form_valid(self, form):
+        if "cancel" in self.request.POST:
+            url = reverse_lazy("home")
+            return HttpResponseRedirect(url)
+            
+        model = form.save(commit=False)
+        model.modified_by = self.request.user
+        model.save
+        
+        messages.add_message(
+            self.request, messages.SUCCESS, "administrator contact details successfully edited."
+        )
+        self.success_url = reverse_lazy("home")
+        return super(EditAdministratorContactView, self).form_valid(form)

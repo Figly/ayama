@@ -144,3 +144,48 @@ class AdvisorSummaryView(generic.DetailView):
         advisor = AdvisorDetail.objects.get(user=advisor_id)
         context = {"advisor": advisor}
         return context
+
+class EditAdvisorDetailView(LoginRequiredMixin, generic.UpdateView):
+    template_name = "practises/edit_advisor_detail.html"
+    model = AdvisorDetail
+    fields = ('title', 'initials', 
+    'surnames', 'names', 'known_as',
+    'sa_id', 'passport_no','position', 'employment_date', 'personnel_number')
+    
+    def form_valid(self, form):
+        if "cancel" in self.request.POST:
+            url = reverse_lazy("home")
+            return HttpResponseRedirect(url)
+            
+        model = form.save(commit=False)
+        model.modified_by = self.request.user
+        model.save
+        
+        messages.add_message(
+            self.request, messages.SUCCESS, "advisor details successfully edited."
+        )
+        self.success_url = reverse_lazy("home")
+        return super(EditAdvisorDetailView, self).form_valid(form)
+
+class EditAdvisorContactView(LoginRequiredMixin, generic.UpdateView):
+    template_name = "practises/edit_administrator_detail.html"
+    model = AdvisorContactDetail
+    fields = ('telephone_home', 'telephone_work', 
+    'cellphone_number', 'fax_number', 'email_address',
+    'residential_address_line_1', 'residential_address_line_2','residential_code', 
+    'postal_address_line_1', 'postal_address_line_2','postal_code')
+    
+    def form_valid(self, form):
+        if "cancel" in self.request.POST:
+            url = reverse_lazy("home")
+            return HttpResponseRedirect(url)
+            
+        model = form.save(commit=False)
+        model.modified_by = self.request.user
+        model.save
+        
+        messages.add_message(
+            self.request, messages.SUCCESS, "advisor contact details successfully edited."
+        )
+        self.success_url = reverse_lazy("home")
+        return super(EditAdvisorContactView, self).form_valid(form)

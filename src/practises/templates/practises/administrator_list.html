@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+{% block container %}
+<div class="container">
+  <h1>Adminstrator List</h1>
+    {% if administrators %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Surname</th>
+                <th scope="col">Email</th>
+                <th scope="col">ID Number</th>
+                <th scope="col">Tel Home</th>
+                <th scope="col">Cellphone</th>
+            </tr>
+        </thead>
+        {% for administrator in administrators %}
+        <tbody>
+            <tr scope="row">
+                <td><a href="{% url 'practises:administrator-summary' pk=administrator.user_id %}">{{ administrator.names }}</a></td>
+                <td>{{ administrator.surnames }}</td>
+                <td>{{ administrator.adminstrator_contact_fk.email_address }}</td>
+                <td>{{ administrator.sa_id}}</td>
+                <td>{{ administrator.adminstrator_contact_fk.telephone_home }}</td>
+                <td>{{ administrator.adminstrator_contact_fk.cellphone_number }}</td>
+
+            </tr>
+        </tbody>
+        {% endfor %}
+    </table>
+    {% else %}
+    <p>No administrator to Display</p>
+</div>
+  {% endif %}
+{% endblock %}
+{% endblock %}
