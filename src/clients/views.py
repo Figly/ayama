@@ -1,29 +1,21 @@
 from __future__ import unicode_literals
 
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.forms.models import construct_instance
 from django.http.response import HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
 from django.views import generic
-from formtools.wizard.views import SessionWizardView
 
+from formtools.wizard.views import SessionWizardView
 from practises.models import AdvisorDetail
 
-from .forms import (
-    AddClientContactDetailForm,
-    AddClientDependentDetailsForm,
-    AddClientDetailForm,
-    AddClientEmploymentetailForm,
-    AddClientRatesAndReturnForm,
-)
-from .models import (
-    ClientContactDetail,
-    ClientDetail,
-    Dependent,
-    EmploymentDetail,
-    RatesAndReturn,
-)
+from .forms import (AddClientContactDetailForm, AddClientDependentDetailsForm,
+                    AddClientDetailForm, AddClientEmploymentetailForm,
+                    AddClientRatesAndReturnForm)
+from .models import (ClientContactDetail, ClientDetail, Dependent,
+                     EmploymentDetail, RatesAndReturn)
 
 FORMS = [
     ("0", AddClientDetailForm),
@@ -39,8 +31,7 @@ TEMPLATES = {
     "3": "clients/add_client_rates_detail.html",
 }
 
-
-class ClientWizard(SessionWizardView):
+class ClientWizard(LoginRequiredMixin, SessionWizardView):
     def get_template_names(self):
         return TEMPLATES[self.steps.current]
 
@@ -88,6 +79,7 @@ class ClientWizard(SessionWizardView):
             form_dict["1"]._meta.fields,
             form_dict["1"]._meta.exclude,
         )
+        contactDetail.modified_by = self.request.user
         contactDetail.save()
 
         employmentDetail = construct_instance(
@@ -96,6 +88,7 @@ class ClientWizard(SessionWizardView):
             form_dict["2"]._meta.fields,
             form_dict["2"]._meta.exclude,
         )
+        employmentDetail.modified_by = self.request.user
         employmentDetail.save()
 
         rates = construct_instance(
@@ -104,6 +97,7 @@ class ClientWizard(SessionWizardView):
             form_dict["3"]._meta.fields,
             form_dict["3"]._meta.exclude,
         )
+        rates.modified_by = self.request.user
         rates.save()
 
         client = construct_instance(
@@ -116,13 +110,13 @@ class ClientWizard(SessionWizardView):
         client.client_contact_fk = contactDetail
         client.client_employment_fk = employmentDetail
         client.client_rates_fk = rates
+        client.modified_by = self.request.user
         client.save()
 
         messages.add_message(
             self.request, messages.SUCCESS, "client successfully added."
         )
         return HttpResponseRedirect(reverse_lazy("home"))
-
 
 class AddClientDependentView(LoginRequiredMixin, generic.CreateView):
     template_name = "clients/add_client_dependent_detail.html"
@@ -146,6 +140,7 @@ class AddClientDependentView(LoginRequiredMixin, generic.CreateView):
 
     def form_valid(self, form):
         model = form.save(commit=False)  # noqa
+        model.modified_by = self.request.user
         messages.add_message(
             self.request, messages.SUCCESS, "dependent successfully added."
         )
@@ -156,7 +151,7 @@ class AddClientDependentView(LoginRequiredMixin, generic.CreateView):
         return super(AddClientDependentView, self).form_valid(form)
 
 
-class ClientlistView(generic.ListView):
+class ClientlistView(LoginRequiredMixin,generic.ListView):
     template_name = "clients/client_list.html"
     model = ClientDetail
 
@@ -181,7 +176,7 @@ class ClientlistView(generic.ListView):
         return context
 
 
-class ClientSummaryView(generic.DetailView):
+class ClientSummaryView(LoginRequiredMixin,generic.DetailView):
     template_name = "clients/client_summary.html"
     model = ClientDetail
 
@@ -192,3 +187,112 @@ class ClientSummaryView(generic.DetailView):
 
         context = {"client": client}
         return context
+
+class EditClientDetailsView(LoginRequiredMixin, generic.UpdateView):
+    template_name = "clients/edit_details.html"
+    model = ClientDetail
+    fields = ('title', 'initials', 
+    'surnames', 'names', 'known_as',
+    'sa_id', 'passport_no',)
+    
+    def form_valid(self, form):
+        if "cancel" in self.request.POST:
+            url = reverse_lazy("home")
+            return HttpResponseRedirect(url)
+            
+        model = form.save(commit=False)
+        model.modified_by = self.request.user
+        model.save
+        
+        messages.add_message(
+            self.request, messages.SUCCESS, "client details successfully edited."
+        )
+        self.success_url = reverse_lazy("home")
+        return super(EditClientDetailsView, self).form_valid(form)
+
+class EditClientContactView(LoginRequiredMixin, generic.UpdateView):
+    template_name = "clients/edit_details.html"
+    model = ClientContactDetail
+    fields = ('telephone_home', 'telephone_work', 
+    'cellphone_number', 'fax_number', 'email_address',
+    'residential_address_line_1', 'residential_address_line_2','residential_code', 
+    'postal_address_line_1', 'postal_address_line_2','postal_code')
+    
+    def form_valid(self, form):
+        if "cancel" in self.request.POST:
+            url = reverse_lazy("home")
+            return HttpResponseRedirect(url)
+
+        model = form.save(commit=False)
+        model.modified_by = self.request.user
+        model.save
+        
+        messages.add_message(
+            self.request, messages.SUCCESS, "client contact details successfully edited."
+        )
+        self.success_url = reverse_lazy("home")
+        return super(EditClientContactView, self).form_valid(form)
+
+class EditClientEmploymentView(LoginRequiredMixin, generic.UpdateView):
+    template_name = "clients/edit_details.html"
+    model = EmploymentDetail
+    fields = ('company_name', 'occupation', 
+    'employment_date', 'personnel_number', 'medical_aid',
+    'retirement_fund_current_value', 'group_life_cover',)
+    
+    def form_valid(self, form):
+        if "cancel" in self.request.POST:
+            url = reverse_lazy("home")
+            return HttpResponseRedirect(url)
+
+        model = form.save(commit=False)
+        model.modified_by = self.request.user
+        model.save
+        
+        messages.add_message(
+            self.request, messages.SUCCESS, "client employment details successfully edited."
+        )
+        self.success_url = reverse_lazy("home")
+        return super(EditClientEmploymentView, self).form_valid(form)
+
+class EditClientRatesView(LoginRequiredMixin, generic.UpdateView):
+    template_name = "clients/edit_details.html"
+    model = RatesAndReturn
+    fields = ('inflation', 'interest', 
+    'return_rate',)
+    
+    def form_valid(self, form):
+        if "cancel" in self.request.POST:
+            url = reverse_lazy("home")
+            return HttpResponseRedirect(url)
+
+        model = form.save(commit=False)
+        model.modified_by = self.request.user
+        model.save
+        
+        messages.add_message(
+            self.request, messages.SUCCESS, "client rates and return details successfully edited."
+        )
+        self.success_url = reverse_lazy("home")
+        return super(EditClientRatesView, self).form_valid(form)
+
+class EditClientDependentView(LoginRequiredMixin, generic.UpdateView):
+    template_name = "clients/edit_details.html"
+    model = Dependent
+    fields = ('names', 'rsa_resident', 
+    'id_no','date_of_birth', 'relationship', 'other')
+    
+    def form_valid(self, form):
+        if "cancel" in self.request.POST:
+            url = reverse_lazy("home")
+            return HttpResponseRedirect(url)
+
+        model = form.save(commit=False)
+        model.modified_by = self.request.user
+        model.save
+        
+        messages.add_message(
+            self.request, messages.SUCCESS, "client dependent details successfully edited."
+        )
+        self.success_url = reverse_lazy("home")
+        return super(EditClientDependentView, self).form_valid(form)
