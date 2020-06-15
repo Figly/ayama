@@ -195,3 +195,9 @@ body>.navbar-transparent {
     text-transform: inherit;
     padding: 0px;
 }
+
+.icon-edit-customer{
+    position: absolute;
+    top: 25px;
+    text-align: center;
+}
