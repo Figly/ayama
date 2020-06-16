@@ -26,11 +26,10 @@ urlpatterns = [
     path("", include(clients.urls)),
 ]
 
-# User-uploaded files like profile pics need to be served in development
-urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-
-# Include django debug toolbar if DEBUG is on
 if settings.DEBUG:
     import debug_toolbar
 
     urlpatterns += [path("__debug__/", include(debug_toolbar.urls))]
+
+    # Dev ref for profile pics -- should probably redo this at some point
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
