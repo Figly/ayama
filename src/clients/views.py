@@ -108,6 +108,7 @@ class ClientWizard(LoginRequiredMixin, SessionWizardView):
             form_dict["0"]._meta.exclude,
         )
 
+        clientComm.modified_by = self.request.user
         clientComm.save()
         client.client_comms_fk = clientComm
 
