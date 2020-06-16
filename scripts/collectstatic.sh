@@ -29,7 +29,7 @@ set -e
 
 echo "Waiting for pods to be cleaned up:"
 while true; do
-  if [[ ! "$(kubectl get -f "${POD_TEMPLATE}" -a -o=name)" ]]; then
+  if [[ ! "$(kubectl get -f "${POD_TEMPLATE}" -o=name)" ]]; then
     break
   fi
 done
@@ -44,7 +44,7 @@ echo "Starting to run migration:"
 kubectl apply -f "${POD_TEMPLATE}"
 
 while true; do
-  POD_STATUS=$(kubectl get -f "${POD_TEMPLATE}" -a -o=jsonpath='{.status.phase}')
+  POD_STATUS=$(kubectl get -f "${POD_TEMPLATE}" -o=jsonpath='{.status.phase}')
 
   case $POD_STATUS in
     Succeeded)
