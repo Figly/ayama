@@ -11,25 +11,20 @@ import os
 import socket
 from pathlib import Path
 
-# Use 12factor inspired environment variables or from a file
-import environ
-
-# For Bootstrap 3, change error alert to 'danger'
 from django.contrib import messages
 from django.urls import reverse_lazy
 
-# Build paths inside the project like this: BASE_DIR / "directory"
-
-DEBUG = os.getenv("DEBUG") == "True"
+DEBUG = os.getenv("DEBUG", False)
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
     os.path.join(BASE_DIR, "media"),
 )
-MEDIA_ROOT = str(os.path.join(BASE_DIR, "media"))
 
-# Use Django templates using the new Django 1.8 TEMPLATES settings
+MEDIA_URL = "/media/"
+STATIC_URL = "/static/"
+
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
@@ -59,8 +54,6 @@ TEMPLATE_LOADERS = ("django.template.loaders.app_directories.load_template_sourc
 SECRET_KEY = os.environ.get("SECRET_KEY", "notsosecretdevkey")
 
 ALLOWED_HOSTS = ["*"]
-
-# Application definition
 
 INSTALLED_APPS = (
     "django.contrib.auth",
@@ -140,19 +133,12 @@ SENDGRID_API_KEY = os.getenv("SENDGRID_API_KEY")
 HOSTNAME = socket.gethostname()
 
 LANGUAGE_CODE = "en-za"
-
-TIME_ZONE = "Africa/Johannesburg"
-
 USE_I18N = True
-
 USE_L10N = True
 
 USE_TZ = True
-
+TIME_ZONE = "Africa/Johannesburg"
 DATETIME_FORMAT = "%Y-%m-%d %H:%M:%S"
-
-MEDIA_URL = "/media/"
-STATIC_URL = "/static/"
 
 # Crispy Form Theme - Bootstrap 4
 CRISPY_TEMPLATE_PACK = "bootstrap4"

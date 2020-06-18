@@ -2,8 +2,10 @@ import logging.config as config
 
 from .settings_base import *  # noqa
 
-# TODO: should catch if dev or staging
-if not os.environ.get("ENVIRONMENT", False):
+if not os.environ.get("ENVIRONMENT", False) or os.environ.get("ENVIRONMENT") in [
+    "dev",
+    "staging",
+]:
     TEMPLATES[0]["OPTIONS"].update({"debug": True})
 
     # Django Debug Toolbar
@@ -16,6 +18,10 @@ if not os.environ.get("ENVIRONMENT", False):
     THUMBNAIL_DEBUG = True
     # Allow internal IPs for debugging
     INTERNAL_IPS = ["127.0.0.1", "0.0.0.1"]
+
+    # Emails in sandbox mode
+    SENDGRID_SANDBOX_MODE_IN_DEBUG = True
+    SENDGRID_ECHO_TO_STDOUT = True
 
 else:
     # Emails in sandbox mode
@@ -37,13 +43,17 @@ else:
     TEMPLATES[0].update({"APP_DIRS": False})
 
     # Setup static file serving
-    STATICFILES_FINDERS = [
-        "django.contrib.staticfiles.finders.FileSystemFinder",
-        "django.contrib.staticfiles.finders.AppDirectoriesFinder",
-    ]
+    STATIC_ROOT = os.path.join(BASE_DIR, "static")
+    MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
     # Configure static and media file access on GCS
     DEFAULT_FILE_STORAGE = "storages.backends.gcloud.GoogleCloudStorage"
+
+    STATICFILES_FINDERS = [
+        "django.contrib.staticfiles.finders.AppDirectoriesFinder",
+        "django.contrib.staticfiles.finders.DefaultStorageFinder",
+        "django.contrib.staticfiles.finders.FileSystemFinder",
+    ]
 
     if os.environ.get("ENVIRONMENT") != "production":
         GS_BUCKET_NAME = "ayama-staging-assets"
@@ -51,9 +61,7 @@ else:
         GS_BUCKET_NAME = "ayama-production-production"
 
     STATICFILES_STORAGE = "storages.backends.gcloud.GoogleCloudStorage"
-
     MEDIA_URL = "https://storage.googleapis.com/ayama-staging-assets/"
-
     STATIC_URL = "https://storage.googleapis.com/ayama-staging-assets/"
 
 PASSWORD_HASHERS = [
