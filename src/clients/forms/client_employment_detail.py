@@ -8,7 +8,7 @@ from practises.models import AdvisorDetail
 from ..models import EmploymentDetail
 
 
-class AddClientEmploymentetailForm(forms.ModelForm):
+class AddClientEmploymentDetailForm(forms.ModelForm):
     employment_date = forms.DateField(
         widget=forms.TextInput(attrs={"class": "datepicker"})
     )

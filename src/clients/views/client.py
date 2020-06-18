@@ -12,14 +12,14 @@ from formtools.wizard.views import SessionWizardView
 from practises.models import AdvisorDetail
 
 from ..forms import (AddClientContactDetailForm, AddClientDetailForm, 
-                    AddClientEmploymentetailForm, AddClientRatesAndReturnForm)
+                    AddClientEmploymentDetailForm, AddClientRatesAndReturnForm)
 from ..models import (ClientCommunication, ClientContactDetail, ClientDetail,
                      EmploymentDetail, RatesAndReturn)
 
 FORMS = [
     ("0", AddClientDetailForm),
     ("1", AddClientContactDetailForm),
-    ("2", AddClientEmploymentetailForm),
+    ("2", AddClientEmploymentDetailForm),
     ("3", AddClientRatesAndReturnForm),
 ]
 
