@@ -8,7 +8,7 @@ from .views import (AddPractiseView, AdministratorSummaryView,
                     AdvisorWizard, AministratorlistView,
                     EditAdministratorContactView, EditAdministratorDetailView,
                     EditAdvisorContactView, EditAdvisorDetailView,
-                    EditPractiseView)
+                    EditPractiseView, EditReminderPreferencesView)
 
 app_name = "practises"
 urlpatterns = [
@@ -39,4 +39,5 @@ urlpatterns = [
     path("administrator_summary/<pk>/", AdministratorSummaryView.as_view(), name="administrator-summary"),
     path("edit_administrator_detail/<pk>/", EditAdministratorDetailView.as_view(), name="edit-administrator-detail"),
     path("edit_administrator_contact/<pk>/", EditAdministratorContactView.as_view(), name="edit-administrator-contact"),
+     path("edit_advisor_reminder/<pk>/", EditReminderPreferencesView.as_view(), name="edit-advisor-reminder-config"),
 ]

@@ -30,6 +30,21 @@
             <div class="row">
                 <div class="col-md-12 col-sm-12"> 
                     <div class="col-md-6 col-sm-6">
+                        <h2>Communication history</h2>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-6">
+                    <p><strong>Last face to face:</strong></p> {{client.client_comms_fk.last_date_face_to_face}}
+                    <p><strong>Last Email:</strong></p> {{client.client_comms_fk.last_date_email}}  
+                </div>
+                <div class="col-md-6 col-sm-6">
+                    <p><strong>Last Call:</strong></p> {{client.client_comms_fk.last_date_call}}
+                    <p><strong>Last SMS:</strong></p> {{client.client_comms_fk.last_date_sms}}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 col-sm-12"> 
+                    <div class="col-md-6 col-sm-6">
                         <h2>Contact Details</h2>
                     </div>
                     <div class="col-md-6 col-sm-6">
@@ -82,6 +97,24 @@
                         <p><strong>Inflation:</strong></p> {{client.client_rates_fk.inflation}}
                         <p><strong>Interest:</strong></p> {{client.client_rates_fk.interest}}
                         <p><strong>Return Rate:</strong></p> {{client.client_rates_fk.return_rate}}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 col-sm-12"> 
+                    <div class="col-md-6 col-sm-6">
+                        <h2>Communication frequency</h2>
+                    </div>
+                    <div class="col-md-6 col-sm-6">
+                        <a href="{% url 'clients:edit-client-communication-frequency' pk=client.client_comms_freq_fk.id %}"><span class="glyphicon glyphicon-pencil icon-edit-customer"></a>
+                    </div>
+                </div>
+                 <div class="col-md-6 col-sm-6">
+                    <p><strong>Face to face (weeks):</strong></p> {{client.client_comms_freq_fk.face_to_face_frequency}}
+                    <p><strong>Email (weeks):</strong></p> {{client.client_comms_freq_fk.email_frequency}}  
+                </div>
+                <div class="col-md-6 col-sm-6">
+                    <p><strong>Call (weeks):</strong></p> {{client.client_comms_freq_fk.calls_frequency}}
+                    <p><strong>SMS (weeks):</strong></p> {{client.client_comms_freq_fk.sms_frequency}}
                 </div>
             </div>
             {% if client.dependents.count > 0%}

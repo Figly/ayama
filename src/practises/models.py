@@ -146,7 +146,8 @@ class AdvisorDetail(BaseModel):
     )
     personnel_number = models.CharField(
         "Personnel Number", max_length=50, blank=True, null=True
-    )
+    )   
+    reminder_config_freq_fk = models.ForeignKey("AdvisorReminderConfig",on_delete=models.CASCADE, related_name="reminder_config")
 
     def __str__(self):
         """Return a human readable representation of the model instance."""
@@ -215,3 +216,16 @@ class AdministratorContactDetail(BaseModel):
     def __str__(self):
         """Return a human readable representation of the model instance."""
         return f"{self.email_address}"
+
+class AdvisorReminderConfig(BaseModel):
+    """
+    Class descriptor
+    """
+    face_to_face_frequency = models.IntegerField(blank=True, null=True, default=5)
+    calls_frequency = models.IntegerField(blank=True, null=True, default=5)
+    email_frequency = models.IntegerField(blank=True, null=True, default=5)
+    sms_frequency = models.IntegerField(blank=True, null=True, default=5)
+    
+    def __str__(self):
+        """Return a human readable representation of the model instance."""
+        return f""

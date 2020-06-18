@@ -4,9 +4,10 @@ from .forms import (AddClientContactDetailForm, AddClientDependentDetailsForm,
                     AddClientDetailForm, AddClientEmploymentetailForm,
                     AddClientRatesAndReturnForm)
 from .views import (AddClientDependentView, ClientlistView, ClientSummaryView,
-                    ClientWizard, EditClientContactView,
-                    EditClientDependentView, EditClientDetailsView,
-                    EditClientEmploymentView, EditClientRatesView)
+                    ClientWizard, EditClientCommunicationFrequencyView,
+                    EditClientContactView, EditClientDependentView,
+                    EditClientDetailsView, EditClientEmploymentView,
+                    EditClientRatesView)
 
 app_name = "clients"
 urlpatterns = [
@@ -34,4 +35,5 @@ urlpatterns = [
     path("edit_client_employment/<pk>/", EditClientEmploymentView.as_view(), name="edit-client-employment"),
     path("edit_client_rates/<pk>/", EditClientRatesView.as_view(), name="edit-client-rates"),
     path("edit_client_dependent/<pk>/", EditClientDependentView.as_view(), name="edit-client-dependent"),
+    path("edit_client_communication_frequency/<pk>/", EditClientCommunicationFrequencyView.as_view(), name="edit-client-communication-frequency"),
 ]

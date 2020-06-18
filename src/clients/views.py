@@ -9,13 +9,14 @@ from django.urls import reverse, reverse_lazy
 from django.views import generic
 
 from formtools.wizard.views import SessionWizardView
-from practises.models import AdvisorDetail
+from practises.models import AdvisorDetail, AdvisorReminderConfig
 
 from .forms import (AddClientContactDetailForm, AddClientDependentDetailsForm,
                     AddClientDetailForm, AddClientEmploymentetailForm,
                     AddClientRatesAndReturnForm)
-from .models import (ClientCommunication, ClientContactDetail, ClientDetail,
-                     Dependent, EmploymentDetail, RatesAndReturn)
+from .models import (ClientCommunication, ClientCommunicationFrequency,
+                     ClientContactDetail, ClientDetail, Dependent,
+                     EmploymentDetail, RatesAndReturn)
 
 FORMS = [
     ("0", AddClientDetailForm),
@@ -72,6 +73,8 @@ class ClientWizard(LoginRequiredMixin, SessionWizardView):
         employmentDetail = EmploymentDetail()
         rates = RatesAndReturn()
         clientComm = ClientCommunication()
+        communicationFrequency = ClientCommunicationFrequency()
+
 
         # form instances
         contactDetail = construct_instance(
@@ -112,6 +115,16 @@ class ClientWizard(LoginRequiredMixin, SessionWizardView):
         clientComm.save()
         client.client_comms_fk = clientComm
 
+        advisorConfig = client.advisor_id_fk.reminder_config_freq_fk
+
+        communicationFrequency.sms_frequency = advisorConfig.sms_frequency
+        communicationFrequency.face_to_face_frequency = advisorConfig.face_to_face_frequency
+        communicationFrequency.calls_frequency = advisorConfig.calls_frequency
+        communicationFrequency.email_frequency = advisorConfig.email_frequency
+        communicationFrequency.modified_by = self.request.user
+        communicationFrequency.save()
+
+        client.client_comms_freq_fk = communicationFrequency
         client.client_contact_fk = contactDetail
         client.client_employment_fk = employmentDetail
         client.client_rates_fk = rates
@@ -301,3 +314,24 @@ class EditClientDependentView(LoginRequiredMixin, generic.UpdateView):
         )
         self.success_url = reverse_lazy("home")
         return super(EditClientDependentView, self).form_valid(form)
+
+class EditClientCommunicationFrequencyView(LoginRequiredMixin, generic.UpdateView):
+    template_name = "clients/edit_details.html"
+    model = ClientCommunicationFrequency
+    fields = ('face_to_face_frequency', 'calls_frequency', 
+    'email_frequency','sms_frequency')
+    
+    def form_valid(self, form):
+        if "cancel" in self.request.POST:
+            url = reverse_lazy("home")
+            return HttpResponseRedirect(url)
+
+        model = form.save(commit=False)
+        model.modified_by = self.request.user
+        model.save
+        
+        messages.add_message(
+            self.request, messages.SUCCESS, "client communication frequency successfully edited."
+        )
+        self.success_url = reverse_lazy("home")
+        return super(EditClientCommunicationFrequencyView, self).form_valid(form)
