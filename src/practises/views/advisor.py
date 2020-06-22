@@ -228,8 +228,8 @@ class EditReminderPreferencesView(LoginRequiredMixin, UserPassesTestMixin, gener
             
         model = form.save(commit=False)
         model.modified_by = self.request.user
-        model.save
-        
+        model.save()
+
         messages.add_message(
             self.request, messages.SUCCESS, "communication frequency successfully edited."
         )
