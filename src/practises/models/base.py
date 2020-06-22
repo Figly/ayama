@@ -28,3 +28,4 @@ class BaseModel(models.Model):
         return datetime.strftime(
             self.modified_at.astimezone(get_current_timezone()), self.dateFormat
         )
+        

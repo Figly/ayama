@@ -247,3 +247,4 @@ class EditClientRatesView(LoginRequiredMixin, generic.UpdateView):
         )
         self.success_url = reverse_lazy("home")
         return super(EditClientRatesView, self).form_valid(form)
+        
