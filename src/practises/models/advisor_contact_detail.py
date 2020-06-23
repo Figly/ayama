@@ -34,4 +34,3 @@ class AdvisorContactDetail(BaseModel):
     def __str__(self):
         """Return a human readable representation of the model instance."""
         return f"{self.email_address}"
-

@@ -6,28 +6,39 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('clients', '0008_auto_20200613_1040'),
+        ("clients", "0008_auto_20200613_1040"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='clientcommunication',
-            name='last_date_call',
-            field=models.DateField(blank=True, default=None, null=True, verbose_name='Last date call'),
+            model_name="clientcommunication",
+            name="last_date_call",
+            field=models.DateField(
+                blank=True, default=None, null=True, verbose_name="Last date call"
+            ),
         ),
         migrations.AlterField(
-            model_name='clientcommunication',
-            name='last_date_email',
-            field=models.DateField(blank=True, default=None, null=True, verbose_name='Last date email'),
+            model_name="clientcommunication",
+            name="last_date_email",
+            field=models.DateField(
+                blank=True, default=None, null=True, verbose_name="Last date email"
+            ),
         ),
         migrations.AlterField(
-            model_name='clientcommunication',
-            name='last_date_face_to_face',
-            field=models.DateField(blank=True, default=None, null=True, verbose_name='Last date face to face'),
+            model_name="clientcommunication",
+            name="last_date_face_to_face",
+            field=models.DateField(
+                blank=True,
+                default=None,
+                null=True,
+                verbose_name="Last date face to face",
+            ),
         ),
         migrations.AlterField(
-            model_name='clientcommunication',
-            name='last_date_sms',
-            field=models.DateField(blank=True, default=None, null=True, verbose_name='Last date SMS'),
+            model_name="clientcommunication",
+            name="last_date_sms",
+            field=models.DateField(
+                blank=True, default=None, null=True, verbose_name="Last date SMS"
+            ),
         ),
     ]

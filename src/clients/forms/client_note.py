@@ -9,7 +9,6 @@ from ..models import ClientNote
 
 
 class AddClientNoteForm(forms.ModelForm):
-   
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper()
@@ -24,7 +23,9 @@ class AddClientNoteForm(forms.ModelForm):
             ),
             Row(
                 Column(
-                    "note_type", placeholder="Note Type", css_class="form-group col-md-6 mb-0"
+                    "note_type",
+                    placeholder="Note Type",
+                    css_class="form-group col-md-6 mb-0",
                 ),
                 Column(
                     "title", placeholder="Title", css_class="form-group col-md-6 mb-0"
@@ -32,9 +33,7 @@ class AddClientNoteForm(forms.ModelForm):
             ),
             Row(
                 Column(
-                    "body",
-                    placeholder="Note",
-                    css_class="form-group col-md-6 mb-0",
+                    "body", placeholder="Note", css_class="form-group col-md-6 mb-0",
                 ),
             ),
         )

@@ -10,22 +10,18 @@ ch_note_type = (
     ("archive", "Archive"),
 )
 
+
 class ClientNote(BaseModel):
     """
     Class descriptor
     """
+
     note = models.ForeignKey(
-        "ClientDetail", 
-        on_delete=models.CASCADE,
-        related_name = 'notes'
+        "ClientDetail", on_delete=models.CASCADE, related_name="notes"
     )
 
-    title = models.CharField(
-        "Note Title", max_length=100 
-    )
-    body = models.CharField(
-        "Note", max_length=2000
-    )
+    title = models.CharField("Note Title", max_length=100)
+    body = models.CharField("Note", max_length=2000)
     note_type = models.CharField(
         "Note Type", max_length=50, choices=ch_note_type, default="Note"
     )

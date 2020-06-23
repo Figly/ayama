@@ -12,10 +12,8 @@ from formtools.wizard.views import SessionWizardView
 from practises.models import AdvisorDetail
 
 from ..forms import AddClientNoteForm
-from ..models import (
-    ClientNote,
-    ClientDetail
-)
+from ..models import ClientNote, ClientDetail
+
 
 class AddClientNoteView(LoginRequiredMixin, generic.CreateView):
     template_name = "clients/add_client_note.html"
@@ -53,9 +51,9 @@ class AddClientNoteView(LoginRequiredMixin, generic.CreateView):
 # class EditClientNoteView(LoginRequiredMixin, generic.UpdateView):
 #     template_name = "clients/edit_details.html"
 #     model = Dependent
-#     fields = ('names', 'rsa_resident', 
+#     fields = ('names', 'rsa_resident',
 #     'id_no','date_of_birth', 'relationship', 'other')
-    
+
 #     def form_valid(self, form):
 #         if "cancel" in self.request.POST:
 #             url = reverse_lazy("home")
@@ -64,7 +62,7 @@ class AddClientNoteView(LoginRequiredMixin, generic.CreateView):
 #         model = form.save(commit=False)
 #         model.modified_by = self.request.user
 #         model.save
-        
+
 #         messages.add_message(
 #             self.request, messages.SUCCESS, "client dependent details successfully edited."
 #         )
