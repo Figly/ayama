@@ -39,10 +39,10 @@ class AddClientNoteView(LoginRequiredMixin, generic.CreateView):
         model = form.save(commit=False)  # noqa
         model.modified_by = self.request.user
         messages.add_message(
-            self.request, messages.SUCCESS, "dependent successfully added."
+            self.request, messages.SUCCESS, "client note successfully  added."
         )
         if "add-another" in self.request.POST:
-            self.success_url = reverse_lazy("clients:add-client-dependents")
+            self.success_url = reverse_lazy("clients:add-client-note")
         elif "submit" in self.request.POST:
             self.success_url = reverse_lazy("home")
         return super(AddClientNoteView, self).form_valid(form)
@@ -71,3 +71,21 @@ class EditClientNoteView(LoginRequiredMixin, generic.UpdateView):
         )
         self.success_url = reverse_lazy("home")
         return super(EditClientNoteView, self).form_valid(form)
+
+
+class ClientNoteListView(LoginRequiredMixin, generic.ListView):
+    template_name = "clients/client_note_list.html"
+    model = ClientNote
+
+    def get_context_data(self, **kwargs):
+        context = super(ClientNoteListView, self).get_context_data(**kwargs)
+        client_id = self.kwargs["pk"]
+        notes = ClientNote.objects.all().filter(client_id_fk_id=client_id)
+        client = ClientDetail.objects.get(id=client_id)
+
+        context = {
+            "notes": notes,
+            "client": client,
+        }
+
+        return context

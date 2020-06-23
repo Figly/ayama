@@ -20,6 +20,7 @@ from .views import (
     EditClientRatesView,
     AddClientNoteView,
     EditClientNoteView,
+    ClientNoteListView,
 )
 
 app_name = "clients"
@@ -66,8 +67,11 @@ urlpatterns = [
         EditClientDependentView.as_view(),
         name="edit-client-dependent",
     ),
-    path("add_client_note/<pk>/", AddClientNoteView.as_view(), name="add-client-note",),
+    path("add_client_note/", AddClientNoteView.as_view(), name="add-client-note",),
     path(
         "edit_client_note/<pk>/", EditClientNoteView.as_view(), name="edit-client-note",
+    ),
+    path(
+        "client_note_list/<pk>/", ClientNoteListView.as_view(), name="client-note-list",
     ),
 ]

@@ -1,4 +1,5 @@
 from django.db import models
+from datetime import datetime
 
 from .base import BaseModel
 
@@ -20,7 +21,9 @@ class ClientNote(BaseModel):
         "ClientDetail", on_delete=models.CASCADE, related_name="notes"
     )
 
-    title = models.CharField("Note Title", max_length=100)
+    title = models.CharField(
+        "Note Title", max_length=100, blank=True, null=True, default=str(datetime.now())
+    )
     body = models.CharField("Note", max_length=2000)
     note_type = models.CharField(
         "Note Type", max_length=50, choices=ch_note_type, default="Note"
