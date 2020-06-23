@@ -51,4 +51,3 @@ class AdvisorDetail(BaseModel):
     def __str__(self):
         """Return a human readable representation of the model instance."""
         return f"{self.get_title_display()} {self.initials} {self.surnames}"
-
