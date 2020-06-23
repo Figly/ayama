@@ -24,7 +24,7 @@ class AddClientNoteForm(forms.ModelForm):
             Row(
                 Column(
                     "note_type",
-                    placeholder="Note Type",
+                    placeholder="Type",
                     css_class="form-group col-md-6 mb-0",
                 ),
                 Column(
@@ -33,7 +33,7 @@ class AddClientNoteForm(forms.ModelForm):
             ),
             Row(
                 Column(
-                    "body", placeholder="Note", css_class="form-group col-md-6 mb-0",
+                    "body", placeholder="Body", css_class="form-group col-md-6 mb-0",
                 ),
             ),
         )
@@ -42,7 +42,7 @@ class AddClientNoteForm(forms.ModelForm):
         model = ClientNote
         fields = [
             "client_id_fk",
-            "note_type",
             "title",
+            "note_type",
             "body",
         ]

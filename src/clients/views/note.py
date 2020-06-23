@@ -48,23 +48,26 @@ class AddClientNoteView(LoginRequiredMixin, generic.CreateView):
         return super(AddClientNoteView, self).form_valid(form)
 
 
-# class EditClientNoteView(LoginRequiredMixin, generic.UpdateView):
-#     template_name = "clients/edit_details.html"
-#     model = Dependent
-#     fields = ('names', 'rsa_resident',
-#     'id_no','date_of_birth', 'relationship', 'other')
+class EditClientNoteView(LoginRequiredMixin, generic.UpdateView):
+    template_name = "clients/edit_details.html"
+    model = ClientNote
+    fields = (
+        "title",
+        "note_type",
+        "body",
+    )
 
-#     def form_valid(self, form):
-#         if "cancel" in self.request.POST:
-#             url = reverse_lazy("home")
-#             return HttpResponseRedirect(url)
+    def form_valid(self, form):
+        if "cancel" in self.request.POST:
+            url = reverse_lazy("home")
+            return HttpResponseRedirect(url)
 
-#         model = form.save(commit=False)
-#         model.modified_by = self.request.user
-#         model.save
+        model = form.save(commit=False)
+        model.modified_by = self.request.user
+        model.save
 
-#         messages.add_message(
-#             self.request, messages.SUCCESS, "client dependent details successfully edited."
-#         )
-#         self.success_url = reverse_lazy("home")
-#         return super(EditClientDependentView, self).form_valid(form)
+        messages.add_message(
+            self.request, messages.SUCCESS, "client note successfully edited."
+        )
+        self.success_url = reverse_lazy("home")
+        return super(EditClientNoteView, self).form_valid(form)

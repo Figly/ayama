@@ -6,6 +6,7 @@ if not os.environ.get("ENVIRONMENT", False) or os.environ.get("ENVIRONMENT") in 
     "dev",
     "staging",
 ]:
+
     TEMPLATES[0]["OPTIONS"].update({"debug": True})
 
     # Django Debug Toolbar

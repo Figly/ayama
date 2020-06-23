@@ -6,7 +6,7 @@ ch_note_type = (
     ("note", "Note"),
     ("follow_up", "Follow Up"),
     ("do_not_mention", "Do Not Mention"),
-    ("mention", "Mention"),
+    ("preferences", "Preferences"),
     ("archive", "Archive"),
 )
 
@@ -16,7 +16,7 @@ class ClientNote(BaseModel):
     Class descriptor
     """
 
-    note = models.ForeignKey(
+    client_id_fk = models.ForeignKey(
         "ClientDetail", on_delete=models.CASCADE, related_name="notes"
     )
 

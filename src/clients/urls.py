@@ -6,6 +6,7 @@ from .forms import (
     AddClientDetailForm,
     AddClientEmploymentDetailForm,
     AddClientRatesAndReturnForm,
+    AddClientNoteForm,
 )
 from .views import (
     AddClientDependentView,
@@ -17,6 +18,8 @@ from .views import (
     EditClientDetailsView,
     EditClientEmploymentView,
     EditClientRatesView,
+    AddClientNoteView,
+    EditClientNoteView,
 )
 
 app_name = "clients"
@@ -62,5 +65,9 @@ urlpatterns = [
         "edit_client_dependent/<pk>/",
         EditClientDependentView.as_view(),
         name="edit-client-dependent",
+    ),
+    path("add_client_note/<pk>/", AddClientNoteView.as_view(), name="add-client-note",),
+    path(
+        "edit_client_note/<pk>/", EditClientNoteView.as_view(), name="edit-client-note",
     ),
 ]
