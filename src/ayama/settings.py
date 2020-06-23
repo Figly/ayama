@@ -23,6 +23,8 @@ if not os.environ.get("ENVIRONMENT", False) or os.environ.get("ENVIRONMENT") in 
     SENDGRID_SANDBOX_MODE_IN_DEBUG = True
     SENDGRID_ECHO_TO_STDOUT = True
 
+    MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+    
 else:
     # Emails in sandbox mode
     SENDGRID_SANDBOX_MODE_IN_DEBUG = False

@@ -39,4 +39,9 @@ urlpatterns = [
     path("administrator_summary/<pk>/", AdministratorSummaryView.as_view(), name="administrator-summary"),
     path("edit_administrator_detail/<pk>/", EditAdministratorDetailView.as_view(), name="edit-administrator-detail"),
     path("edit_administrator_contact/<pk>/", EditAdministratorContactView.as_view(), name="edit-administrator-contact"),
+    # path("sign_up/", 
+    #     AddPractiseView.as_view()
+    #     AdministratorWizard.as_view([AddAdministratorDetailForm, AddAdministratorContactDetailForm]
+    #     ),
+    #     name="sign-up"),
 ]
