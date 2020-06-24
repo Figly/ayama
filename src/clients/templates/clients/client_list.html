@@ -20,6 +20,7 @@
                 {%if user.is_administrator %}
                 <th scope="col">Advisor</th>
                 {% endif %}
+                <th scope="col">Notes</th>
             </tr>
         </thead>
         {% for client in clients %}
@@ -36,6 +37,7 @@
                 {%if user.is_administrator %}
                 <td>{{ client.advisor_id_fk}}</td>
                 {% endif %}
+                <td><a href="{% url 'clients:client-note-list' pk=client.id %}">Notes</a></td>
             </tr>
         </tbody>
         {% endfor %}
