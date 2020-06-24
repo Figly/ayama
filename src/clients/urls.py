@@ -1,7 +1,7 @@
 from django.urls import path
 
 from .forms import (AddClientContactDetailForm, AddClientDependentDetailsForm,
-                    AddClientDetailForm, AddClientEmploymentetailForm,
+                    AddClientDetailForm, AddClientEmploymentDetailForm,
                     AddClientRatesAndReturnForm)
 from .views import (AddClientDependentView, ClientlistView, ClientSummaryView,
                     ClientWizard, EditClientCommunicationFrequencyView,
@@ -17,7 +17,7 @@ urlpatterns = [
             [
                 AddClientDetailForm,
                 AddClientContactDetailForm,
-                AddClientEmploymentetailForm,
+                AddClientEmploymentDetailForm,
                 AddClientRatesAndReturnForm,
             ]
         ),

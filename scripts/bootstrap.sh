@@ -20,9 +20,9 @@ fi
 
 set -e
 
-MINIKUBE_VERSION="1.2.0"
+MINIKUBE_VERSION="1.11.0"
 STERN_VERSION="1.10.0"
-KUBECTL_VERSION="1.12.8"
+KUBECTL_VERSION="1.18.3"
 
 if [[ "$(uname -s)" == 'Linux' ]]; then
   CLIENT_OS='linux'
@@ -38,6 +38,7 @@ else
     echo 'Brew installed.'
   fi
   echo "Updating brew, so we don't need to do this later..."
+  sudo chown -R $(whoami) /usr/local/var/homebrew
   brew update
 fi
 
