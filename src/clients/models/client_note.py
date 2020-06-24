@@ -5,7 +5,7 @@ from .base import BaseModel
 
 ch_note_type = (
     ("note", "Note"),
-    ("follow_up", "Follow Up"),
+    ("comms", "Communications"),
     ("preferences", "Preferences"),
     ("archive", "Archive"),
 )
