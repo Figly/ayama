@@ -38,6 +38,7 @@ class ClientDetail(BaseModel):
     )
     client_rates_fk = models.ForeignKey("RatesAndReturn", on_delete=models.CASCADE)
     client_comms_fk = models.ForeignKey("ClientCommunication", on_delete=models.CASCADE)
+    client_comms_freq_fk = models.ForeignKey("ClientCommunicationFrequency", on_delete=models.CASCADE)
     def __str__(self):
         """Return a human readable representation of the model instance."""
         return f"{self.get_title_display()} {self.initials} {self.surnames}"

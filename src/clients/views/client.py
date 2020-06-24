@@ -75,7 +75,6 @@ class ClientWizard(LoginRequiredMixin, SessionWizardView):
         clientComm = ClientCommunication()
         communicationFrequency = ClientCommunicationFrequency()
 
-
         # form instances
         contactDetail = construct_instance(
             form_dict["1"],

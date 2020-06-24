@@ -1,3 +1,11 @@
+from django.contrib import messages
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.urls import reverse, reverse_lazy
+from django.views import generic
+
+from ..models import ClientCommunicationFrequency
+
+
 class EditClientCommunicationFrequencyView(LoginRequiredMixin, generic.UpdateView):
     template_name = "clients/edit_details.html"
     model = ClientCommunicationFrequency
