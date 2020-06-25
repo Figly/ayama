@@ -11,28 +11,12 @@ from django.views import generic
 from formtools.wizard.views import SessionWizardView
 from practises.models import AdvisorDetail, AdvisorReminderConfig
 
-
 from ..forms import (AddClientContactDetailForm, AddClientDetailForm,
                      AddClientEmploymentDetailForm,
                      AddClientRatesAndReturnForm)
 from ..models import (ClientCommunication, ClientCommunicationFrequency,
                       ClientContactDetail, ClientDetail, EmploymentDetail,
                       RatesAndReturn)
-
-from ..forms import (
-    AddClientContactDetailForm,
-    AddClientDetailForm,
-    AddClientEmploymentDetailForm,
-    AddClientRatesAndReturnForm,
-)
-from ..models import (
-    ClientCommunication,
-    ClientContactDetail,
-    ClientDetail,
-    EmploymentDetail,
-    RatesAndReturn,
-)
->>>>>>> develop
 
 FORMS = [
     ("0", AddClientDetailForm),
