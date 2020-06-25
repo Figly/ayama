@@ -1,10 +1,11 @@
 from __future__ import unicode_literals
 
-from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Column, Field, Layout, Row, Submit
 from django import forms
 
+from crispy_forms.helper import FormHelper
+from crispy_forms.layout import Column, Field, Layout, Row, Submit
 from practises.models import AdvisorDetail
+
 from ..models import ClientNote
 
 
@@ -40,6 +41,9 @@ class AddClientNoteForm(forms.ModelForm):
 
     class Meta:
         model = ClientNote
+        widgets = {
+            'body': forms.Textarea(attrs={'cols': 80, 'rows': 20}),
+        }
         fields = [
             "client_id_fk",
             "title",

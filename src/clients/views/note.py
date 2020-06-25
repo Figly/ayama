@@ -12,7 +12,7 @@ from formtools.wizard.views import SessionWizardView
 from practises.models import AdvisorDetail
 
 from ..forms import AddClientNoteForm
-from ..models import ClientNote, ClientDetail
+from ..models import ClientDetail, ClientNote
 
 
 class AddClientNoteView(LoginRequiredMixin, generic.CreateView):

@@ -37,7 +37,7 @@
                 {%if user.is_administrator %}
                 <td>{{ client.advisor_id_fk}}</td>
                 {% endif %}
-                <td><a href="{% url 'clients:client-note-list' pk=client.id %}">Notes</a></td>
+                <td><a href="{% url 'clients:client-note-list' pk=client.id %}">Notes ({{ client.notes.count }})</a></td>
             </tr>
         </tbody>
         {% endfor %}
