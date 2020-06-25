@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.db import models
 
+from .advisor_reminder_config import AdvisorReminderConfig
 from .base import BaseModel
 
 ch_titles = (
@@ -47,6 +48,7 @@ class AdvisorDetail(BaseModel):
     personnel_number = models.CharField(
         "Personnel Number", max_length=50, blank=True, null=True
     )
+    reminder_config_freq_fk = models.ForeignKey("AdvisorReminderConfig",on_delete=models.CASCADE, related_name="reminder_config")
 
     def __str__(self):
         """Return a human readable representation of the model instance."""

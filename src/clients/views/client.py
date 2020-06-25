@@ -9,21 +9,14 @@ from django.urls import reverse, reverse_lazy
 from django.views import generic
 
 from formtools.wizard.views import SessionWizardView
-from practises.models import AdvisorDetail
+from practises.models import AdvisorDetail, AdvisorReminderConfig
 
-from ..forms import (
-    AddClientContactDetailForm,
-    AddClientDetailForm,
-    AddClientEmploymentDetailForm,
-    AddClientRatesAndReturnForm,
-)
-from ..models import (
-    ClientCommunication,
-    ClientContactDetail,
-    ClientDetail,
-    EmploymentDetail,
-    RatesAndReturn,
-)
+from ..forms import (AddClientContactDetailForm, AddClientDetailForm,
+                     AddClientEmploymentDetailForm,
+                     AddClientRatesAndReturnForm)
+from ..models import (ClientCommunication, ClientCommunicationFrequency,
+                      ClientContactDetail, ClientDetail, EmploymentDetail,
+                      RatesAndReturn)
 
 FORMS = [
     ("0", AddClientDetailForm),
@@ -81,6 +74,7 @@ class ClientWizard(LoginRequiredMixin, SessionWizardView):
         employmentDetail = EmploymentDetail()
         rates = RatesAndReturn()
         clientComm = ClientCommunication()
+        communicationFrequency = ClientCommunicationFrequency()
 
         # form instances
         contactDetail = construct_instance(
@@ -121,6 +115,16 @@ class ClientWizard(LoginRequiredMixin, SessionWizardView):
         clientComm.save()
         client.client_comms_fk = clientComm
 
+        advisorConfig = client.advisor_id_fk.reminder_config_freq_fk
+
+        communicationFrequency.sms_frequency = advisorConfig.sms_frequency
+        communicationFrequency.face_to_face_frequency = advisorConfig.face_to_face_frequency
+        communicationFrequency.calls_frequency = advisorConfig.calls_frequency
+        communicationFrequency.email_frequency = advisorConfig.email_frequency
+        communicationFrequency.modified_by = self.request.user
+        communicationFrequency.save()
+
+        client.client_comms_freq_fk = communicationFrequency
         client.client_contact_fk = contactDetail
         client.client_employment_fk = employmentDetail
         client.client_rates_fk = rates

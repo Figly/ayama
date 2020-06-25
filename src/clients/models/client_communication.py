@@ -45,3 +45,16 @@ class ClientCommunication(BaseModel):
     def __str__(self):
         """Return a human readable representation of the model instance."""
         return f"{self.names} {self.surnames}"
+
+
+class ClientCommunicationFrequency(BaseModel):
+    """
+    Class descriptor
+    """
+    face_to_face_frequency = models.IntegerField(blank=True, null=True)
+    calls_frequency = models.IntegerField(blank=True, null=True)
+    email_frequency = models.IntegerField(blank=True, null=True)
+    sms_frequency = models.IntegerField(blank=True, null=True)
+    def __str__(self):
+        """Return a human readable representation of the model instance."""
+        return f"{self.names} {self.surnames}"

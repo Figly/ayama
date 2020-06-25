@@ -11,12 +11,8 @@ from django.views import generic
 from formtools.wizard.views import SessionWizardView
 
 from ..forms import AddAdvisorContactDetailForm, AddAdvisorDetailForm
-from ..models import (
-    AdministratorDetail,
-    AdvisorContactDetail,
-    AdvisorDetail,
-    PractiseDetail,
-)
+from ..models import (AdministratorDetail, AdvisorContactDetail, AdvisorDetail,
+                      AdvisorReminderConfig, PractiseDetail)
 
 FORMS = [
     ("0", AddAdvisorDetailForm),
@@ -77,6 +73,7 @@ class AdvisorWizard(LoginRequiredMixin, UserPassesTestMixin, SessionWizardView):
         # models backing db
         advisor = AdvisorDetail()
         advisorContact = AdvisorContactDetail()
+        advisorCommsConfig = AdvisorReminderConfig()
 
         # form instances
 
@@ -113,7 +110,12 @@ class AdvisorWizard(LoginRequiredMixin, UserPassesTestMixin, SessionWizardView):
         advisorContact.save()
         advisor.advisor_contact_fk = advisorContact
 
-        advisor.modified_by = self.request.user
+        advisorCommsConfig.modified_by = self.request.user
+        advisorCommsConfig.save()
+
+        advisor.reminder_config_freq_fk = advisorCommsConfig
+        advisor.modified_by =  self.request.user
+
         advisor.save()
 
         messages.add_message(
@@ -197,10 +199,9 @@ class EditAdvisorDetailView(
         return super(EditAdvisorDetailView, self).form_valid(form)
 
 
-class EditAdvisorContactView(
-    LoginRequiredMixin, UserPassesTestMixin, generic.UpdateView
-):
-    template_name = "practises/edit_administrator_detail.html"
+class EditAdvisorContactView(LoginRequiredMixin, UserPassesTestMixin, generic.UpdateView):
+    template_name = "practises/edit_advisor_detail.html"
+
     model = AdvisorContactDetail
     fields = (
         "telephone_home",
@@ -235,3 +236,27 @@ class EditAdvisorContactView(
         )
         self.success_url = reverse_lazy("home")
         return super(EditAdvisorContactView, self).form_valid(form)
+
+class EditReminderPreferencesView(LoginRequiredMixin, UserPassesTestMixin, generic.UpdateView):
+    template_name = "practises/edit_advisor_detail.html"
+    model = AdvisorReminderConfig
+    fields = ('face_to_face_frequency', 'calls_frequency', 
+    'email_frequency', 'sms_frequency',)
+
+    def test_func(self):
+        return self.request.user.is_advisor
+
+    def form_valid(self, form):
+        if "cancel" in self.request.POST:
+            url = reverse_lazy("home")
+            return HttpResponseRedirect(url)
+            
+        model = form.save(commit=False)
+        model.modified_by = self.request.user
+        model.save()
+
+        messages.add_message(
+            self.request, messages.SUCCESS, "communication frequency successfully edited."
+        )
+        self.success_url = reverse_lazy("home")
+        return super(EditReminderPreferencesView, self).form_valid(form)
