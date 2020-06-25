@@ -10,7 +10,7 @@ class BaseModel(models.Model):
 
     created_at = models.DateTimeField(auto_now_add=True)
     modified_at = models.DateTimeField(auto_now=True)
-    modified_by = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE)
+    modified_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
     class Meta:
         get_latest_by = "created_at"
@@ -28,4 +28,3 @@ class BaseModel(models.Model):
         return datetime.strftime(
             self.modified_at.astimezone(get_current_timezone()), self.dateFormat
         )
-        
