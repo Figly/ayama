@@ -98,4 +98,3 @@ class AddClientContactDetailForm(forms.ModelForm):
             "postal_address_line_2",
             "postal_code",
         ]
-

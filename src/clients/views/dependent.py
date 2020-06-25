@@ -12,10 +12,8 @@ from formtools.wizard.views import SessionWizardView
 from practises.models import AdvisorDetail
 
 from ..forms import AddClientDependentDetailsForm
-from ..models import (
-    Dependent,
-    ClientDetail
-)
+from ..models import Dependent, ClientDetail
+
 
 class AddClientDependentView(LoginRequiredMixin, generic.CreateView):
     template_name = "clients/add_client_dependent_detail.html"
@@ -53,9 +51,15 @@ class AddClientDependentView(LoginRequiredMixin, generic.CreateView):
 class EditClientDependentView(LoginRequiredMixin, generic.UpdateView):
     template_name = "clients/edit_details.html"
     model = Dependent
-    fields = ('names', 'rsa_resident', 
-    'id_no','date_of_birth', 'relationship', 'other')
-    
+    fields = (
+        "names",
+        "rsa_resident",
+        "id_no",
+        "date_of_birth",
+        "relationship",
+        "other",
+    )
+
     def form_valid(self, form):
         if "cancel" in self.request.POST:
             url = reverse_lazy("home")
@@ -64,9 +68,11 @@ class EditClientDependentView(LoginRequiredMixin, generic.UpdateView):
         model = form.save(commit=False)
         model.modified_by = self.request.user
         model.save
-        
+
         messages.add_message(
-            self.request, messages.SUCCESS, "client dependent details successfully edited."
+            self.request,
+            messages.SUCCESS,
+            "client dependent details successfully edited.",
         )
         self.success_url = reverse_lazy("home")
         return super(EditClientDependentView, self).form_valid(form)

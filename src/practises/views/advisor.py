@@ -25,8 +25,7 @@ TEMPLATES = {
 }
 
 
-class AdvisorWizard(LoginRequiredMixin, UserPassesTestMixin,SessionWizardView):
-    
+class AdvisorWizard(LoginRequiredMixin, UserPassesTestMixin, SessionWizardView):
     def test_func(self):
         return self.request.user.is_administrator or self.request.user.is_superuser
 
@@ -50,7 +49,7 @@ class AdvisorWizard(LoginRequiredMixin, UserPassesTestMixin,SessionWizardView):
 
         return form
 
-    def get_form_initial(self, step):      
+    def get_form_initial(self, step):
         self.initial_dict.get(self.steps.current, {})
         if self.steps.current == "0" and self.practise is not None:
             return self.initial_dict.get(step, {"practise_id_fk": self.practise})
@@ -106,7 +105,7 @@ class AdvisorWizard(LoginRequiredMixin, UserPassesTestMixin,SessionWizardView):
         user.is_superuser = False
         user.save()
         advisor.user = user
-        
+
         advisorContact.modified_by = self.request.user
         advisorContact.save()
         advisor.advisor_contact_fk = advisorContact
@@ -116,6 +115,7 @@ class AdvisorWizard(LoginRequiredMixin, UserPassesTestMixin,SessionWizardView):
 
         advisor.reminder_config_freq_fk = advisorCommsConfig
         advisor.modified_by =  self.request.user
+
         advisor.save()
 
         messages.add_message(
@@ -128,7 +128,7 @@ class AdvisorWizard(LoginRequiredMixin, UserPassesTestMixin,SessionWizardView):
 class AdvisorlistView(LoginRequiredMixin, UserPassesTestMixin, generic.ListView):
     template_name = "practises/advisor_list.html"
     model = AdvisorDetail
-    
+
     def test_func(self):
         return self.request.user.is_administrator or self.request.user.is_superuser
 
@@ -161,53 +161,78 @@ class AdvisorSummaryView(LoginRequiredMixin, UserPassesTestMixin, generic.Detail
         context = {"advisor": advisor}
         return context
 
-class EditAdvisorDetailView(LoginRequiredMixin, UserPassesTestMixin, generic.UpdateView):
+
+class EditAdvisorDetailView(
+    LoginRequiredMixin, UserPassesTestMixin, generic.UpdateView
+):
     template_name = "practises/edit_advisor_detail.html"
     model = AdvisorDetail
-    fields = ('title', 'initials', 
-    'surnames', 'names', 'known_as',
-    'sa_id', 'passport_no','position', 'employment_date', 'personnel_number')
+    fields = (
+        "title",
+        "initials",
+        "surnames",
+        "names",
+        "known_as",
+        "sa_id",
+        "passport_no",
+        "position",
+        "employment_date",
+        "personnel_number",
+    )
 
     def test_func(self):
         return self.request.user.is_administrator or self.request.user.is_superuser
-    
+
     def form_valid(self, form):
         if "cancel" in self.request.POST:
             url = reverse_lazy("home")
             return HttpResponseRedirect(url)
-            
+
         model = form.save(commit=False)
         model.modified_by = self.request.user
         model.save
-        
+
         messages.add_message(
             self.request, messages.SUCCESS, "advisor details successfully edited."
         )
         self.success_url = reverse_lazy("home")
         return super(EditAdvisorDetailView, self).form_valid(form)
 
+
 class EditAdvisorContactView(LoginRequiredMixin, UserPassesTestMixin, generic.UpdateView):
     template_name = "practises/edit_advisor_detail.html"
+
     model = AdvisorContactDetail
-    fields = ('telephone_home', 'telephone_work', 
-    'cellphone_number', 'fax_number', 'email_address',
-    'residential_address_line_1', 'residential_address_line_2','residential_code', 
-    'postal_address_line_1', 'postal_address_line_2','postal_code')
-    
+    fields = (
+        "telephone_home",
+        "telephone_work",
+        "cellphone_number",
+        "fax_number",
+        "email_address",
+        "residential_address_line_1",
+        "residential_address_line_2",
+        "residential_code",
+        "postal_address_line_1",
+        "postal_address_line_2",
+        "postal_code",
+    )
+
     def test_func(self):
         return self.request.user.is_administrator or self.request.user.is_superuser
-        
+
     def form_valid(self, form):
         if "cancel" in self.request.POST:
             url = reverse_lazy("home")
             return HttpResponseRedirect(url)
-            
+
         model = form.save(commit=False)
         model.modified_by = self.request.user
         model.save
-        
+
         messages.add_message(
-            self.request, messages.SUCCESS, "advisor contact details successfully edited."
+            self.request,
+            messages.SUCCESS,
+            "advisor contact details successfully edited.",
         )
         self.success_url = reverse_lazy("home")
         return super(EditAdvisorContactView, self).form_valid(form)

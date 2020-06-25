@@ -8,7 +8,7 @@
         <h1>Client Details</h1>
         <div class="container">
             <div class="row">
-                <div class="col-md-12 col-sm-12"> 
+                <div class="col-md-12 col-sm-12">
                     <div class="col-md-6 col-sm-6">
                         <h2>Personal Details</h2>
                     </div>
@@ -28,7 +28,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-12 col-sm-12"> 
+                <div class="col-md-12 col-sm-12">
                     <div class="col-md-6 col-sm-6">
                         <h2>Communication history</h2>
                     </div>
@@ -64,7 +64,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-12 col-sm-12"> 
+                <div class="col-md-12 col-sm-12">
                     <div class="col-md-6 col-sm-6">
                         <h2>Employment Detail</h2>
                     </div>
@@ -85,7 +85,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-12 col-sm-12"> 
+                <div class="col-md-12 col-sm-12">
                     <div class="col-md-6 col-sm-6">
                         <h2>Rates and Return</h2>
                     </div>
@@ -121,9 +121,9 @@
             <div class="row">
                 <h2>Dependents</h2>
                 {% for dependent in client.dependents.all %}
-                
 
-                <div class="col-md-12 col-sm-12"> 
+
+                <div class="col-md-12 col-sm-12">
                     <div class="col-md-6 col-sm-6">
                         <h3>{{dependent.names}}</h3>
                     </div>
@@ -133,7 +133,7 @@
                 </div>
 
                     <div class="col-md-6 col-sm-6">
-                        
+
                         <p><strong>Surname:</strong></p> {{dependent.surnames}}
                         <p><strong>ID Number:</strong></p> {{dependent.id_no}}
                         <p><strong>South African Resident:</strong></p> {{dependent.rsa_resident}}
