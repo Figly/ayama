@@ -11,12 +11,20 @@ from django.views import generic
 from formtools.wizard.views import SessionWizardView
 from practises.models import AdvisorDetail, AdvisorReminderConfig
 
-from ..forms import (AddClientContactDetailForm, AddClientDetailForm,
-                     AddClientEmploymentDetailForm,
-                     AddClientRatesAndReturnForm)
-from ..models import (ClientCommunication, ClientCommunicationFrequency,
-                      ClientContactDetail, ClientDetail, EmploymentDetail,
-                      RatesAndReturn)
+from ..forms import (
+    AddClientContactDetailForm,
+    AddClientDetailForm,
+    AddClientEmploymentDetailForm,
+    AddClientRatesAndReturnForm,
+)
+from ..models import (
+    ClientCommunication,
+    ClientCommunicationFrequency,
+    ClientContactDetail,
+    ClientDetail,
+    EmploymentDetail,
+    RatesAndReturn,
+)
 
 FORMS = [
     ("0", AddClientDetailForm),
@@ -118,7 +126,9 @@ class ClientWizard(LoginRequiredMixin, SessionWizardView):
         advisorConfig = client.advisor_id_fk.reminder_config_freq_fk
 
         communicationFrequency.sms_frequency = advisorConfig.sms_frequency
-        communicationFrequency.face_to_face_frequency = advisorConfig.face_to_face_frequency
+        communicationFrequency.face_to_face_frequency = (
+            advisorConfig.face_to_face_frequency
+        )
         communicationFrequency.calls_frequency = advisorConfig.calls_frequency
         communicationFrequency.email_frequency = advisorConfig.email_frequency
         communicationFrequency.modified_by = self.request.user
