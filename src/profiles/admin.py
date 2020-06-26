@@ -1,10 +1,11 @@
 from __future__ import unicode_literals
 
-from authtools.admin import NamedUserAdmin
 from django.contrib import admin
 from django.contrib.auth import get_user_model
 from django.urls import reverse
 from django.utils.html import format_html
+
+from authtools.admin import NamedUserAdmin
 
 from .models import Profile
 
@@ -24,6 +25,8 @@ class NewUserAdmin(NamedUserAdmin):
         "permalink",
         "is_superuser",
         "is_staff",
+        "is_advisor",
+        "is_administrator",
     )
 
     # 'View on site' didn't work since the original User model needs to

@@ -3,7 +3,7 @@ set -efu
 
 LOCAL_USERS_DIR='/Users'
 SCRIPTS_DIR=$(dirname "$(python -c "import os; print(os.path.realpath('$0'))")")
-KUBERNETES_VERSION="v1.13.11"
+KUBERNETES_VERSION="v1.18.3"
 INSTALLED_MINIKUBE=$(minikube version | cut -d 'v' -f 3 | cut -d . -f 1)
 
 handle_dodgy_virtio () {
@@ -16,7 +16,7 @@ handle_dodgy_virtio () {
 handle_ip_address_failure () {
   echo "Deleting .PID file and restarting minikube"
   minikube stop
-  rm -f ~/.minikube/machines/minikube/hyperkit.pid
+  rm -rf ~/.minikube/machines/minikube/hyperkit.pid
   minikube start
 }
 

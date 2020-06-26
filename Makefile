@@ -29,6 +29,10 @@ staging:
 	./scripts/deploy.sh staging
 	./scripts/collectstatic.sh staging
 
+first:
+	$(MAKE) db
+	$(MAKE) app
+
 scaleup:
 	gcloud container clusters resize carignan --node-pool aragon --num-nodes 1 --zone europe-west1-d
 

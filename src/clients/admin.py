@@ -1,6 +1,7 @@
 from django.contrib import admin
 
 from .models import (
+    ClientCommunication,
     ClientContactDetail,
     ClientDetail,
     Dependent,
@@ -68,8 +69,18 @@ class DependentsAdmin(admin.ModelAdmin):
     )
 
 
+class ClientCommunicationsAdmin(admin.ModelAdmin):
+    list_display = (
+        "last_date_email",
+        "last_date_sms",
+        "last_date_call",
+        "last_date_face_to_face",
+    )
+
+
 admin.site.register(ClientDetail, ClientDetailsAdmin)
 admin.site.register(ClientContactDetail, ContactDetailsAdmin)
 admin.site.register(EmploymentDetail, EmploymentDetailsAdmin)
 admin.site.register(RatesAndReturn, RatesAndReturnsAdmin)
 admin.site.register(Dependent, DependentsAdmin)
+admin.site.register(ClientCommunication, ClientCommunicationsAdmin)

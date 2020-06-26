@@ -16,6 +16,10 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "ayama.settings")
 application = get_wsgi_application()
 
 if settings.DEBUG:
+    from django.contrib.staticfiles.handlers import StaticFilesHandler
+
+    application = StaticFilesHandler(get_wsgi_application())
+
     try:
         import django.views.debug
         import six
