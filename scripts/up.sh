@@ -16,7 +16,7 @@ handle_dodgy_virtio () {
 handle_ip_address_failure () {
   echo "Deleting .PID file and restarting minikube"
   minikube stop
-  rm -f ~/.minikube/machines/minikube/hyperkit.pid
+  rm -rf ~/.minikube/machines/minikube/hyperkit.pid
   minikube start
 }
 
