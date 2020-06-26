@@ -21,7 +21,7 @@ class ClientNote(BaseModel):
     )
 
     title = models.CharField("Note Title", max_length=100,)
-    body = models.CharField("Note", max_length=5000,)
+    body = models.TextField("Note")
     note_type = models.CharField(
         "Note Type", max_length=50, choices=ch_note_type, default="Note",
     )
