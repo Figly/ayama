@@ -12,7 +12,9 @@ function getInputValue2(){
     var retire = document.getElementById("retire").value;
     var I = document.getElementById("interest2").value;
     var salary = document.getElementById("salary_at_retirement").value;
+    var ob = document.getElementById("initial_investment1").value || 0;
     var balance;
+    console.log(balance);
 
     T = retire  - age;
     var r = I/1200;
@@ -23,7 +25,8 @@ function getInputValue2(){
         brac = Math.pow(1+r,t);
         numerator = P*(brac - 1);
         denumerator = r;
-        balance = numerator/denumerator;
+        bal = ob*Math.pow((1+(I/100)),i)
+        balance = bal + numerator/denumerator;
         pre_data.push([Number(age) + Number(i),balance]);
         }   
 
@@ -33,7 +36,9 @@ function getInputValue2(){
         numerator = salary*(brac - 1);
         denumerator = r;
         balance = balance*brac - (salary*12)*(1+r);
+        if(balance > 0){
         pre_data.push([Number(retire) + Number(i),balance]);
+    }
     }
 
     console.log(pre_data);
