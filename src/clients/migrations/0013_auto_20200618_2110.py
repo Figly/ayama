@@ -9,18 +9,21 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('clients', '0012_communicationfrequency'),
+        ("clients", "0012_communicationfrequency"),
     ]
 
     operations = [
         migrations.RenameModel(
-            old_name='CommunicationFrequency',
-            new_name='ClientCommunicationFrequency',
+            old_name="CommunicationFrequency", new_name="ClientCommunicationFrequency",
         ),
         migrations.AddField(
-            model_name='clientdetail',
-            name='client_comms_freq_fk',
-            field=models.ForeignKey(default=1, on_delete=django.db.models.deletion.CASCADE, to='clients.ClientCommunicationFrequency'),
+            model_name="clientdetail",
+            name="client_comms_freq_fk",
+            field=models.ForeignKey(
+                default=1,
+                on_delete=django.db.models.deletion.CASCADE,
+                to="clients.ClientCommunicationFrequency",
+            ),
             preserve_default=False,
         ),
     ]

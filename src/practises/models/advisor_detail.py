@@ -48,7 +48,11 @@ class AdvisorDetail(BaseModel):
     personnel_number = models.CharField(
         "Personnel Number", max_length=50, blank=True, null=True
     )
-    reminder_config_freq_fk = models.ForeignKey("AdvisorReminderConfig",on_delete=models.CASCADE, related_name="reminder_config")
+    reminder_config_freq_fk = models.ForeignKey(
+        "AdvisorReminderConfig",
+        on_delete=models.CASCADE,
+        related_name="reminder_config",
+    )
 
     def __str__(self):
         """Return a human readable representation of the model instance."""

@@ -47,6 +47,7 @@ class AdministratorDetail(BaseModel):
     personnel_number = models.CharField(
         "Personnel Number", max_length=50, blank=True, null=True
     )
+
     def __str__(self):
         """Return a human readable representation of the model instance."""
         return f"{self.get_title_display()} {self.initials} {self.surnames}"

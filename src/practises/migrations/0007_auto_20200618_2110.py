@@ -7,13 +7,17 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('practises', '0006_auto_20200618_1824'),
+        ("practises", "0006_auto_20200618_1824"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='advisordetail',
-            name='reminder_config_freq_fk',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='reminder_config', to='practises.AdvisorReminderConfig'),
+            model_name="advisordetail",
+            name="reminder_config_freq_fk",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="reminder_config",
+                to="practises.AdvisorReminderConfig",
+            ),
         ),
     ]

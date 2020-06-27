@@ -9,26 +9,40 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('clients', '0011_clientcommunication_modified_by'),
+        ("clients", "0011_clientcommunication_modified_by"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='CommunicationFrequency',
+            name="CommunicationFrequency",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('modified_at', models.DateTimeField(auto_now=True)),
-                ('face_to_face_frequency', models.IntegerField(blank=True, null=True)),
-                ('calls_frequency', models.IntegerField(blank=True, null=True)),
-                ('email_frequency', models.IntegerField(blank=True, null=True)),
-                ('sms_frequency', models.IntegerField(blank=True, null=True)),
-                ('modified_by', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("created_at", models.DateTimeField(auto_now_add=True)),
+                ("modified_at", models.DateTimeField(auto_now=True)),
+                ("face_to_face_frequency", models.IntegerField(blank=True, null=True)),
+                ("calls_frequency", models.IntegerField(blank=True, null=True)),
+                ("email_frequency", models.IntegerField(blank=True, null=True)),
+                ("sms_frequency", models.IntegerField(blank=True, null=True)),
+                (
+                    "modified_by",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
             ],
             options={
-                'get_latest_by': 'created_at',
-                'abstract': False,
-                'order_with_respect_to': 'created_at',
+                "get_latest_by": "created_at",
+                "abstract": False,
+                "order_with_respect_to": "created_at",
             },
         ),
     ]
