@@ -34,7 +34,7 @@ first:
 	$(MAKE) app
 
 scaleup:
-	gcloud container clusters resize carignan --node-pool aragon --num-nodes 1 --zone europe-west1-d
+	gcloud container clusters resize suburbia --node-pool north --num-nodes 1 --zone europe-west1-d
 
 scaledown:
-	gcloud container clusters resize carignan --node-pool aragon --num-nodes 0 --zone europe-west1-d
+	gcloud container clusters resize suburbia --node-pool north --num-nodes 0 --zone europe-west1-d

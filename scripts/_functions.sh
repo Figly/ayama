@@ -80,7 +80,7 @@ ion/json" -X POST -d "{
     \"state\": \"$1\",
     \"description\": \"$2\",
     \"context\": \"$3\"
-  }"https://api.github.com/repos/coetzeevs/$GIT_REPO_NAME/statuses/$(git rev-parse HEAD)" > /dev/null
+  }"https://api.github.com/repos/Figly/$GIT_REPO_NAME/statuses/$(git rev-parse HEAD)" > /dev/null
 }
 
 
