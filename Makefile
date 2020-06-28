@@ -6,28 +6,28 @@ help:
 	@echo "first - deploy everything from scratch"
 
 bootstrap:
-	./scripts/bootstrap.sh
+	./scripts/src/bootstrap.sh
 
 up:
-	./scripts/up.sh
+	./scripts/src/up.sh
 
 db:
 	kubectl --context=minikube apply -f services/postgres/kubernetes/dev
-	./scripts/postgres.sh dev
+	./scripts/src/postgres.sh dev
 	echo "waiting for DB availability"
 	sleep 30
 
 app:
 	kubectl --context=minikube apply -f kubernetes/once-off/dev
-	./scripts/_build.sh dev
-	./scripts/migrate.sh dev
-	./scripts/deploy.sh dev
+	./scripts/src/_build.sh dev
+	./scripts/src/migrate.sh dev
+	./scripts/sr/cdeploy.sh dev
 
 staging:
-	./scripts/_build.sh staging
-	./scripts/migrate.sh staging
-	./scripts/deploy.sh staging
-	./scripts/collectstatic.sh staging
+	./scripts/src/_build.sh staging
+	./scripts/src/migrate.sh staging
+	./scripts/src/deploy.sh staging
+	./scripts/src/collectstatic.sh staging
 
 first:
 	$(MAKE) db
