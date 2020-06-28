@@ -59,7 +59,7 @@ else:
         GS_BUCKET_NAME = "ayama-production-production"
 
     STATICFILES_STORAGE = "storages.backends.gcloud.GoogleCloudStorage"
-    STATIC_URL = "https://storage.googleapis.com/ayama-staging-assets/static/"
+    STATIC_URL = "https://storage.googleapis.com/ayama-staging-assets/"
 
 PASSWORD_HASHERS = [
     "django.contrib.auth.hashers.PBKDF2PasswordHasher",

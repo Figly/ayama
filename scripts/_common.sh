@@ -10,7 +10,7 @@ set -o pipefail
 APP_NAME="ayama"
 GIT_REPO_NAME="ayama"
 PROJECT_ZONE=europe-west1-d
-CURRENT_USER=$(whoami)
+CURRENT_USER="$(USER)"
 OS="$(uname -s)"
 
 ENVIRONMENT=${1:-}
