@@ -1,7 +1,7 @@
 app: ayama
 defaults:
   labels:
-    owner: hadoe
+    owner: figly-tech
   replicas: 0
   resources:
     requests:
