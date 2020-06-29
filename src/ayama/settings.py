@@ -59,6 +59,7 @@ else:
         GS_BUCKET_NAME = "ayama-production-production"
 
     STATICFILES_STORAGE = "storages.backends.gcloud.GoogleCloudStorage"
+    MEDIA_URL = "https://storage.googleapis.com/ayama-staging-assets/"
     STATIC_URL = "https://storage.googleapis.com/ayama-staging-assets/"
 
 PASSWORD_HASHERS = [
