@@ -62,7 +62,7 @@ create_configmap () {
   if [ -f "${KUBERNETES_DIR}/configmaps/${ENVIRONMENT}.env" ]; then
     kubectl create configmap "${APP_NAME}-env" \
       --from-env-file="${KUBERNETES_DIR}/configmaps/${ENVIRONMENT}.env" \
-      --dry-run -oyaml | kubectl apply -f -
+      --dry-run=client -oyaml | kubectl apply -f -
   fi
 }
 
@@ -70,7 +70,7 @@ create_secret () {
   if [ -f "${KUBERNETES_DIR}/secrets/${ENVIRONMENT}.env" ]; then
     kubectl create secret generic "${APP_NAME}-env" \
       --from-env-file="${KUBERNETES_DIR}/secrets/${ENVIRONMENT}.env" \
-      --dry-run -oyaml | kubectl apply -f -
+      --dry-run=client -oyaml | kubectl apply -f -
   fi
 }
 
@@ -80,7 +80,7 @@ ion/json" -X POST -d "{
     \"state\": \"$1\",
     \"description\": \"$2\",
     \"context\": \"$3\"
-  }"https://api.github.com/repos/coetzeevs/$GIT_REPO_NAME/statuses/$(git rev-parse HEAD)" > /dev/null
+  }"https://api.github.com/repos/Figly/$GIT_REPO_NAME/statuses/$(git rev-parse HEAD)" > /dev/null
 }
 
 
