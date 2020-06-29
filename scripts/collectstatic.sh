@@ -40,7 +40,7 @@ create_configmap
 # Secrets Maps
 create_secret
 
-echo "Starting to run migration:"
+echo "Starting to collect static:"
 kubectl apply -f "${POD_TEMPLATE}"
 
 while true; do
