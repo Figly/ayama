@@ -1,8 +1,12 @@
 from __future__ import unicode_literals
 
+import logging
+
 from django.contrib import messages
 from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.db import transaction
+from django.db.models.query_utils import Q
 from django.forms.models import construct_instance
 from django.http.response import HttpResponseRedirect
 from django.urls import reverse_lazy
@@ -28,8 +32,10 @@ TEMPLATES = {
     "0": "practises/add_advisor_detail.html",
     "1": "practises/add_advisor_contact_detail.html",
 }
+log = logging.getLogger(__name__)
 
 
+@transaction.atomic
 class AdvisorWizard(LoginRequiredMixin, UserPassesTestMixin, SessionWizardView):
     def test_func(self):
         return self.request.user.is_administrator or self.request.user.is_superuser
@@ -73,59 +79,78 @@ class AdvisorWizard(LoginRequiredMixin, UserPassesTestMixin, SessionWizardView):
             context.update({"advisor_name": " ".join(advisor_name)})
         return context
 
+    @transaction.atomic
     def done(self, form_list, form_dict, **kwargs):
-        User = get_user_model()
-        # models backing db
-        advisor = AdvisorDetail()
-        advisorContact = AdvisorContactDetail()
-        advisorCommsConfig = AdvisorReminderConfig()
+        try:
+            User = get_user_model()
+            # models backing db
+            advisor = AdvisorDetail()
+            advisorContact = AdvisorContactDetail()
+            advisorCommsConfig = AdvisorReminderConfig()
 
-        # form instances
+            # form instances
 
-        advisor = construct_instance(
-            form_dict["0"],
-            advisor,
-            form_dict["0"]._meta.fields,
-            form_dict["0"]._meta.exclude,
-        )
+            advisor = construct_instance(
+                form_dict["0"],
+                advisor,
+                form_dict["0"]._meta.fields,
+                form_dict["0"]._meta.exclude,
+            )
 
-        advisorContact = construct_instance(
-            form_dict["1"],
-            advisorContact,
-            form_dict["1"]._meta.fields,
-            form_dict["1"]._meta.exclude,
-        )
+            advisorContact = construct_instance(
+                form_dict["1"],
+                advisorContact,
+                form_dict["1"]._meta.fields,
+                form_dict["1"]._meta.exclude,
+            )
 
-        user = User.objects.create_user(
-            email=advisorContact.email_address,
-            username=advisorContact.email_address,
-            password="password",
-            first_name=advisor.names,
-            last_name=advisor.surnames,
-            name=advisor.names + " " + advisor.surnames,
-        )  # default password for now, to revise
-        user.is_advisor = True
-        user.is_administrator = False
-        user.is_staff = True
-        user.is_superuser = False
-        user.save()
-        advisor.user = user
+            existing_user = User.objects.filter(
+                Q(email=advisorContact.email_address)
+                | Q(username=advisorContact.email_address)
+            )
 
-        advisorContact.modified_by = self.request.user
-        advisorContact.save()
-        advisor.advisor_contact_fk = advisorContact
+            if not existing_user:
+                user = User.objects.create_user(
+                    email=advisorContact.email_address,
+                    username=advisorContact.email_address,
+                    password="password",
+                    first_name=advisor.names,
+                    last_name=advisor.surnames,
+                    name=advisor.names + " " + advisor.surnames,
+                )  # default password for now, to revise
+                user.is_advisor = True
+                user.is_administrator = False
+                user.is_staff = True
+                user.is_superuser = False
+                user.save()
+                advisor.user = user
 
-        advisorCommsConfig.modified_by = self.request.user
-        advisorCommsConfig.save()
+                advisorContact.modified_by = self.request.user
+                advisorContact.save()
+                advisor.advisor_contact_fk = advisorContact
 
-        advisor.reminder_config_freq_fk = advisorCommsConfig
-        advisor.modified_by = self.request.user
+                advisorCommsConfig.modified_by = self.request.user
+                advisorCommsConfig.save()
 
-        advisor.save()
+                advisor.reminder_config_freq_fk = advisorCommsConfig
+                advisor.modified_by = self.request.user
 
-        messages.add_message(
-            self.request, messages.SUCCESS, "advisor successfully added."
-        )
+                advisor.save()
+
+                messages.add_message(
+                    self.request, messages.SUCCESS, "advisor successfully added."
+                )
+            else:
+                messages.add_message(
+                    self.request, messages.ERROR, "Email address already in use."
+                )
+                return HttpResponseRedirect(self.request.path_info)
+        except Exception as e:
+            log.info(e)
+            messages.add_message(
+                self.request, messages.ERROR, "An error occured. Please try again."
+            )
+            return HttpResponseRedirect(reverse_lazy("home"))
 
         return HttpResponseRedirect(reverse_lazy("home"))
 
