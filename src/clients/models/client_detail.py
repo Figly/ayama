@@ -37,8 +37,10 @@ class ClientDetail(BaseModel):
         "EmploymentDetail", on_delete=models.CASCADE
     )
     client_rates_fk = models.ForeignKey("RatesAndReturn", on_delete=models.CASCADE)
-    client_comms_fk = models.ForeignKey("ClientCommunication", on_delete=models.CASCADE)
-    client_comms_freq_fk = models.ForeignKey(
+    client_comms_fk = models.OneToOneField(
+        "ClientCommunication", on_delete=models.CASCADE
+    )
+    client_comms_freq_fk = models.OneToOneField(
         "ClientCommunicationFrequency", on_delete=models.CASCADE
     )
 
