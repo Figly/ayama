@@ -5,11 +5,13 @@ from .forms import (
     AddAdministratorDetailForm,
     AddAdvisorContactDetailForm,
     AddAdvisorDetailForm,
+    AddPractiseDetailForm,
+    SignUpAdministratorDetailForm,
 )
 from .views import (
     AddPractiseView,
     AdministratorSummaryView,
-    AdministratorWizard,
+    AddAdministratorWizard,
     AdvisorlistView,
     AdvisorSummaryView,
     AdvisorWizard,
@@ -20,6 +22,7 @@ from .views import (
     EditAdvisorDetailView,
     EditPractiseView,
     EditReminderPreferencesView,
+    SignUpAdministratorWizard,
 )
 
 app_name = "practises"
@@ -38,10 +41,21 @@ urlpatterns = [
     ),
     path(
         "administrator/",
-        AdministratorWizard.as_view(
+        AddAdministratorWizard.as_view(
             [AddAdministratorDetailForm, AddAdministratorContactDetailForm]
         ),
         name="add-administrator",
+    ),
+    path(
+        "admin_sign_up/",
+        SignUpAdministratorWizard.as_view(
+            [
+                SignUpAdministratorDetailForm,
+                AddAdministratorContactDetailForm,
+                AddPractiseDetailForm,
+            ]
+        ),
+        name="sign-up-administrator",
     ),
     path("advisor_list/", AdvisorlistView.as_view(), name="advisor-list"),
     path("advisor_summary/<pk>/", AdvisorSummaryView.as_view(), name="advisor-summary"),

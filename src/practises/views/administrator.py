@@ -24,7 +24,9 @@ TEMPLATES = {
 }
 
 
-class AdministratorWizard(LoginRequiredMixin, UserPassesTestMixin, SessionWizardView):
+class AddAdministratorWizard(
+    LoginRequiredMixin, UserPassesTestMixin, SessionWizardView
+):
     def test_func(self):
         return self.request.user.is_superuser
 
@@ -32,7 +34,9 @@ class AdministratorWizard(LoginRequiredMixin, UserPassesTestMixin, SessionWizard
         return TEMPLATES[self.steps.current]
 
     def get_context_data(self, form, **kwargs):
-        context = super(AdministratorWizard, self).get_context_data(form=form, **kwargs)
+        context = super(AddAdministratorWizard, self).get_context_data(
+            form=form, **kwargs
+        )
         if self.steps.current != "0":
             administrator_name = []
             step0data = self.get_cleaned_data_for_step("0")
