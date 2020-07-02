@@ -54,7 +54,7 @@ function drawChart2(pre_data) {
     var options = {
         chart: {
             title: 'Monthly Payment Calculator',
-            subtitle: 'Ander Kak',
+            subtitle: 'Awe',
             },
         bars: 'vertical'
         };

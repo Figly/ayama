@@ -27,7 +27,7 @@ function drawChart(pre_data) {
     var options = {
     	chart: {
         	title: 'Awe',
-        	subtitle: 'Nog Kak',
+        	subtitle: 'Awe',
       		},
       	bars: 'vertical'
     	};
