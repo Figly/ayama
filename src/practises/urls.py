@@ -11,12 +11,12 @@ from .forms import (
 )
 from .views import (
     AddPractiseView,
-    AdministratorSummaryView,
     AddAdministratorWizard,
+    AddAdvisorWizard,
+    AdministratorSummaryView,
     AdvisorlistView,
     AdvisorSummaryView,
-    AdvisorWizard,
-    AministratorlistView,
+    AdministratorlistView,
     EditAdministratorContactView,
     EditAdministratorDetailView,
     EditAdvisorContactView,
@@ -33,12 +33,12 @@ urlpatterns = [
     path("edit_practise/<pk>/", EditPractiseView.as_view(), name="edit-practise"),
     path(
         "advisor/",
-        AdvisorWizard.as_view([AddAdvisorDetailForm, AddAdvisorContactDetailForm]),
+        AddAdvisorWizard.as_view([AddAdvisorDetailForm, AddAdvisorContactDetailForm]),
         name="add-advisor",
     ),
     path(
         "advisor/<int:practise>/",
-        AdvisorWizard.as_view([AddAdvisorDetailForm, AddAdvisorContactDetailForm]),
+        AddAdvisorWizard.as_view([AddAdvisorDetailForm, AddAdvisorContactDetailForm]),
         name="add-advisor",
     ),
     path(
@@ -79,7 +79,9 @@ urlpatterns = [
         name="edit-advisor-contact",
     ),
     path(
-        "administrator_list/", AministratorlistView.as_view(), name="administrator-list"
+        "administrator_list/",
+        AdministratorlistView.as_view(),
+        name="administrator-list",
     ),
     path(
         "administrator_summary/<pk>/",

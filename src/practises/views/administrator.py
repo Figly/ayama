@@ -97,7 +97,7 @@ class AddAdministratorWizard(
         return HttpResponseRedirect(reverse_lazy("home"))
 
 
-class AministratorlistView(LoginRequiredMixin, UserPassesTestMixin, generic.ListView):
+class AdministratorlistView(LoginRequiredMixin, UserPassesTestMixin, generic.ListView):
     template_name = "practises/administrator_list.html"
     model = AdministratorDetail
 
@@ -105,7 +105,7 @@ class AministratorlistView(LoginRequiredMixin, UserPassesTestMixin, generic.List
         return self.request.user.is_superuser
 
     def get_context_data(self, **kwargs):
-        context = super(AministratorlistView, self).get_context_data(**kwargs)
+        context = super(AdministratorlistView, self).get_context_data(**kwargs)
         user = self.request.user
         if user.is_superuser:
             administrators = AdministratorDetail.objects.all().select_related(

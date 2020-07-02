@@ -30,7 +30,7 @@ TEMPLATES = {
 }
 
 
-class AdvisorWizard(LoginRequiredMixin, UserPassesTestMixin, SessionWizardView):
+class AddAdvisorWizard(LoginRequiredMixin, UserPassesTestMixin, SessionWizardView):
     def test_func(self):
         return self.request.user.is_administrator or self.request.user.is_superuser
 
@@ -39,7 +39,7 @@ class AdvisorWizard(LoginRequiredMixin, UserPassesTestMixin, SessionWizardView):
 
     def dispatch(self, request, *args, **kwargs):
         self.practise = kwargs.get("practise", None)
-        return super(AdvisorWizard, self).dispatch(request, *args, **kwargs)
+        return super(AddAdvisorWizard, self).dispatch(request, *args, **kwargs)
 
     def get_form(self, step=None, data=None, files=None):
         form = super().get_form(step, data, files)
@@ -63,7 +63,7 @@ class AdvisorWizard(LoginRequiredMixin, UserPassesTestMixin, SessionWizardView):
             return self.initial_dict.get(step, {"practise_id_fk": self.practise})
 
     def get_context_data(self, form, **kwargs):
-        context = super(AdvisorWizard, self).get_context_data(form=form, **kwargs)
+        context = super(AddAdvisorWizard, self).get_context_data(form=form, **kwargs)
         if self.steps.current != "0":
             advisor_name = []
             step0data = self.get_cleaned_data_for_step("0")
