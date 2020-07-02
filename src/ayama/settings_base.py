@@ -14,7 +14,7 @@ from pathlib import Path
 from django.contrib import messages
 from django.urls import reverse_lazy
 
-DEBUG = True
+DEBUG = os.getenv("DEBUG", False)
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 STATICFILES_DIRS = (
