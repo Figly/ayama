@@ -104,7 +104,7 @@ class SignUpAdvisorWizard(SessionWizardView):
         advisor.save()
 
         messages.add_message(
-            self.request, messages.SUCCESS, "advisor successfully added."
+            self.request, messages.SUCCESS, "Advisor successfully signed up."
         )
 
         return HttpResponseRedirect(reverse_lazy("home"))

@@ -114,7 +114,9 @@ class SignUpAdministratorWizard(SessionWizardView):
         administrator.save()
 
         messages.add_message(
-            self.request, messages.SUCCESS, "Practise and Administrator signed up."
+            self.request,
+            messages.SUCCESS,
+            "Practise and Administrator successfully signed up.",
         )
 
         return HttpResponseRedirect(reverse_lazy("home"))
