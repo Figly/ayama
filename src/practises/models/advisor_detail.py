@@ -28,7 +28,6 @@ class AdvisorDetail(BaseModel):
         "PractiseDetail",
         on_delete=models.CASCADE,
         related_name="Advisors",
-        blank=True,
         null=True,
         default=None,
     )
