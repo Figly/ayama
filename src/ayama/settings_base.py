@@ -14,7 +14,7 @@ from pathlib import Path
 from django.contrib import messages
 from django.urls import reverse_lazy
 
-DEBUG = os.getenv("DEBUG", False)
+DEBUG = True
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 STATICFILES_DIRS = (
@@ -69,6 +69,7 @@ INSTALLED_APPS = (
     "easy_thumbnails",
     "profiles",
     "accounts",
+    "calculator",
     "clients",
     "practises",
     "formtools",
