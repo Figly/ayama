@@ -62,7 +62,7 @@ create_configmap () {
   if [ -f "${KUBERNETES_DIR}/configmaps/${ENVIRONMENT}.env" ]; then
     kubectl create configmap "${APP_NAME}-env" \
       --from-env-file="${KUBERNETES_DIR}/configmaps/${ENVIRONMENT}.env" \
-      --dry-run=client -oyaml | kubectl apply -f -
+      --dry-run=true -oyaml | kubectl apply -f -
   fi
 }
 
@@ -70,7 +70,7 @@ create_secret () {
   if [ -f "${KUBERNETES_DIR}/secrets/${ENVIRONMENT}.env" ]; then
     kubectl create secret generic "${APP_NAME}-env" \
       --from-env-file="${KUBERNETES_DIR}/secrets/${ENVIRONMENT}.env" \
-      --dry-run=client -oyaml | kubectl apply -f -
+      --dry-run=true -oyaml | kubectl apply -f -
   fi
 }
 

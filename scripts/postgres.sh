@@ -38,13 +38,13 @@ fi
 if [ -f "${POSTGRES_K8S_DIR}/configmaps/${ENVIRONMENT}.env" ]; then
   kubectl create configmap "${APP_NAME}-postgres-env" \
     --from-env-file="${POSTGRES_K8S_DIR}/configmaps/${ENVIRONMENT}.env" \
-    --dry-run=client -oyaml | kubectl apply -f -
+    --dry-run=true -oyaml | kubectl apply -f -
 fi
 # Secrets Maps
 if [ -f "${POSTGRES_K8S_DIR}/secrets/${ENVIRONMENT}.env" ]; then
   kubectl create secret generic "${APP_NAME}-postgres-env" \
     --from-env-file="${POSTGRES_K8S_DIR}/secrets/${ENVIRONMENT}.env" \
-    --dry-run=client -oyaml | kubectl apply -f -
+    --dry-run=true -oyaml | kubectl apply -f -
 fi
 
 kubectl apply -f "${POSTGRES_K8S_BUILD_DIR}/"
