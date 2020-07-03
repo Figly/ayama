@@ -8,6 +8,7 @@ import accounts.urls
 import clients.urls
 import practises.urls
 import profiles.urls
+import calculator.urls
 
 from . import views
 
@@ -24,6 +25,7 @@ urlpatterns = [
     path("", include(accounts.urls)),
     path("", include(practises.urls)),
     path("", include(clients.urls)),
+    path("calcs/", include(calculator.urls)),
 ]
 
 if settings.DEBUG:
