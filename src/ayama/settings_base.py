@@ -69,6 +69,7 @@ INSTALLED_APPS = (
     "easy_thumbnails",
     "profiles",
     "accounts",
+    "calculator",
     "clients",
     "practises",
     "formtools",
