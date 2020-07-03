@@ -10,7 +10,7 @@ set -o pipefail
 APP_NAME="ayama"
 GIT_REPO_NAME="ayama"
 PROJECT_ZONE=europe-west1-d
-CURRENT_USER=$(whoami)
+CURRENT_USER="$(whoami)"
 OS="$(uname -s)"
 
 ENVIRONMENT=${1:-}
@@ -23,21 +23,21 @@ fi
 
 case "${ENVIRONMENT}" in
     production)
-        CLUSTER="vermentino"
-        PROJECT_ID=ayama-production
+        CLUSTER="pangea"
+        PROJECT_ID=figly-production
         KUBECTL_NAMESPACE="default"
         KUBECTL_CONTEXT="gke_${PROJECT_ID}_${PROJECT_ZONE}_${CLUSTER}"
-        SLACK_CHANNEL="https://hooks.slack.com/services/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"
+        SLACK_CHANNEL="https://hooks.slack.com/services/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"
         ANNOUNCE_PREFIX=":rocket: production"
         ANNOUNCE_ENABLED=true
     ;;
 
     staging)
-        CLUSTER="carignan"
-        PROJECT_ID=ayama-staging
+        CLUSTER="suburbia"
+        PROJECT_ID=figly-staging
         KUBECTL_NAMESPACE="default"
         KUBECTL_CONTEXT="gke_${PROJECT_ID}_${PROJECT_ZONE}_${CLUSTER}"
-        SLACK_CHANNEL="https://hooks.slack.com/services/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"
+        SLACK_CHANNEL="https://hooks.slack.com/services/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"
         ANNOUNCE_PREFIX=":construction: staging"
         ANNOUNCE_ENABLED=true
     ;;
@@ -47,9 +47,9 @@ case "${ENVIRONMENT}" in
         PROJECT_ID=
         KUBECTL_NAMESPACE=default
         KUBECTL_CONTEXT="minikube"
-        SLACK_CHANNEL="https://hooks.slack.com/services/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"
-        ANNOUNCE_PREFIX=":pick: dev"
-        ANNOUNCE_ENABLED=true
+        SLACK_CHANNEL=""
+        ANNOUNCE_PREFIX=""
+        ANNOUNCE_ENABLED=false
     ;;
 
     *)

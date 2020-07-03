@@ -5,21 +5,26 @@ from .forms import (
     AddAdministratorDetailForm,
     AddAdvisorContactDetailForm,
     AddAdvisorDetailForm,
+    AddPractiseDetailForm,
+    SignUpAdministratorDetailForm,
+    SignUpAdvisorDetailForm,
 )
 from .views import (
     AddPractiseView,
+    AddAdministratorWizard,
+    AddAdvisorWizard,
     AdministratorSummaryView,
-    AdministratorWizard,
     AdvisorlistView,
     AdvisorSummaryView,
-    AdvisorWizard,
-    AministratorlistView,
+    AdministratorlistView,
     EditAdministratorContactView,
     EditAdministratorDetailView,
     EditAdvisorContactView,
     EditAdvisorDetailView,
     EditPractiseView,
     EditReminderPreferencesView,
+    SignUpAdministratorWizard,
+    SignUpAdvisorWizard,
 )
 
 app_name = "practises"
@@ -28,20 +33,38 @@ urlpatterns = [
     path("edit_practise/<pk>/", EditPractiseView.as_view(), name="edit-practise"),
     path(
         "advisor/",
-        AdvisorWizard.as_view([AddAdvisorDetailForm, AddAdvisorContactDetailForm]),
+        AddAdvisorWizard.as_view([AddAdvisorDetailForm, AddAdvisorContactDetailForm]),
         name="add-advisor",
     ),
     path(
         "advisor/<int:practise>/",
-        AdvisorWizard.as_view([AddAdvisorDetailForm, AddAdvisorContactDetailForm]),
+        AddAdvisorWizard.as_view([AddAdvisorDetailForm, AddAdvisorContactDetailForm]),
         name="add-advisor",
     ),
     path(
         "administrator/",
-        AdministratorWizard.as_view(
+        AddAdministratorWizard.as_view(
             [AddAdministratorDetailForm, AddAdministratorContactDetailForm]
         ),
         name="add-administrator",
+    ),
+    path(
+        "admin_sign_up/",
+        SignUpAdministratorWizard.as_view(
+            [
+                SignUpAdministratorDetailForm,
+                AddAdministratorContactDetailForm,
+                AddPractiseDetailForm,
+            ]
+        ),
+        name="sign-up-administrator",
+    ),
+    path(
+        "advisor_sign_up/",
+        SignUpAdvisorWizard.as_view(
+            [SignUpAdministratorDetailForm, AddAdvisorContactDetailForm,]
+        ),
+        name="sign-up-advisor",
     ),
     path("advisor_list/", AdvisorlistView.as_view(), name="advisor-list"),
     path("advisor_summary/<pk>/", AdvisorSummaryView.as_view(), name="advisor-summary"),
@@ -56,7 +79,9 @@ urlpatterns = [
         name="edit-advisor-contact",
     ),
     path(
-        "administrator_list/", AministratorlistView.as_view(), name="administrator-list"
+        "administrator_list/",
+        AdministratorlistView.as_view(),
+        name="administrator-list",
     ),
     path(
         "administrator_summary/<pk>/",

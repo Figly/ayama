@@ -1,8 +1,12 @@
 from __future__ import unicode_literals
 
+import logging
+
 from django.contrib import messages
 from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.db import transaction
+from django.db.models import Q
 from django.forms.models import construct_instance
 from django.http.response import HttpResponseRedirect
 from django.urls import reverse_lazy
@@ -22,9 +26,12 @@ TEMPLATES = {
     "0": "practises/add_administrator.html",
     "1": "practises/add_administrator_contact_detail.html",
 }
+log = logging.getLogger(__name__)
 
 
-class AdministratorWizard(LoginRequiredMixin, UserPassesTestMixin, SessionWizardView):
+class AddAdministratorWizard(
+    LoginRequiredMixin, UserPassesTestMixin, SessionWizardView
+):
     def test_func(self):
         return self.request.user.is_superuser
 
@@ -32,7 +39,9 @@ class AdministratorWizard(LoginRequiredMixin, UserPassesTestMixin, SessionWizard
         return TEMPLATES[self.steps.current]
 
     def get_context_data(self, form, **kwargs):
-        context = super(AdministratorWizard, self).get_context_data(form=form, **kwargs)
+        context = super(AddAdministratorWizard, self).get_context_data(
+            form=form, **kwargs
+        )
         if self.steps.current != "0":
             administrator_name = []
             step0data = self.get_cleaned_data_for_step("0")
@@ -42,58 +51,77 @@ class AdministratorWizard(LoginRequiredMixin, UserPassesTestMixin, SessionWizard
             context.update({"administrator_name": " ".join(administrator_name)})
         return context
 
+    @transaction.atomic
     def done(self, form_list, form_dict, **kwargs):
-        # models backing db
-        administrator = AdministratorDetail()
-        administratorContactDetail = AdministratorContactDetail()
-        User = get_user_model()
+        try:
+            # models backing db
+            administrator = AdministratorDetail()
+            administratorContactDetail = AdministratorContactDetail()
+            User = get_user_model()
 
-        # form instances
-        administrator = construct_instance(
-            form_dict["0"],
-            administrator,
-            form_dict["0"]._meta.fields,
-            form_dict["0"]._meta.exclude,
-        )
+            # form instances
+            administrator = construct_instance(
+                form_dict["0"],
+                administrator,
+                form_dict["0"]._meta.fields,
+                form_dict["0"]._meta.exclude,
+            )
 
-        administratorContactDetail = construct_instance(
-            form_dict["1"],
-            administratorContactDetail,
-            form_dict["1"]._meta.fields,
-            form_dict["1"]._meta.exclude,
-        )
+            administratorContactDetail = construct_instance(
+                form_dict["1"],
+                administratorContactDetail,
+                form_dict["1"]._meta.fields,
+                form_dict["1"]._meta.exclude,
+            )
 
-        User = User.objects.create_user(
-            email=administratorContactDetail.email_address,
-            username=administratorContactDetail.email_address,
-            password="password",
-            first_name=administrator.names,
-            last_name=administrator.surnames,
-            name=administrator.names + " " + administrator.surnames,
-        )  # default password for now, to revise
+            existing_user = User.objects.filter(
+                Q(email=administratorContactDetail.email_address)
+                | Q(username=administratorContactDetail.email_address)
+            )
 
-        User.is_advisor = False
-        User.is_administrator = True
-        User.is_staff = True
-        User.is_superuser = False
-        User.save()
-        administrator.user = User
+            if not existing_user:
+                User = User.objects.create_user(
+                    email=administratorContactDetail.email_address,
+                    username=administratorContactDetail.email_address,
+                    password="password",
+                    first_name=administrator.names,
+                    last_name=administrator.surnames,
+                    name=administrator.names + " " + administrator.surnames,
+                )  # default password for now, to revise
 
-        administratorContactDetail.modified_by = self.request.user
-        administratorContactDetail.save()
-        administrator.adminstrator_contact_fk = administratorContactDetail
+                User.is_advisor = False
+                User.is_administrator = True
+                User.is_staff = True
+                User.is_superuser = False
+                User.save()
+                administrator.user = User
 
-        administrator.modified_by = self.request.user
-        administrator.save()
+                administratorContactDetail.modified_by = self.request.user
+                administratorContactDetail.save()
+                administrator.adminstrator_contact_fk = administratorContactDetail
 
-        messages.add_message(
-            self.request, messages.SUCCESS, "administrator successfully added."
-        )
+                administrator.modified_by = self.request.user
+                administrator.save()
+
+                messages.add_message(
+                    self.request, messages.SUCCESS, "administrator successfully added."
+                )
+            else:
+                messages.add_message(
+                    self.request, messages.ERROR, "Email address already in use."
+                )
+                return HttpResponseRedirect(self.request.path_info)
+        except Exception as e:
+            log.info(e)
+            messages.add_message(
+                self.request, messages.ERROR, "An error occured. Please try again."
+            )
+            return HttpResponseRedirect(reverse_lazy("home"))
 
         return HttpResponseRedirect(reverse_lazy("home"))
 
 
-class AministratorlistView(LoginRequiredMixin, UserPassesTestMixin, generic.ListView):
+class AdministratorlistView(LoginRequiredMixin, UserPassesTestMixin, generic.ListView):
     template_name = "practises/administrator_list.html"
     model = AdministratorDetail
 
@@ -101,7 +129,7 @@ class AministratorlistView(LoginRequiredMixin, UserPassesTestMixin, generic.List
         return self.request.user.is_superuser
 
     def get_context_data(self, **kwargs):
-        context = super(AministratorlistView, self).get_context_data(**kwargs)
+        context = super(AdministratorlistView, self).get_context_data(**kwargs)
         user = self.request.user
         if user.is_superuser:
             administrators = AdministratorDetail.objects.all().select_related(
