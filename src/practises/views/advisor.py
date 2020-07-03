@@ -35,7 +35,6 @@ TEMPLATES = {
 log = logging.getLogger(__name__)
 
 
-@transaction.atomic
 class AddAdvisorWizard(LoginRequiredMixin, UserPassesTestMixin, SessionWizardView):
     def test_func(self):
         return self.request.user.is_administrator or self.request.user.is_superuser

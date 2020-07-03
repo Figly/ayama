@@ -1,8 +1,12 @@
 from __future__ import unicode_literals
 
+import logging
+
 from django.contrib import messages
 from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.db import transaction
+from django.db.models import Q
 from django.forms.models import construct_instance
 from django.http.response import HttpResponseRedirect
 from django.urls import reverse_lazy
@@ -32,6 +36,7 @@ TEMPLATES = {
     "1": "practises/signup_administrator_contact_detail.html",
     "2": "practises/signup_practise_detail.html",
 }
+log = logging.getLogger(__name__)
 
 
 class SignUpAdministratorWizard(SessionWizardView):
@@ -56,67 +61,86 @@ class SignUpAdministratorWizard(SessionWizardView):
 
         return context
 
+    @transaction.atomic
     def done(self, form_list, form_dict, **kwargs):
-        # models backing db
-        practise = PractiseDetail()
-        administrator = AdministratorDetail()
-        administratorContactDetail = AdministratorContactDetail()
-        User = get_user_model()
+        try:
+            # models backing db
+            practise = PractiseDetail()
+            administrator = AdministratorDetail()
+            administratorContactDetail = AdministratorContactDetail()
+            User = get_user_model()
 
-        # form instances
-        administrator = construct_instance(
-            form_dict["0"],
-            administrator,
-            form_dict["0"]._meta.fields,
-            form_dict["0"]._meta.exclude,
-        )
+            # form instances
+            administrator = construct_instance(
+                form_dict["0"],
+                administrator,
+                form_dict["0"]._meta.fields,
+                form_dict["0"]._meta.exclude,
+            )
 
-        administratorContactDetail = construct_instance(
-            form_dict["1"],
-            administratorContactDetail,
-            form_dict["1"]._meta.fields,
-            form_dict["1"]._meta.exclude,
-        )
+            administratorContactDetail = construct_instance(
+                form_dict["1"],
+                administratorContactDetail,
+                form_dict["1"]._meta.fields,
+                form_dict["1"]._meta.exclude,
+            )
 
-        practise = construct_instance(
-            form_dict["2"],
-            practise,
-            form_dict["2"]._meta.fields,
-            form_dict["2"]._meta.exclude,
-        )
+            practise = construct_instance(
+                form_dict["2"],
+                practise,
+                form_dict["2"]._meta.fields,
+                form_dict["2"]._meta.exclude,
+            )
 
-        User = User.objects.create_user(
-            email=administratorContactDetail.email_address,
-            username=administratorContactDetail.email_address,
-            password="password",
-            first_name=administrator.names,
-            last_name=administrator.surnames,
-            name=administrator.names + " " + administrator.surnames,
-        )  # default password for now, to revise
+            existing_user = User.objects.filter(
+                Q(email=administratorContactDetail.email_address)
+                | Q(username=administratorContactDetail.email_address)
+            )
 
-        User.is_advisor = False
-        User.is_administrator = True
-        User.is_staff = True
-        User.is_superuser = False
-        User.is_active = False  # user set to inactive until email verification
-        User.save()
-        administrator.user = User
+            if not existing_user:
 
-        practise.modified_by = administrator.user
-        practise.save()
-        administrator.practise_id_fk = practise
+                User = User.objects.create_user(
+                    email=administratorContactDetail.email_address,
+                    username=administratorContactDetail.email_address,
+                    password="password",
+                    first_name=administrator.names,
+                    last_name=administrator.surnames,
+                    name=administrator.names + " " + administrator.surnames,
+                )  # default password for now, to revise
 
-        administratorContactDetail.modified_by = administrator.user
-        administratorContactDetail.save()
-        administrator.adminstrator_contact_fk = administratorContactDetail
+                User.is_advisor = False
+                User.is_administrator = True
+                User.is_staff = True
+                User.is_superuser = False
+                User.is_active = False  # user set to inactive until email verification
+                User.save()
+                administrator.user = User
 
-        administrator.modified_by = administrator.user
-        administrator.save()
+                practise.modified_by = administrator.user
+                practise.save()
+                administrator.practise_id_fk = practise
 
-        messages.add_message(
-            self.request,
-            messages.SUCCESS,
-            "Practise and Administrator successfully signed up.",
-        )
+                administratorContactDetail.modified_by = administrator.user
+                administratorContactDetail.save()
+                administrator.adminstrator_contact_fk = administratorContactDetail
 
+                administrator.modified_by = administrator.user
+                administrator.save()
+
+                messages.add_message(
+                    self.request,
+                    messages.SUCCESS,
+                    "Practise and Administrator successfully signed up.",
+                )
+            else:
+                messages.add_message(
+                    self.request, messages.ERROR, "Email address already in use."
+                )
+                return HttpResponseRedirect(self.request.path_info)
+        except Exception as e:
+            log.info(e)
+            messages.add_message(
+                self.request, messages.ERROR, "An error occured. Please try again."
+            )
+            return HttpResponseRedirect(reverse_lazy("home"))
         return HttpResponseRedirect(reverse_lazy("home"))
