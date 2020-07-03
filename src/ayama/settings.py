@@ -42,7 +42,7 @@ else:
     TEMPLATES[0].update({"APP_DIRS": False})
 
     # Setup static file serving
-    STATIC_ROOT = os.path.join(Path(__file__).resolve().parent, "static")
+    STATIC_ROOT = os.path.join(BASE_DIR, "static/")
 
     # Configure static and media file access on GCS
     DEFAULT_FILE_STORAGE = "storages.backends.gcloud.GoogleCloudStorage"
@@ -60,6 +60,10 @@ else:
 
     STATICFILES_STORAGE = "storages.backends.gcloud.GoogleCloudStorage"
     STATIC_URL = "https://storage.googleapis.com/ayama-staging-assets/"
+
+    # static file serving credentials
+    GS_ACCESS_KEY_ID = os.environ.get("GS_ACCESS_KEY_ID", None)
+    GS_SECRET_ACCESS_KEY = os.environ.get("GS_SECRET_ACCESS_KEY", None)
 
 PASSWORD_HASHERS = [
     "django.contrib.auth.hashers.PBKDF2PasswordHasher",
