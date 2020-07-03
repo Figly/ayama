@@ -96,6 +96,88 @@ class AddAdministratorDetailForm(forms.ModelForm):
         ]
 
 
+class SignUpAdministratorDetailForm(forms.ModelForm):
+    employment_date = forms.DateField(
+        widget=forms.TextInput(attrs={"class": "datepicker"})
+    )
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_tag = False
+        self.helper.layout = Layout(
+            Row(
+                Column(
+                    "title", placeholder="Title", css_class="form-group col-md-2 mb-0"
+                ),
+                Column(
+                    "initials",
+                    placeholder="Initials",
+                    css_class="form-group col-md-3 mb-0",
+                ),
+                Column(
+                    "names", placeholder="Name(s)", css_class="form-group col-md-3 mb-0"
+                ),
+            ),
+            Row(
+                Column(
+                    "surnames",
+                    placeholder="Surname(s)",
+                    css_class="form-group col-md-4 mb-0",
+                ),
+                Column(
+                    "known_as",
+                    placeholder="Known As",
+                    css_class="form-group col-md-6 mb-0",
+                ),
+            ),
+            Row(
+                Column(
+                    "sa_id",
+                    placeholder="RSA ID Number",
+                    css_class="form-group col-md-6 mb-0",
+                ),
+                Column(
+                    "passport_no",
+                    placeholder="Passport Number",
+                    css_class="form-group col-md-6 mb-0",
+                ),
+            ),
+            Row(
+                Column(
+                    "position",
+                    placeholder="Position",
+                    css_class="form-group col-md-5 mb-0",
+                ),
+                Column(
+                    "employment_date",
+                    placeholder="Employment Date",
+                    css_class="form-group col-md-4 mb-0",
+                ),
+                Column(
+                    "personnel_number",
+                    placeholder="Personnel Number",
+                    css_class="form-group col-md-3 mb-0",
+                ),
+            ),
+        )
+
+    class Meta:
+        model = AdministratorDetail
+        fields = [
+            "title",
+            "initials",
+            "surnames",
+            "names",
+            "known_as",
+            "sa_id",
+            "passport_no",
+            "position",
+            "employment_date",
+            "personnel_number",
+        ]
+
+
 class AddAdministratorContactDetailForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
