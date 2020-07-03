@@ -4,7 +4,6 @@ from .settings_base import *  # noqa
 
 if not os.environ.get("ENVIRONMENT", False) or os.environ.get("ENVIRONMENT") in [
     "dev",
-    "staging",
 ]:
     TEMPLATES[0]["OPTIONS"].update({"debug": True})
 
@@ -43,7 +42,7 @@ else:
     TEMPLATES[0].update({"APP_DIRS": False})
 
     # Setup static file serving
-    STATIC_ROOT = os.path.join(BASE_DIR, "static")
+    STATIC_ROOT = os.path.join(Path(__file__).resolve().parent, "static")
 
     # Configure static and media file access on GCS
     DEFAULT_FILE_STORAGE = "storages.backends.gcloud.GoogleCloudStorage"
@@ -60,7 +59,6 @@ else:
         GS_BUCKET_NAME = "ayama-production-production"
 
     STATICFILES_STORAGE = "storages.backends.gcloud.GoogleCloudStorage"
-    MEDIA_URL = "https://storage.googleapis.com/ayama-staging-assets/"
     STATIC_URL = "https://storage.googleapis.com/ayama-staging-assets/"
 
 PASSWORD_HASHERS = [
