@@ -74,19 +74,11 @@ urlpatterns = [
         EditClientCommunicationFrequencyView.as_view(),
         name="edit-client-communication-frequency",
     ),
+    path("add_client_note/", AddClientNoteView.as_view(), name="add-client-note",),
     path(
-      "add_client_note/",
-      AddClientNoteView.as_view(),
-      name="add-client-note",
+        "edit_client_note/<pk>/", EditClientNoteView.as_view(), name="edit-client-note",
     ),
     path(
-      "edit_client_note/<pk>/",
-      EditClientNoteView.as_view(),
-      name="edit-client-note",
-    ),
-    path(
-      "client_note_list/<pk>/",
-      ClientNoteListView.as_view(),
-      name="client-note-list",
+        "client_note_list/<pk>/", ClientNoteListView.as_view(), name="client-note-list",
     ),
 ]

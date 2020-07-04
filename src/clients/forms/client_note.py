@@ -42,7 +42,7 @@ class AddClientNoteForm(forms.ModelForm):
     class Meta:
         model = ClientNote
         widgets = {
-            'body': forms.Textarea(attrs={'cols': 80, 'rows': 20}),
+            "body": forms.Textarea(attrs={"cols": 80, "rows": 20}),
         }
         fields = [
             "client_id_fk",
