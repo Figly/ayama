@@ -1,5 +1,5 @@
 """
-Sample email send invocation using the Django email backend setup (hooked up to Sendgrid)
+Quarterly email send invocation using the Django email backend setup to remind advisors about client communication(hooked up to Sendgrid)
 """
 import logging
 from datetime import datetime, timedelta
@@ -19,7 +19,7 @@ def run(**kwargs):
     django.setup()
     try:
         today = datetime.today()
-        three_months_ago = today - timedelta(days=3)
+        three_months_ago = today - timedelta(months=3)
 
         _subject = kwargs["subject"] or "Communication Reminder"
         _body = kwargs["body"] or "Communication reminder job run."
