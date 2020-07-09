@@ -10,6 +10,8 @@
             </div>
         </div>
     </a>
+</div>
+<div class="row">
     <a href="{% url 'clients:clients-list' %}">
         <div class="col-md-6 col-sm-6">
             <div class="container">
@@ -26,10 +28,21 @@
             </div>
         </div>
     </a>
+</div>
+<div class="row">
     <a href="{% url 'practises:edit-advisor-reminder-config' pk=user.Advisor.reminder_config_freq_fk.id%}">
         <div class="col-md-6 col-sm-6">
             <div class="container">
                 <h2>Edit reminder default settings</h2>
+            </div>
+        </div>
+    </a>
+</div>
+<div class="row">
+    <a href="{% url 'calculator:show-calculator' %}">
+        <div class="col-md-6 col-sm-6">
+            <div class="container">
+                <h2>View Calculators</h2>
             </div>
         </div>
     </a>

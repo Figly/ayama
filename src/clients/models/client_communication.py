@@ -44,7 +44,7 @@ class ClientCommunication(BaseModel):
 
     def __str__(self):
         """Return a human readable representation of the model instance."""
-        return f"{self.names} {self.surnames}"
+        return f"{self.last_date_email} {self.last_date_call}"
 
 
 class ClientCommunicationFrequency(BaseModel):

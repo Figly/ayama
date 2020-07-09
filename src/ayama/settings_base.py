@@ -14,7 +14,9 @@ from pathlib import Path
 from django.contrib import messages
 from django.urls import reverse_lazy
 
-DEBUG = os.getenv("DEBUG", False)
+DEBUG = os.getenv(
+    "DEBUG", True
+)  # Defaulting to true for dev purposes - should always be set in staging/prod
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 STATICFILES_DIRS = (
@@ -22,7 +24,7 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "media"),
 )
 
-MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+MEDIA_ROOT = os.path.join(BASE_DIR, "media/")
 
 MEDIA_URL = "/media/"
 STATIC_URL = "/static/"
@@ -69,6 +71,7 @@ INSTALLED_APPS = (
     "easy_thumbnails",
     "profiles",
     "accounts",
+    "calculator",
     "clients",
     "practises",
     "formtools",

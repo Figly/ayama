@@ -25,7 +25,11 @@ class AdvisorDetail(BaseModel):
         related_name="Advisor",
     )
     practise_id_fk = models.ForeignKey(
-        "PractiseDetail", on_delete=models.CASCADE, related_name="Advisors"
+        "PractiseDetail",
+        on_delete=models.CASCADE,
+        related_name="Advisors",
+        null=True,
+        default=None,
     )
     advisor_contact_fk = models.ForeignKey(
         "AdvisorContactDetail", on_delete=models.CASCADE

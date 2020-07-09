@@ -9,26 +9,60 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('clients', '0013_auto_20200618_2110'),
+        ("clients", "0013_auto_20200618_2110"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='ClientNote',
+            name="ClientNote",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('modified_at', models.DateTimeField(auto_now=True)),
-                ('title', models.CharField(max_length=100, verbose_name='Note Title')),
-                ('body', models.CharField(max_length=5000, verbose_name='Note')),
-                ('note_type', models.CharField(choices=[('note', 'Note'), ('comms', 'Communications'), ('preferences', 'Preferences'), ('archive', 'Archive')], default='Note', max_length=50, verbose_name='Note Type')),
-                ('client_id_fk', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='notes', to='clients.ClientDetail')),
-                ('modified_by', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("created_at", models.DateTimeField(auto_now_add=True)),
+                ("modified_at", models.DateTimeField(auto_now=True)),
+                ("title", models.CharField(max_length=100, verbose_name="Note Title")),
+                ("body", models.CharField(max_length=5000, verbose_name="Note")),
+                (
+                    "note_type",
+                    models.CharField(
+                        choices=[
+                            ("note", "Note"),
+                            ("comms", "Communications"),
+                            ("preferences", "Preferences"),
+                            ("archive", "Archive"),
+                        ],
+                        default="Note",
+                        max_length=50,
+                        verbose_name="Note Type",
+                    ),
+                ),
+                (
+                    "client_id_fk",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="notes",
+                        to="clients.ClientDetail",
+                    ),
+                ),
+                (
+                    "modified_by",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
             ],
             options={
-                'get_latest_by': 'created_at',
-                'abstract': False,
-                'order_with_respect_to': 'created_at',
+                "get_latest_by": "created_at",
+                "abstract": False,
+                "order_with_respect_to": "created_at",
             },
         ),
     ]
