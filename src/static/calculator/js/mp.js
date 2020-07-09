@@ -19,7 +19,7 @@ function getInputValue2(){
     T = retire  - age;
     var r = I/1200;
     var t;
-    
+
     for (i = 1; i <= T; i++) {
         t = i*12;
         brac = Math.pow(1+r,t);
@@ -28,7 +28,7 @@ function getInputValue2(){
         bal = ob*Math.pow((1+(I/100)),i)
         balance = bal + numerator/denumerator;
         pre_data.push([Number(age) + Number(i),balance]);
-        }   
+        }
 
     for(i = 1; i <= 35; i ++){
         t = 12;
@@ -62,6 +62,6 @@ function drawChart2(pre_data) {
     var chart = new google.charts.Bar(document.getElementById('monthly_payment'));
 
     chart.draw(data, google.charts.Bar.convertOptions(options));
-    
+
     var btns = document.getElementById('btn-group');
     }

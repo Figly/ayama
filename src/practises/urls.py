@@ -62,7 +62,7 @@ urlpatterns = [
     path(
         "advisor_sign_up/",
         SignUpAdvisorWizard.as_view(
-            [SignUpAdministratorDetailForm, AddAdvisorContactDetailForm,]
+            [SignUpAdministratorDetailForm, AddAdvisorContactDetailForm]
         ),
         name="sign-up-advisor",
     ),

@@ -10,10 +10,10 @@ function getInputValue(){
     var I = document.getElementById("initial_investment").value;
     var T = document.getElementById("years").value;
     var R = document.getElementById("interest").value;
-    
+
     for (i = 0; i <= T; i++) {
   		pre_data.push([i,I*Math.pow((1+(R/100)),i)])
-		}	
+		}
     console.log(pre_data);
     this.drawChart(pre_data);
     }
@@ -35,6 +35,6 @@ function drawChart(pre_data) {
     var chart = new google.charts.Bar(document.getElementById('barchart_material'));
 
     chart.draw(data, google.charts.Bar.convertOptions(options));
-    
+
     var btns = document.getElementById('btn-group');
     }
