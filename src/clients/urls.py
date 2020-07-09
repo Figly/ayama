@@ -1,17 +1,18 @@
 from django.urls import path
 
-
 from .forms import (
     AddClientContactDetailForm,
     AddClientDependentDetailsForm,
     AddClientDetailForm,
     AddClientEmploymentDetailForm,
-    AddClientRatesAndReturnForm,
     AddClientNoteForm,
+    AddClientRatesAndReturnForm,
 )
 from .views import (
     AddClientDependentView,
+    AddClientNoteView,
     ClientlistView,
+    ClientNoteListView,
     ClientSummaryView,
     ClientWizard,
     EditClientCommunicationFrequencyView,
@@ -19,10 +20,9 @@ from .views import (
     EditClientDependentView,
     EditClientDetailsView,
     EditClientEmploymentView,
-    EditClientRatesView,
-    AddClientNoteView,
     EditClientNoteView,
-    ClientNoteListView,
+    EditClientRatesView,
+    UpdateClientCommunicationHistoryView,
 )
 
 app_name = "clients"
@@ -80,5 +80,10 @@ urlpatterns = [
     ),
     path(
         "client_note_list/<pk>/", ClientNoteListView.as_view(), name="client-note-list",
+    ),
+    path(
+        "client_comms_hist/<pk>/",
+        UpdateClientCommunicationHistoryView.as_view(),
+        name="edit-client-comms",
     ),
 ]
