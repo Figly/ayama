@@ -1,3 +1,4 @@
+from django.conf.urls import url
 from django.urls import path
 
 from .forms import (
@@ -10,13 +11,14 @@ from .forms import (
     SignUpAdvisorDetailForm,
 )
 from .views import (
-    AddPractiseView,
     AddAdministratorWizard,
     AddAdvisorWizard,
+    AddPractiseView,
+    AdministratorlistView,
     AdministratorSummaryView,
     AdvisorlistView,
+    AdvisorSearch,
     AdvisorSummaryView,
-    AdministratorlistView,
     EditAdministratorContactView,
     EditAdministratorDetailView,
     EditAdvisorContactView,
@@ -103,4 +105,5 @@ urlpatterns = [
         EditReminderPreferencesView.as_view(),
         name="edit-advisor-reminder-config",
     ),
+    url(r"^search/$", AdvisorSearch, name="advisor-search"),
 ]

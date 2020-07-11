@@ -9,11 +9,13 @@ from django.db import transaction
 from django.db.models.query_utils import Q
 from django.forms.models import construct_instance
 from django.http.response import HttpResponseRedirect
+from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views import generic
 
 from formtools.wizard.views import SessionWizardView
 
+from ..filters import AdvisorFilter
 from ..forms import AddAdvisorContactDetailForm, AddAdvisorDetailForm
 from ..models import (
     AdministratorDetail,
@@ -300,3 +302,9 @@ class EditReminderPreferencesView(
         )
         self.success_url = reverse_lazy("home")
         return super(EditReminderPreferencesView, self).form_valid(form)
+
+
+def AdvisorSearch(request):
+    advisor_list = AdvisorDetail.objects.filter(practise_id_fk=None)
+    advisor_filter = AdvisorFilter(request.GET, queryset=advisor_list)
+    return render(request, "practises/advisor_search.html", {"filter": advisor_filter})
