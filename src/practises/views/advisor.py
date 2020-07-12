@@ -340,7 +340,7 @@ class InviteAdvisor(generic.View):
                 fail_silently=False,
             )
 
-            return JsonResponse({"valid": link}, status=200)
+            return JsonResponse({"valid": True}, status=200)
         except Exception:
             return JsonResponse(
                 {"valid": "An error occured. Please contact an administrator"},
