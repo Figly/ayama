@@ -25,6 +25,8 @@ from .views import (
     EditAdvisorDetailView,
     EditPractiseView,
     EditReminderPreferencesView,
+    InviteAdvisor,
+    LinkAdvisor,
     SignUpAdministratorWizard,
     SignUpAdvisorWizard,
 )
@@ -106,4 +108,6 @@ urlpatterns = [
         name="edit-advisor-reminder-config",
     ),
     url(r"^search/$", AdvisorSearch, name="advisor-search"),
+    path("invite_advisor", InviteAdvisor.as_view(), name="invite-advisor",),
+    path("link_advisor", LinkAdvisor.as_view(), name="link-advisor",),
 ]

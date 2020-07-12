@@ -1,15 +1,15 @@
 from __future__ import unicode_literals
 
-import logging
-
 from django.contrib import messages
 from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.core.mail import send_mail
 from django.db import transaction
 from django.db.models.query_utils import Q
 from django.forms.models import construct_instance
+from django.http import JsonResponse
 from django.http.response import HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 from django.urls import reverse_lazy
 from django.views import generic
 
@@ -34,7 +34,6 @@ TEMPLATES = {
     "0": "practises/add_advisor_detail.html",
     "1": "practises/add_advisor_contact_detail.html",
 }
-log = logging.getLogger(__name__)
 
 
 class AddAdvisorWizard(LoginRequiredMixin, UserPassesTestMixin, SessionWizardView):
@@ -146,8 +145,7 @@ class AddAdvisorWizard(LoginRequiredMixin, UserPassesTestMixin, SessionWizardVie
                     self.request, messages.ERROR, "Email address already in use."
                 )
                 return HttpResponseRedirect(self.request.path_info)
-        except Exception as e:
-            log.info(e)
+        except Exception:
             messages.add_message(
                 self.request, messages.ERROR, "An error occured. Please try again."
             )
@@ -308,3 +306,82 @@ def AdvisorSearch(request):
     advisor_list = AdvisorDetail.objects.filter(practise_id_fk=None)
     advisor_filter = AdvisorFilter(request.GET, queryset=advisor_list)
     return render(request, "practises/advisor_search.html", {"filter": advisor_filter})
+
+
+class InviteAdvisor(generic.View):
+    def post(self, request, *args, **kwargs):
+        try:
+            advisor_id = request.POST.get("advisor_id", None)
+            admin_id = request.POST.get("admin_id")
+
+            if advisor_id is None or admin_id is None:
+                return JsonResponse({"valid": False}, status=400)
+
+            advisor = get_object_or_404(AdvisorDetail, pk=advisor_id)
+            admin = get_object_or_404(AdministratorDetail, pk=admin_id)
+            practise = get_object_or_404(PractiseDetail, pk=admin.practise_id_fk.id)
+
+            # current_site = Site.objects.get_current()
+            # current_site.domain
+
+            # TODO:replace https below with the above
+            link = (
+                "https://www.figly.io/link_advisor?advisorid="
+                + advisor_id
+                + "&practiseid="
+                + str(admin.practise_id_fk.id)
+            )
+
+            send_mail(
+                practise.name + " invited you to join their practise.",
+                "Click: " + link,
+                "karelverhoeven@gmail.com",
+                [advisor.advisor_contact_fk.email_address],
+                fail_silently=False,
+            )
+
+            return JsonResponse({"valid": link}, status=200)
+        except Exception:
+            return JsonResponse(
+                {"valid": "An error occured. Please contact an administrator"},
+                status=400,
+            )
+
+
+class LinkAdvisor(generic.View):
+    def get(self, request, *args, **kwargs):
+        try:
+            advisor_id = request.GET["advisorid"]
+            practise_id = request.GET["practiseid"]
+
+            advisor = get_object_or_404(AdvisorDetail, pk=advisor_id)
+            practise = get_object_or_404(PractiseDetail, pk=practise_id)
+
+            if advisor.practise_id_fk is not None:
+                messages.add_message(
+                    self.request,
+                    messages.ERROR,
+                    "Advisor is already associated with a practise.",
+                )
+                url = reverse_lazy("home")
+                return HttpResponseRedirect(url)
+
+            advisor.practise_id_fk = practise
+            advisor.save()
+
+            messages.add_message(
+                self.request,
+                messages.SUCCESS,
+                "You have succesfully been linked to a practise.",
+            )
+
+            url = reverse_lazy("home")
+            return HttpResponseRedirect(url)
+        except Exception:
+            messages.add_message(
+                self.request,
+                messages.ERROR,
+                "An error occured. Please contact an administrator.",
+            )
+            url = reverse_lazy("home")
+            return HttpResponseRedirect(url)
