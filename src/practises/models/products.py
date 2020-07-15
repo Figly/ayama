@@ -4,7 +4,7 @@ from django.db import models
 from .base import BaseModel
 
 types = (
-    ("Ins", "Insurance"),
+    ("INS", "Insurance"),
     ("RA", "Retirement Annuity"),
     ("UT", "Unit Trust"),
 )
