@@ -10,19 +10,20 @@ from .forms import (
     SignUpAdvisorDetailForm,
 )
 from .views import (
-    AddPractiseView,
     AddAdministratorWizard,
     AddAdvisorWizard,
+    AddPractiseView,
+    AdministratorlistView,
     AdministratorSummaryView,
     AdvisorlistView,
     AdvisorSummaryView,
-    AdministratorlistView,
     EditAdministratorContactView,
     EditAdministratorDetailView,
     EditAdvisorContactView,
     EditAdvisorDetailView,
     EditPractiseView,
     EditReminderPreferencesView,
+    EditRolesView,
     SignUpAdministratorWizard,
     SignUpAdvisorWizard,
 )
@@ -102,5 +103,8 @@ urlpatterns = [
         "edit_advisor_reminder/<pk>/",
         EditReminderPreferencesView.as_view(),
         name="edit-advisor-reminder-config",
+    ),
+    path(
+        "edit_advisor_roles/<pk>/", EditRolesView.as_view(), name="edit-advisor-roles",
     ),
 ]

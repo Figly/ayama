@@ -50,15 +50,20 @@ class ClientWizard(LoginRequiredMixin, SessionWizardView):
         user = self.request.user
 
         if self.steps.current == "0" and step is None:
-            if user.is_advisor:
-                advisor_id = user.id
+            if user.is_administrator and user.is_advisor:
+                practise_id = user.Advisor.practise_id_fk
                 form.fields["advisor_id_fk"].queryset = AdvisorDetail.objects.filter(
-                    user_id=advisor_id
+                    practise_id_fk=practise_id
                 )
             elif user.is_administrator:
                 practise_id = user.Administrator.practise_id_fk
                 form.fields["advisor_id_fk"].queryset = AdvisorDetail.objects.filter(
                     practise_id_fk=practise_id
+                )
+            elif user.is_advisor:
+                advisor_id = user.id
+                form.fields["advisor_id_fk"].queryset = AdvisorDetail.objects.filter(
+                    user_id=advisor_id
                 )
 
         return form

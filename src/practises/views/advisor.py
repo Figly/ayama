@@ -2,6 +2,7 @@ from __future__ import unicode_literals
 
 import logging
 
+from django import forms
 from django.contrib import messages
 from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
@@ -21,6 +22,7 @@ from ..models import (
     AdvisorDetail,
     AdvisorReminderConfig,
     PractiseDetail,
+    User,
 )
 
 FORMS = [
@@ -51,6 +53,11 @@ class AddAdvisorWizard(LoginRequiredMixin, UserPassesTestMixin, SessionWizardVie
         if self.steps.current == "0" and step is None:
             if self.request.user.is_superuser:
                 form.fields["practise_id_fk"].queryset = PractiseDetail.objects.all()
+            elif self.request.user.is_administrator and self.request.user.is_advisor:
+                practise_id = self.request.user.Advisor.practise_id_fk.id
+                form.fields["practise_id_fk"].queryset = PractiseDetail.objects.filter(
+                    id=practise_id
+                ).all()
             elif self.request.user.is_administrator:
                 practise_id = self.request.user.Administrator.practise_id_fk.id
                 form.fields["practise_id_fk"].queryset = PractiseDetail.objects.filter(
@@ -62,6 +69,9 @@ class AddAdvisorWizard(LoginRequiredMixin, UserPassesTestMixin, SessionWizardVie
     def get_form_initial(self, step):
         self.initial_dict.get(self.steps.current, {})
         if self.steps.current == "0" and self.practise is not None:
+            return self.initial_dict.get(step, {"practise_id_fk": self.practise})
+        elif self.request.user.is_administrator and self.request.user.is_advisor:
+            self.practise = self.request.user.Advisor.practise_id_fk
             return self.initial_dict.get(step, {"practise_id_fk": self.practise})
         elif self.request.user.is_administrator:
             self.practise = self.request.user.Administrator.practise_id_fk
@@ -164,7 +174,13 @@ class AdvisorlistView(LoginRequiredMixin, UserPassesTestMixin, generic.ListView)
     def get_context_data(self, **kwargs):
         context = super(AdvisorlistView, self).get_context_data(**kwargs)
         user = self.request.user
-        if user.is_administrator:
+
+        if user.is_administrator and user.is_advisor:
+            advisors = AdvisorDetail.objects.filter(
+                practise_id_fk=user.Advisor.practise_id_fk
+            ).select_related("advisor_contact_fk")
+            context = {"advisors": advisors}
+        elif user.is_administrator:
             advisors = AdvisorDetail.objects.filter(
                 practise_id_fk=user.Administrator.practise_id_fk
             ).select_related("advisor_contact_fk")
@@ -300,3 +316,35 @@ class EditReminderPreferencesView(
         )
         self.success_url = reverse_lazy("home")
         return super(EditReminderPreferencesView, self).form_valid(form)
+
+
+class EditRolesView(LoginRequiredMixin, UserPassesTestMixin, generic.UpdateView):
+    template_name = "practises/edit_advisor_detail.html"
+
+    model = User
+    fields = (
+        "is_administrator",
+        "is_advisor",
+    )
+    widgets = {
+        "is_administrator": forms.CheckboxInput(),
+        "is_advisor": forms.CheckboxInput(),
+    }
+
+    def test_func(self):
+        return self.request.user.is_administrator or self.request.user.is_superuser
+
+    def form_valid(self, form):
+        if "cancel" in self.request.POST:
+            url = reverse_lazy("home")
+            return HttpResponseRedirect(url)
+
+        model = form.save(commit=False)
+        model.modified_by = self.request.user
+        model.save
+
+        messages.add_message(
+            self.request, messages.SUCCESS, "advisor roles successfully edited.",
+        )
+        self.success_url = reverse_lazy("home")
+        return super(EditRolesView, self).form_valid(form)
