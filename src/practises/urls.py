@@ -12,6 +12,7 @@ from .forms import (
 from .views import (
     AddAdministratorWizard,
     AddAdvisorWizard,
+    AddClientProductView,
     AddPractiseView,
     AddProductView,
     AdministratorlistView,
@@ -26,10 +27,10 @@ from .views import (
     EditProductView,
     EditReminderPreferencesView,
     EditRolesView,
-    LinkClientProductView,
     ProductlistView,
     SignUpAdministratorWizard,
     SignUpAdvisorWizard,
+    ViewClientProductView,
 )
 
 app_name = "practises"
@@ -115,8 +116,9 @@ urlpatterns = [
     path("product_list/", ProductlistView.as_view(), name="list-products"),
     path("edit_product/<pk>/", EditProductView.as_view(), name="edit-product"),
     path(
-        "link_client_product/<int:client_id>",
-        LinkClientProductView.as_view(),
-        name="link-client-product",
+        "view_client_product/<int:client_id>",
+        ViewClientProductView.as_view(),
+        name="view-client-product",
     ),
+    path("add_client_product/", AddClientProductView, name="add-client-product",),
 ]

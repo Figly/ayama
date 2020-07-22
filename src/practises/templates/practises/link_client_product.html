@@ -4,6 +4,18 @@
 {% block content %}
 {% block container %}
 <div class="container">
+    <h1>Client existing products</h1>
+    {% if client_products %}
+    <ul>
+        {% for client_product in client_products %}
+            <li><p>{{ client_product.product_id_fk}}</p></li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p>No products to Display</p>
+    {% endif %}
+</div>
+<div class="container">
   <h1>Product List</h1>
     {% if products %}
     <table class="table">
@@ -12,19 +24,24 @@
                 <th scope="col">Name</th>
                 <th scope="col">Type</th>
                 <th scope="col">Company</th>
-                <th scope="col">Is Active</th>
             </tr>
         </thead>
-        {% for product in products %}
         <tbody>
+            {% for product in products %}
             <tr scope="row">
-                <td><a a href="{% url 'practises:edit-product' pk=product.id %}">{{ product.product_name }}</a></td>
+                <td>{{ product.product_name }}</td>
                 <td>{{ product.product_type }}</td>
                 <td>{{ product.product_company }}</td>
-                <td>{{ product.is_active|yesno:"Yes,No"}}</td>
+                <td>
+                    <form action="{% url 'practises:add-client-product'%}" method="post">{% csrf_token %}
+                        <input type="hidden" id="client_id_fk" name="client_id_fk" value={{client_id}}>
+                        <input type="hidden" id="product_id_fk" name="product_id_fk" value={{product.id}}>
+                        <button type="submit" class="btn btn-success">Add</button>
+                    </form>
+                </td>
             </tr>
+            {% endfor %}
         </tbody>
-        {% endfor %}
     </table>
     {% else %}
     <p>No products to Display</p>
