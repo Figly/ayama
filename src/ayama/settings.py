@@ -110,7 +110,7 @@ config.dictConfig(
             },
         },
         "loggers": {
-            "": {"level": "INFO", "handlers": ["console", "file"]},
+            "": {"level": "WARNING", "handlers": ["console", "file"]},
             "ayama": {
                 "level": LOG_LEVEL,
                 "handlers": ["console", "file"],
