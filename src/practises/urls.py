@@ -13,6 +13,7 @@ from .views import (
     AddAdministratorWizard,
     AddAdvisorWizard,
     AddPractiseView,
+    AddProductView,
     AdministratorlistView,
     AdministratorSummaryView,
     AdvisorlistView,
@@ -22,8 +23,11 @@ from .views import (
     EditAdvisorContactView,
     EditAdvisorDetailView,
     EditPractiseView,
+    EditProductView,
     EditReminderPreferencesView,
     EditRolesView,
+    LinkClientProductView,
+    ProductlistView,
     SignUpAdministratorWizard,
     SignUpAdvisorWizard,
 )
@@ -106,5 +110,13 @@ urlpatterns = [
     ),
     path(
         "edit_advisor_roles/<pk>/", EditRolesView.as_view(), name="edit-advisor-roles",
+    ),
+    path("add_product/", AddProductView.as_view(), name="add-product"),
+    path("product_list/", ProductlistView.as_view(), name="list-products"),
+    path("edit_product/<pk>/", EditProductView.as_view(), name="edit-product"),
+    path(
+        "link_client_product/<int:client_id>",
+        LinkClientProductView.as_view(),
+        name="link-client-product",
     ),
 ]
