@@ -1,5 +1,7 @@
 from __future__ import unicode_literals
 
+import logging
+
 from django.contrib import messages
 from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
@@ -34,6 +36,8 @@ TEMPLATES = {
     "0": "practises/add_advisor_detail.html",
     "1": "practises/add_advisor_contact_detail.html",
 }
+
+log = logging.getLogger(__name__)
 
 
 class AddAdvisorWizard(LoginRequiredMixin, UserPassesTestMixin, SessionWizardView):
@@ -145,7 +149,8 @@ class AddAdvisorWizard(LoginRequiredMixin, UserPassesTestMixin, SessionWizardVie
                     self.request, messages.ERROR, "Email address already in use."
                 )
                 return HttpResponseRedirect(self.request.path_info)
-        except Exception:
+        except Exception as e:
+            log.info(e)
             messages.add_message(
                 self.request, messages.ERROR, "An error occured. Please try again."
             )
@@ -341,7 +346,8 @@ class InviteAdvisor(generic.View):
             )
 
             return JsonResponse({"valid": True}, status=200)
-        except Exception:
+        except Exception as e:
+            log.info(e)
             return JsonResponse(
                 {"valid": "An error occured. Please contact an administrator"},
                 status=400,
@@ -377,7 +383,8 @@ class LinkAdvisor(generic.View):
 
             url = reverse_lazy("home")
             return HttpResponseRedirect(url)
-        except Exception:
+        except Exception as e:
+            log.info(e)
             messages.add_message(
                 self.request,
                 messages.ERROR,
