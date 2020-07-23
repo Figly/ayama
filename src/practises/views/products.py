@@ -22,9 +22,13 @@ class AddProductView(LoginRequiredMixin, UserPassesTestMixin, generic.CreateView
     )
 
     def test_func(self):
-        return self.request.user.is_administrator or self.request.user.is_superuser
+        return True
 
     def form_valid(self, form):
+        if "cancel" in self.request.POST:
+            url = reverse_lazy("home")
+            return HttpResponseRedirect(url)
+
         model = form.save(commit=False)
         model.modified_by = self.request.user
         model.practise_id_fk = self.request.user.Administrator.practise_id_fk
