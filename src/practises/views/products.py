@@ -102,15 +102,22 @@ class ViewClientProductView(generic.View):
             client_id = self.kwargs["client_id"]
 
             practise = self.request.user.Advisor.practise_id_fk
-            products = models.ProductDetail.objects.filter(
-                practise_id_fk=practise, is_active=True
-            )
 
             if client_id is not None:
                 client_products = ClientProduct.objects.filter(client_id_fk=client_id)
 
+            client_products_filter = client_products.values_list(
+                "product_id_fk", flat=True
+            )
+
+            available_products = models.ProductDetail.objects.filter(
+                practise_id_fk=practise, is_active=True
+            ).exclude(
+                id__in=client_products_filter.all()
+            )  # can't add same product twice
+
             context = {
-                "products": products,
+                "products": available_products,
                 "client_products": client_products,
                 "client_id": client_id,
             }
@@ -119,15 +126,20 @@ class ViewClientProductView(generic.View):
             client_id = self.kwargs["client_id"]
 
             practise = self.request.user.Administrator.practise_id_fk
-            products = models.ProductDetail.objects.filter(
-                practise_id_fk=practise, is_active=True
-            )
 
             if client_id is not None:
                 client_products = ClientProduct.objects.filter(client_id_fk=client_id)
 
+            client_products_filter = client_products.values_list(
+                "product_id_fk", flat=True
+            )
+
+            available_products = models.ProductDetail.objects.filter(
+                practise_id_fk=practise, is_active=True
+            ).exclude(id__in=client_products_filter.all())
+
             context = {
-                "products": products,
+                "products": available_products,
                 "client_products": client_products,
                 "client_id": client_id,
             }
@@ -135,13 +147,20 @@ class ViewClientProductView(generic.View):
             client_id = self.kwargs["client_id"]
 
             practise = self.request.user.Advisor.practise_id_fk
-            products = models.ProductDetail.objects.filter(practise_id_fk=practise)
 
             if client_id is not None:
                 client_products = ClientProduct.objects.filter(client_id_fk=client_id)
 
+            client_products_filter = client_products.values_list(
+                "product_id_fk", flat=True
+            )
+
+            available_products = models.ProductDetail.objects.filter(
+                practise_id_fk=practise, is_active=True
+            ).exclude(id__in=client_products_filter.all())
+
             context = {
-                "products": products,
+                "products": available_products,
                 "client_products": client_products,
                 "client_id": client_id,
             }
