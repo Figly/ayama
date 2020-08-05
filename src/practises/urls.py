@@ -13,7 +13,9 @@ from .forms import (
 from .views import (
     AddAdministratorWizard,
     AddAdvisorWizard,
+    AddClientProductView,
     AddPractiseView,
+    AddProductView,
     AdministratorlistView,
     AdministratorSummaryView,
     AdvisorlistView,
@@ -24,11 +26,15 @@ from .views import (
     EditAdvisorContactView,
     EditAdvisorDetailView,
     EditPractiseView,
+    EditProductView,
     EditReminderPreferencesView,
+    EditRolesView,
     InviteAdvisor,
     LinkAdvisor,
+    ProductlistView,
     SignUpAdministratorWizard,
     SignUpAdvisorWizard,
+    ViewClientProductView,
 )
 
 app_name = "practises"
@@ -110,4 +116,16 @@ urlpatterns = [
     url(r"^search/$", AdvisorSearch, name="advisor-search"),
     path("invite_advisor", InviteAdvisor.as_view(), name="invite-advisor",),
     path("link_advisor", LinkAdvisor.as_view(), name="link-advisor",),
+    path(
+        "edit_advisor_roles/<pk>/", EditRolesView.as_view(), name="edit-advisor-roles",
+    ),
+    path("add_product/", AddProductView.as_view(), name="add-product"),
+    path("product_list/", ProductlistView.as_view(), name="list-products"),
+    path("edit_product/<pk>/", EditProductView.as_view(), name="edit-product"),
+    path(
+        "view_client_product/<int:client_id>",
+        ViewClientProductView.as_view(),
+        name="view-client-product",
+    ),
+    path("add_client_product/", AddClientProductView, name="add-client-product",),
 ]

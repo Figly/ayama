@@ -22,6 +22,7 @@
                 {% endif %}
                 <th scope="col">Notes</th>
                 <th scope="col">Communication</th>
+                <th scope="col">Link Products</th>
             </tr>
         </thead>
         {% for client in clients %}
@@ -40,6 +41,7 @@
                 {% endif %}
                 <td><a href="{% url 'clients:client-note-list' pk=client.id %}">Notes ({{ client.notes.count }})</a></td>
                 <td><a href="{% url 'clients:edit-client-comms' pk=client.client_comms_fk.id %}"><span class="glyphicon glyphicon-pencil"></a></td>
+                <td><a href="{% url 'practises:view-client-product' client_id=client.id %}" style="color: green;"><span class="glyphicon glyphicon-plus"></a></td>
             </tr>
         </tbody>
         {% endfor %}
