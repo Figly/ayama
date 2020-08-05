@@ -121,6 +121,21 @@
 {% endif %}
 {% endblock %}
 
+{% block modal%}
+<div class="modal" tabindex="-1" role="dialog" id="ayama-modal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Please wait</h5>
+      </div>
+      <div class="modal-body">
+        <p>Loading...</p>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
 {% block splash %}
 {% endblock splash %}
 

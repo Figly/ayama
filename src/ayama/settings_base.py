@@ -76,6 +76,7 @@ INSTALLED_APPS = (
     "practises",
     "formtools",
     "comms",
+    "django_filters",
 )
 
 MIDDLEWARE = [
