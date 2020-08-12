@@ -1,12 +1,13 @@
 from __future__ import unicode_literals
 
-from authtools import views as authviews
-from braces import views as bracesviews
 from django.conf import settings
 from django.contrib import auth, messages
 from django.contrib.auth import get_user_model
 from django.urls import reverse_lazy
 from django.views import generic
+
+from authtools import views as authviews
+from braces import views as bracesviews
 
 from . import forms
 
@@ -26,6 +27,14 @@ class LoginView(bracesviews.AnonymousRequiredMixin, authviews.LoginView):
             expiry = getattr(settings, "KEEP_LOGGED_DURATION", ONE_MONTH)
             self.request.session.set_expiry(expiry)
         return redirect
+
+    def form_invalid(self, form):
+        messages.add_message(
+            self.request,
+            messages.ERROR,
+            "Sorry, looks like something went wrong. Incorrect email or password. Please correct and submit again:",
+        )
+        return self.render_to_response(self.get_context_data(form=form))
 
 
 class LogoutView(authviews.LogoutView):

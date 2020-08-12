@@ -201,3 +201,103 @@ body>.navbar-transparent {
     top: 25px;
     text-align: center;
 }
+
+.figly-heading{
+    font-family: 'Yantramanav', sans-serif;
+    color: #012B3A;
+    opacity: 100%;
+    font-size:40px;
+}
+
+.figly-heading-h1{
+    margin-bottom: 90px;
+    margin-left: 90px;
+}
+
+.signup-card{
+    width: 308px;
+    border-radius: 30px;
+    border-style: none;
+}
+
+.jumbotron{
+    background-color: white !important;
+    margin-bottom: 0px!important;
+}
+
+.navbar{
+    margin-bottom:0rem!important
+}
+
+.figly-container-main{
+    max-width: 1360px;
+    background-color: #ffffff;
+    min-height: 67%;
+}
+
+.btn-signup{
+    background-color: #012B3A;
+    color: white;
+    border-radius: 10px;
+    width: 251px;
+}
+.footer-main-heading{
+    font-family: 'Poppins', sans-serif;
+    font-size: 20px;
+    color: #869D96;
+}
+
+.footer-sub-heading{
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    color: #869D96;
+    margin-bottom: 0px;
+}
+.footer-text{
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    color: #ffffff;
+    padding-right: 10px;
+}
+
+.figly-footer{
+    background: #012B3A;
+    text-align: center;
+}
+
+.footer-container{
+    padding-top: 20px;
+    padding-left: 100px;
+    text-align: left;
+}
+
+.figly-btn-primary{
+    background-color: #012B3A;
+    color: #ffffff;
+    border-radius: 10px;
+}
+
+body{
+    background-color: #f3f3f3;
+}
+
+hr {
+    margin-top: 0px;
+    margin-bottom: 1rem;
+    border: 1px;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    background-color: #012B3A;
+  }
+
+.login-form{
+    margin-left: 20px;
+    width: 400px;
+}
+
+.login-text{
+    color: #869D96;
+    margin-left: 20px;
+}
+.figly-link{
+    color: #869D96;
+}
