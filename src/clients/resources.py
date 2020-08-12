@@ -1,6 +1,6 @@
 from import_export import resources, fields, widgets
 
-from client.models import (
+from .models import (
     ClientContactDetail,
     ClientCommunication,
     ClientCommunicationFrequency,
@@ -55,14 +55,14 @@ class ClientImportResource(resources.ModelResource):
                 )
 
                 try:
-                    advisor_contact_id = AdvisorContactDetail.objects.all().filter(
+                    advisor_contact_id = AdvisorContactDetail.objects.get(
                         email_address=row[advisor_index]
                     )
-                    advisor = AdvisorDetail.objects.all().filter(
-                        advisor_contact_fk=advisor_contact_id[0].id
+                    advisor = AdvisorDetail.objects.get(
+                        advisor_contact_fk=advisor_contact_id.id
                     )
 
-                    client_detail_dict["advisor_id_fk"] = advisor[0]
+                    client_detail_dict["advisor_id_fk"] = advisor
                 except Exception as E:
                     # TODO : Add message when advisor email not existing in DB
                     print(E)
