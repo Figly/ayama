@@ -42,8 +42,16 @@ class ClientImportResource(resources.ModelResource):
             user = kwargs["user"]
 
             advisor_index = dataset.headers.index("advisor_email")
+            sa_id_index = dataset.headers.index("sa_id")
 
             for row in dataset:
+                # Determine whether client with similar sa_id is present in DB, skip row if true
+                if (
+                    ClientDetail.objects.all().filter(sa_id=row[sa_id_index]).count()
+                    > 0
+                ):
+                    continue
+
                 client_detail_dict = self.map_row_to_dict(
                     row, ClientDetail(), dataset.headers
                 )
@@ -54,6 +62,7 @@ class ClientImportResource(resources.ModelResource):
                     row, ClientContactDetail(), dataset.headers
                 )
 
+                # Get advisor id from email
                 try:
                     advisor_contact_id = AdvisorContactDetail.objects.get(
                         email_address=row[advisor_index]
@@ -66,7 +75,7 @@ class ClientImportResource(resources.ModelResource):
                 except Exception as E:
                     # TODO : Add message when advisor email not existing in DB
                     print(E)
-                    pass
+                    continue
 
                 self.save_models(
                     client_detail_dict,
