@@ -77,6 +77,7 @@ INSTALLED_APPS = (
     "formtools",
     "comms",
     "import_export",
+    "django_filters",
 )
 
 MIDDLEWARE = [

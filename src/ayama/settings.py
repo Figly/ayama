@@ -42,7 +42,7 @@ else:
     TEMPLATES[0].update({"APP_DIRS": False})
 
     # Setup static file serving
-    STATIC_ROOT = os.path.join(Path(__file__).resolve().parent, "static/")
+    STATIC_ROOT = os.path.join(BASE_DIR, "static/")
 
     # Configure static and media file access on GCS
     DEFAULT_FILE_STORAGE = "storages.backends.gcloud.GoogleCloudStorage"
