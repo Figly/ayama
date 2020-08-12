@@ -76,6 +76,7 @@ INSTALLED_APPS = (
     "practises",
     "formtools",
     "comms",
+    "import_export",
 )
 
 MIDDLEWARE = [
@@ -158,3 +159,5 @@ LOGIN_URL = reverse_lazy("accounts:login")
 THUMBNAIL_EXTENSION = "png"
 
 DATE_INPUT_FORMATS = ["%Y-%m-%d"]
+
+IMPORT_EXPORT_USE_TRANSACTIONS = True

@@ -5,3 +5,4 @@ from .client_employment_detail import EmploymentDetail
 from .dependent import Dependent
 from .rates_and_return import RatesAndReturn
 from .client_note import ClientNote
+from .client_import import ClientImport
