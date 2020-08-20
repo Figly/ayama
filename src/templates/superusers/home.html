@@ -1,81 +1,14 @@
-<div class="row">
-    <a href="{% url 'practises:add-practise' %}">
-        <div class="col-md-6 col-sm-6">
-            <div class="container">
-                <h2>Add Practise</h2>
-            </div>
+{% load thumbnail %}
+<div class="container" style="margin-top: 20px;">
+    <div class="row">
+        <div class="card align-center card-container" style="width: 18rem;">
+            <img class="card-img-top home-image" src="{% thumbnail user.profile.picture|default:'default_profile.png' 30x30 crop %}"  alt="Card image cap">
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">Cras justo odio</li>
+                <li class="list-group-item">Dapibus ac facilisis in</li>
+                <li class="list-group-item">Vestibulum at eros</li>
+              </ul>
         </div>
-    </a>
-</div>
-<div class="row">
-    <a href="{% url 'practises:add-advisor' %}">
-        <div class="col-md-6 col-sm-6">
-            <div class="container">
-                <h2>Add Advisor</h2>
-            </div>
-        </div>
-    </a>
-</div>
-<div class="row">
-    <a href="{% url 'clients:add-client' %}">
-        <div class="col-md-6 col-sm-6">
-            <div class="container">
-                <h2>Add Client</h2>
-            </div>
-        </div>
-    </a>
-</div>
-<div class="row">
-    <a href="{% url 'practises:add-administrator' %}">
-        <div class="col-md-6 col-sm-6">
-            <div class="container">
-                <h2>Add Administrator</h2>
-            </div>
-        </div>
-    </a>
-</div>
-<div class="row">
-    <a href="{% url 'clients:add-client-dependents' %}">
-        <div class="col-md-6 col-sm-6">
-            <div class="container">
-                <h2>Add Client Dependents</h2>
-            </div>
-        </div>
-    </a>
-</div>
-<div class="row">
-    <a href="{% url 'clients:clients-list' %}">
-        <div class="col-md-6 col-sm-6">
-            <div class="container">
-                <h2>View Clients</h2>
-            </div>
-        </div>
-    </a>
-</div>
-<div class="row">
-    <a href="{% url 'practises:advisor-list' %}">
-        <div class="col-md-6 col-sm-6">
-            <div class="container">
-                <h2>View Advisors</h2>
-            </div>
-        </div>
-    </a>
-</div>
-<div class="row">
-    <a href="{% url 'practises:administrator-list' %}">
-        <div class="col-md-6 col-sm-6">
-            <div class="container">
-                <h2>View Administrators</h2>
-            </div>
-        </div>
-    </a>
-</div>
-<div class="row">
-    <a href="{% url 'calculator:show-calculator' %}">
-        <div class="col-md-6 col-sm-6">
-            <div class="container">
-                <h2>View Calculators</h2>
-            </div>
-        </div>
-    </a>
+        <p class="figly-heading figly-heading margin-left-20">Welcome home,  {{ user.get_full_name}}</p>
+    </div>
 </div>

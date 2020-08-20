@@ -8,7 +8,7 @@
 <body>
   <div class="container figly-container-main">
     <div class="row">
-      <div class="container">
+      <div class="container container-home">
       {% if user.is_authenticated %}
         {% if user.is_superuser %}
           {% include "superusers/home.html" %}

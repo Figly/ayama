@@ -301,3 +301,29 @@ hr {
 .figly-link{
     color: #869D96;
 }
+
+.container-home{
+    margin-left: 10px;
+}
+
+.margin-left-10{
+    margin-left: 10px;
+}
+.margin-left-20{
+    margin-left: 10px;
+}
+
+.home-image{
+    border-radius: 50% !important;
+    width: 50%;
+    height: 50%;
+}
+
+.align-center{
+    align-items: center;
+}
+
+.card-container{
+    border-radius: 30px;
+    height: 100%;
+}
