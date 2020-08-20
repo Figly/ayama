@@ -80,11 +80,12 @@
 {% block container %}
 {% endblock container %}
 
+{% if not user.is_authenticated %}
 <!-- Site footer -->
-{% block footer %}
-{% include "footer.html" %}
-{% endblock footer %}
-
+  {% block footer %}
+    {% include "footer.html" %}
+  {% endblock footer %}
+{% endif %}
 <!-- Bootstrap core JavaScript
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->

@@ -1,10 +1,11 @@
 from __future__ import unicode_literals
 
-from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Column, Field, Layout, Row, Submit
 from django import forms
 
+from crispy_forms.helper import FormHelper
+from crispy_forms.layout import HTML, Column, Field, Fieldset, Layout, Row, Submit
 from practises.models import AdvisorDetail
+
 from ..models import ClientContactDetail
 
 
@@ -13,72 +14,106 @@ class AddClientContactDetailForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper()
         self.helper.form_tag = False
+        self.fields["telephone_home"].widget.attrs["class"] = "figly-form-control"
+        self.fields["telephone_work"].widget.attrs["class"] = "figly-form-control"
+        self.fields["cellphone_number"].widget.attrs["class"] = "figly-form-control"
+        self.fields["fax_number"].widget.attrs["class"] = "figly-form-control"
+        self.fields["email_address"].widget.attrs["class"] = "figly-form-control"
+        self.fields["residential_address_line_1"].widget.attrs[
+            "class"
+        ] = "figly-form-control"
+        self.fields["residential_address_line_2"].widget.attrs[
+            "class"
+        ] = "figly-form-control"
+        self.fields["residential_code"].widget.attrs["class"] = "figly-form-control"
+        self.fields["postal_address_line_1"].widget.attrs[
+            "class"
+        ] = "figly-form-control"
+        self.fields["postal_address_line_2"].widget.attrs[
+            "class"
+        ] = "figly-form-control"
+        self.fields["postal_code"].widget.attrs["class"] = "figly-form-control"
+
         self.helper.layout = Layout(
             Row(
                 Column(
                     "telephone_home",
                     placeholder="Home telephone number",
-                    css_class="form-group col-md-6 mb-0",
-                ),
+                    css_class="form-group col-md-10",
+                )
+            ),
+            Row(
                 Column(
                     "telephone_work",
                     placeholder="Work Telephone number",
-                    css_class="form-group col-md-6 mb-0",
+                    css_class="form-group col-md-10",
                 ),
             ),
             Row(
                 Column(
                     "cellphone_number",
                     placeholder="Cellphone number",
-                    css_class="form-group col-md-6 mb-0",
-                ),
-                Column(
-                    "fax_number",
-                    placeholder="Fax number",
-                    css_class="form-group col-md-6 mb-0",
-                ),
-                Column(
-                    "email_address",
-                    placeholder="Email address",
-                    css_class="form-group col-md-6 mb-0",
+                    css_class="form-group col-md-10",
                 ),
             ),
             Row(
                 Column(
+                    "fax_number",
+                    placeholder="Fax number",
+                    css_class="form-group col-md-10",
+                ),
+            ),
+            Row(
+                Column(
+                    "email_address",
+                    placeholder="Email address",
+                    css_class="form-group col-md-10",
+                ),
+            ),
+            HTML("<hr/>"),
+            HTML("<h3>Residential address</h3>"),
+            Row(
+                Column(
                     "residential_address_line_1",
                     placeholder="Residential Line 1",
-                    css_class="form-group col-md-6 mb-0",
+                    css_class="form-group col-md-10",
                 ),
+            ),
+            Row(
                 Column(
                     "residential_address_line_2",
                     placeholder="Residential Line 2",
-                    css_class="form-group col-md-6 mb-0",
+                    css_class="form-group col-md-10",
                 ),
             ),
             Row(
                 Column(
                     "residential_code",
                     placeholder="Residential Code",
-                    css_class="form-group col-md-3 mb-0",
+                    css_class="form-group col-md-10",
                 ),
             ),
+            HTML("<hr/>"),
+            HTML("<h3>Postal address</h3>"),
             Row(
                 Column(
                     "postal_address_line_1",
                     placeholder="Postal Address Line 1",
-                    css_class="form-group col-md-6 mb-0",
+                    css_class="form-group col-md-10",
                 ),
+            ),
+            Row(
                 Column(
                     "postal_address_line_2",
                     placeholder="Postal Address Line 2",
-                    css_class="form-group col-md-6 mb-0",
+                    css_class="form-group col-md-10",
                 ),
             ),
             Row(
                 Column(
                     "postal_code",
                     placeholder="Postal Code",
-                    css_class="form-group col-md-3 mb-0",
+                    css_class="form-group col-md-10",
                 ),
             ),
         )
