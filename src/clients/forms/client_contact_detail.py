@@ -95,6 +95,10 @@ class AddClientContactDetailForm(forms.ModelForm):
             ),
             HTML("<hr/>"),
             HTML("<h3>Postal address</h3>"),
+            HTML("<input id='same-as-residential' type='checkbox'>"),
+            HTML(
+                "<label type='checkbox' class='form-check-label' for='same-as-residential' style='margin-left:10px'>Same as residential address</label>"
+            ),
             Row(
                 Column(
                     "postal_address_line_1",

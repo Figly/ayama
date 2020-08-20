@@ -66,7 +66,7 @@
             {% endif %}
           <div>
               {% if wizard.steps.prev %}
-            <button name="wizard_goto_step" formnovalidate value="{{ wizard.steps.prev }}" class="btn figly-btn-secondary">{% trans "Back" %}</button>
+            <button name="wizard_goto_step" formnovalidate value="{{ wizard.steps.prev }}" class="btn figly-btn-secondary offset-md-1">{% trans "Back" %}</button>
               {% endif %}
             <button type="submit" class="btn figly-btn-wizard-next col-xs-offset-right-2">{% trans "Continue" %}</button>
           </div>
