@@ -22,17 +22,27 @@ class AddClientContactDetailForm(forms.ModelForm):
         self.fields["residential_address_line_1"].widget.attrs[
             "class"
         ] = "figly-form-control"
+        self.fields["residential_address_line_1"].widget.attrs[
+            "id"
+        ] = "residential-line-1-id"
         self.fields["residential_address_line_2"].widget.attrs[
             "class"
         ] = "figly-form-control"
+        self.fields["residential_address_line_2"].widget.attrs[
+            "id"
+        ] = "residential-line-2-id"
         self.fields["residential_code"].widget.attrs["class"] = "figly-form-control"
+        self.fields["residential_code"].widget.attrs["id"] = "residential-code-id"
         self.fields["postal_address_line_1"].widget.attrs[
             "class"
         ] = "figly-form-control"
+        self.fields["postal_address_line_1"].widget.attrs["id"] = "postal-line-1-id"
         self.fields["postal_address_line_2"].widget.attrs[
             "class"
         ] = "figly-form-control"
+        self.fields["postal_address_line_2"].widget.attrs["id"] = "postal-line-2-id"
         self.fields["postal_code"].widget.attrs["class"] = "figly-form-control"
+        self.fields["postal_code"].widget.attrs["id"] = "postal-code-id"
 
         self.helper.layout = Layout(
             Row(
@@ -95,7 +105,7 @@ class AddClientContactDetailForm(forms.ModelForm):
             ),
             HTML("<hr/>"),
             HTML("<h3>Postal address</h3>"),
-            HTML("<input id='same-as-residential' type='checkbox'>"),
+            HTML("<input id='same-as-residential' type='checkbox'/>"),
             HTML(
                 "<label type='checkbox' class='form-check-label' for='same-as-residential' style='margin-left:10px'>Same as residential address</label>"
             ),
