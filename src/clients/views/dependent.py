@@ -12,7 +12,7 @@ from formtools.wizard.views import SessionWizardView
 from practises.models import AdvisorDetail
 
 from ..forms import AddClientDependentDetailsForm
-from ..models import Dependent, ClientDetail
+from ..models import ClientDetail, Dependent
 
 
 class AddClientDependentView(LoginRequiredMixin, generic.CreateView):
@@ -23,9 +23,14 @@ class AddClientDependentView(LoginRequiredMixin, generic.CreateView):
     def get_form(self, *args, **kwargs):
         form = super(AddClientDependentView, self).get_form(*args, **kwargs)
         user = self.request.user
-        if user.is_advisor:
-            advisor_id = user.id  # noqa
-            form.fields["client_id_fk"].queryset = user.Advisor.clients
+
+        if user.is_administrator and user.is_advisor:
+            advisors = AdvisorDetail.objects.filter(
+                practise_id_fk=user.Advisor.practise_id_fk
+            )
+            form.fields["client_id_fk"].queryset = ClientDetail.objects.filter(
+                advisor_id_fk__in=advisors
+            )
         elif user.is_administrator:
             advisors = AdvisorDetail.objects.filter(
                 practise_id_fk=user.Administrator.practise_id_fk
@@ -33,6 +38,9 @@ class AddClientDependentView(LoginRequiredMixin, generic.CreateView):
             form.fields["client_id_fk"].queryset = ClientDetail.objects.filter(
                 advisor_id_fk__in=advisors
             )
+        elif user.is_advisor:
+            advisor_id = user.id  # noqa
+            form.fields["client_id_fk"].queryset = user.Advisor.clients
         return form
 
     def form_valid(self, form):

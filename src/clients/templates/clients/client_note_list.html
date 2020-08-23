@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+{% block container %}
+<div class="container">
+  <h1>Notes List</h1>
+  <h2>{{client}}</h2>
+  <h3><a href="{% url 'clients:add-client-note'%}"> Add Notes </a></h3>
+    {% if notes %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Title</th>
+                <th scope="col">Body</th>
+                <th scope="col">Type</th>
+                <th scope="col">Created Date</th>
+                <th scope="col">Last Modified by</th>
+            </tr>
+        </thead>
+        {% for note in notes %}
+        <tbody>
+            <tr scope="row">
+                <td>{{ note.id }}</td>
+                <td><a href="{% url 'clients:edit-client-note' pk=note.id %}">{{ note.title }}</a></td>
+                <td>{{ note.body }}</td>
+                <td>{{ note.note_type }}</td>
+                <td>{{ note.created_at }}</td>
+                <td>{{ note.modified_by }}</td>
+            </tr>
+        </tbody>
+        {% endfor %}
+    </table>
+    {% else %}
+    <p>No Notes to Display</p>
+</div>
+  {% endif %}
+{% endblock %}
+{% endblock %}

@@ -15,7 +15,7 @@
                 <th scope="col">ID Number</th>
                 <th scope="col">Tel Home</th>
                 <th scope="col">Cellphone</th>
-
+                <th scope="col">Is Administrator</th>
             </tr>
         </thead>
         {% for advisor in advisors %}
@@ -27,6 +27,8 @@
                 <td>{{ advisor.sa_id}}</td>
                 <td>{{ advisor.advisor_contact_fk.telephone_home }}</td>
                 <td>{{ advisor.advisor_contact_fk.cellphone_number }}</td>
+                <td>{{ advisor.user.is_administrator }}</td>
+                <td><a href="{% url 'practises:edit-advisor-roles' pk=advisor.user.id %}">edit roles</a></td>
 
             </tr>
         </tbody>

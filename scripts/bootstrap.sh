@@ -192,7 +192,7 @@ else
 fi
 
 echo_yellow 'Updating gcloud SDK'
-sudo gcloud components update
+gcloud components update
 
 # remove gcloud kubectl if installed
 if [[ $(which kubectl) == *google-cloud-sdk* ]]; then

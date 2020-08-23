@@ -1,3 +1,4 @@
+from django.conf.urls import url
 from django.urls import path
 
 from .forms import (
@@ -5,21 +6,35 @@ from .forms import (
     AddAdministratorDetailForm,
     AddAdvisorContactDetailForm,
     AddAdvisorDetailForm,
+    AddPractiseDetailForm,
+    SignUpAdministratorDetailForm,
+    SignUpAdvisorDetailForm,
 )
 from .views import (
+    AddAdministratorWizard,
+    AddAdvisorWizard,
+    AddClientProductView,
     AddPractiseView,
+    AddProductView,
+    AdministratorlistView,
     AdministratorSummaryView,
-    AdministratorWizard,
     AdvisorlistView,
+    AdvisorSearch,
     AdvisorSummaryView,
-    AdvisorWizard,
-    AministratorlistView,
     EditAdministratorContactView,
     EditAdministratorDetailView,
     EditAdvisorContactView,
     EditAdvisorDetailView,
     EditPractiseView,
+    EditProductView,
     EditReminderPreferencesView,
+    EditRolesView,
+    InviteAdvisor,
+    LinkAdvisor,
+    ProductlistView,
+    SignUpAdministratorWizard,
+    SignUpAdvisorWizard,
+    ViewClientProductView,
 )
 
 app_name = "practises"
@@ -28,20 +43,38 @@ urlpatterns = [
     path("edit_practise/<pk>/", EditPractiseView.as_view(), name="edit-practise"),
     path(
         "advisor/",
-        AdvisorWizard.as_view([AddAdvisorDetailForm, AddAdvisorContactDetailForm]),
+        AddAdvisorWizard.as_view([AddAdvisorDetailForm, AddAdvisorContactDetailForm]),
         name="add-advisor",
     ),
     path(
         "advisor/<int:practise>/",
-        AdvisorWizard.as_view([AddAdvisorDetailForm, AddAdvisorContactDetailForm]),
+        AddAdvisorWizard.as_view([AddAdvisorDetailForm, AddAdvisorContactDetailForm]),
         name="add-advisor",
     ),
     path(
         "administrator/",
-        AdministratorWizard.as_view(
+        AddAdministratorWizard.as_view(
             [AddAdministratorDetailForm, AddAdministratorContactDetailForm]
         ),
         name="add-administrator",
+    ),
+    path(
+        "admin_sign_up/",
+        SignUpAdministratorWizard.as_view(
+            [
+                SignUpAdministratorDetailForm,
+                AddAdministratorContactDetailForm,
+                AddPractiseDetailForm,
+            ]
+        ),
+        name="sign-up-administrator",
+    ),
+    path(
+        "advisor_sign_up/",
+        SignUpAdvisorWizard.as_view(
+            [SignUpAdministratorDetailForm, AddAdvisorContactDetailForm]
+        ),
+        name="sign-up-advisor",
     ),
     path("advisor_list/", AdvisorlistView.as_view(), name="advisor-list"),
     path("advisor_summary/<pk>/", AdvisorSummaryView.as_view(), name="advisor-summary"),
@@ -56,7 +89,9 @@ urlpatterns = [
         name="edit-advisor-contact",
     ),
     path(
-        "administrator_list/", AministratorlistView.as_view(), name="administrator-list"
+        "administrator_list/",
+        AdministratorlistView.as_view(),
+        name="administrator-list",
     ),
     path(
         "administrator_summary/<pk>/",
@@ -78,4 +113,19 @@ urlpatterns = [
         EditReminderPreferencesView.as_view(),
         name="edit-advisor-reminder-config",
     ),
+    url(r"^search/$", AdvisorSearch, name="advisor-search"),
+    path("invite_advisor", InviteAdvisor.as_view(), name="invite-advisor",),
+    path("link_advisor", LinkAdvisor.as_view(), name="link-advisor",),
+    path(
+        "edit_advisor_roles/<pk>/", EditRolesView.as_view(), name="edit-advisor-roles",
+    ),
+    path("add_product/", AddProductView.as_view(), name="add-product"),
+    path("product_list/", ProductlistView.as_view(), name="list-products"),
+    path("edit_product/<pk>/", EditProductView.as_view(), name="edit-product"),
+    path(
+        "view_client_product/<int:client_id>",
+        ViewClientProductView.as_view(),
+        name="view-client-product",
+    ),
+    path("add_client_product/", AddClientProductView, name="add-client-product",),
 ]

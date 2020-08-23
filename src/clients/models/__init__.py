@@ -2,5 +2,7 @@ from .client_communication import *
 from .client_contact_detail import ClientContactDetail
 from .client_detail import ClientDetail
 from .client_employment_detail import EmploymentDetail
+from .client_note import ClientNote
+from .client_products import ClientProduct
 from .dependent import Dependent
 from .rates_and_return import RatesAndReturn

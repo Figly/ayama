@@ -10,3 +10,7 @@
         $('.navbar').addClass('navbar-transparent');
   }).trigger('scroll');
 })();
+
+$.ajaxSetup({
+  headers: { "X-CSRFToken": '{{csrf_token}}' }
+});
