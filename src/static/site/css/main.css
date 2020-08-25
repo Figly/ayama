@@ -327,6 +327,10 @@ hr {
 .margin-left-20{
     margin-left: 10px;
 }
+
+.margin-left-35{
+  margin-left:35px;
+}
 .col-xs-offset-right-12 {
     margin-right: 100%;
   }
@@ -379,9 +383,17 @@ hr {
 
 .card-container{
     border-radius: 30px;
-    height: 100%;
+    border: none;
+    text-align: center;
 }
 
+a{
+  color: #869D96;
+}
+
+li td{
+  color: #012B3A;
+}
 /* Steps */
 .step {
   position: relative;
@@ -492,4 +504,11 @@ hr {
 
 .form-row{
     margin-left: 50px;
+}
+
+.sidebar{
+  width: 20%;
+}
+.dashboard-main{
+  width: 80%;
 }
