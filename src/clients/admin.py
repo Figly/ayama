@@ -1,13 +1,22 @@
 from django.contrib import admin
+from import_export.admin import ImportExportModelAdmin
+
+from .resources import ClientImportResource
 
 from .models import (
     ClientCommunication,
     ClientContactDetail,
     ClientDetail,
+    ClientImport,
     Dependent,
     EmploymentDetail,
     RatesAndReturn,
 )
+
+
+class ClientImportAdmin(ImportExportModelAdmin):
+    resource_class = ClientImportResource
+    pass
 
 
 class ClientDetailsAdmin(admin.ModelAdmin):
@@ -78,6 +87,7 @@ class ClientCommunicationsAdmin(admin.ModelAdmin):
     )
 
 
+admin.site.register(ClientImport, ClientImportAdmin)
 admin.site.register(ClientDetail, ClientDetailsAdmin)
 admin.site.register(ClientContactDetail, ContactDetailsAdmin)
 admin.site.register(EmploymentDetail, EmploymentDetailsAdmin)
