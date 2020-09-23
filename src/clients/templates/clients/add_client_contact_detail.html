@@ -8,33 +8,91 @@
 
 {% block content %}
 {% block container %}
-  <div class="container">
-    <form action="" method="POST">{% csrf_token %}
-      <p>Step {{ wizard.steps.step1 }} of {{ wizard.steps.count }}</p>
-      <nav aria-label="breadcrumb">
-        <ol class="breadcrumb remove_breadcrumb_css">
-          <li class="breadcrumb-item"><button  class="btn btn-link remove_breadcrumb_btn_css" formnovalidate role="link" name="wizard_goto_step" value="{{ wizard.steps.first }}">Client Details</button></li>
-          <li class="breadcrumb-item active" aria-current="page">Contact details</li>
-        </ol>
-      </nav>
-      <h3>Client Contact Details  {{ client_name }}</h3>
-      {{ wizard.management_form }}
-      {% if wizard.form.forms %}
-        {{ wizard.form.management_form }}
-        {% for form in wizard.form.forms %}
-          {% crispy form %}
-        {% endfor %}
-      {% else %}
-        {% crispy wizard.form %}
-      {% endif %}
-      <div class="col text-center">
-        {% if wizard.steps.prev %}
-        <button name="wizard_goto_step" formnovalidate value="{{ wizard.steps.prev }}" class="btn btn-secondary btn-lg">{% trans "Previous" %}</button>
-        {% endif %}
-        <button type="submit" formnovalidate class="btn btn-primary btn-lg">{% trans "Next" %}</button>
+<div class="container figly-container-main">
+  <div class="row">
+    <div class="col-md-3 client-stepper">
+      <div class="vl"></div>
+        <div class="step">
+          <div>
+            <div class="circle"></div>
+          </div>
+          <div>
+            <div class="title">Personal details</div>
+            <div class="caption"></div>
+          </div>
+        </div>
+        <div class="vl"></div>
+        <div class="step step-active">
+          <div>
+            <div class="circle"></div>
+          </div>
+          <div>
+            <div class="title">Contact details</div>
+          </div>
+        </div>
+        <div class="vl"></div>
+        <div class="step">
+          <div>
+            <div class="circle"></div>
+          </div>
+          <div>
+            <div class="title">Employment details</div>
+          </div>
+        </div>
+        <div class="vl"></div>
+        <div class="step">
+          <div>
+            <div class="circle"></div>
+          </div>
+          <div>
+            <div class="title">Financial details</div>
+          </div>
+        </div>
+        <div class="vl"></div>
+    </div>
+    <div class="col-md-7">
+      <div class="container">
+        <p class="figly-heading figly-heading-h1 client-register-heading">CLIENT DETAILS</p>
+        <hr/>
+        <form action="" method="POST">{% csrf_token %}
+            {{ wizard.management_form }}
+            {% if wizard.form.forms %}
+              {{ wizard.form.management_form }}
+              {% for form in wizard.form.forms %}
+                {% crispy form %}
+              {% endfor %}
+            {% else %}
+              {% crispy wizard.form %}
+            {% endif %}
+          <div>
+              {% if wizard.steps.prev %}
+            <button name="wizard_goto_step" formnovalidate value="{{ wizard.steps.prev }}" class="btn figly-btn-secondary offset-md-1">{% trans "Back" %}</button>
+              {% endif %}
+            <button type="submit" class="btn figly-btn-wizard-next col-xs-offset-right-2">{% trans "Continue" %}</button>
+          </div>
+        </form>
+        <hr style="margin-top: 60px"/>
       </div>
-    </form>
+    </div>
   </div>
+</div>
 {% endblock %}
-
 {% endblock %}
+</script>
+{% block scripts %}
+<script type='text/javascript'>
+  $(document).ready(function(){
+      $("#same-as-residential").click(function(){
+        if($(this).is(':checked')){
+          $("#postal-line-1-id").val($("#residential-line-1-id").val());
+          $("#postal-line-2-id").val($("#residential-line-2-id").val());
+          $("#postal-code-id").val($("#residential-code-id").val());
+        } else {
+          $("#postal-line-1-id").val("");
+          $("#postal-line-2-id").val("");
+          $("#postal-code-id").val("");
+        }
+      });
+  });
+</script>
+{% endblock scripts %}

@@ -6,17 +6,19 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="{% block description %}{% endblock description %}">
     <link rel="shortcut icon" href="{% static 'site/ico/favicon.ico' %}">
 
     <title>{% block title %}{% include "_brandname.html" %} :: {% endblock %}</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="{% static 'bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
 
     <!--JQuery css-->
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
 
     <!-- Custom styles for this site -->
     {% block styles %}
@@ -36,71 +38,7 @@
 <body>
 
 {% block navbar %}
-<nav class="navbar navbar-default">
-  <div class="container-fluid">
-    <!-- Brand and toggle get grouped for better mobile display -->
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="#">{% include "_brandname.html" %}</a>
-    </div>
-
-    <!-- Collect the nav links, forms, and other content for toggling -->
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav">
-        <li class="active"><a href="{% url 'home' %}">Home <span class="sr-only">(current)</span></a></li>
-
-          <!--<li><a href="#">Link</a></li>-->
-
-        <!--<li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><a href="#">Action</a></li>
-            <li><a href="#">Another action</a></li>
-            <li><a href="#">Something else here</a></li>
-            <li role="separator" class="divider"></li>
-            <li><a href="#">Separated link</a></li>
-            <li role="separator" class="divider"></li>
-            <li><a href="#">One more separated link</a></li>
-          </ul>
-        </li>-->
-      </ul>
-      <!--<form class="navbar-form navbar-left">
-        <div class="form-group">
-          <input type="text" class="form-control" placeholder="Search">
-        </div>
-        <button type="submit" class="btn btn-default">Submit</button>
-      </form>-->
-      {% block navbar-right %}
-      <ul class="nav navbar-nav navbar-right">
-        {% if user.is_authenticated %}
-        {% if user.is_superuser %}
-        <li><a href="{% url 'admin:index' %}">Admin</a></li>
-        {% endif %}
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle profile-menu" data-toggle="dropdown"  role="button" aria-haspopup="true" aria-expanded="false">
-            <img src="{% thumbnail user.profile.picture|default:'default_profile.png' 30x30 crop %}" alt="" class = "img-circle"/>
-            {{ user.get_full_name|truncatechars:20 }}
-            <span class="caret"></span>
-          </a>
-          <ul class="dropdown-menu">
-            <li><a href="{% url 'profiles:show_self' %}">Profile</a></li>
-            <li><a href="{% url 'accounts:logout' %}">Logout</a></li>
-            <!--<li role="separator" class="divider"></li>
-            <li><a href="#">Separated link</a></li>-->
-          </ul>
-        </li>
-        {% endif %}
-      </ul>
-      {% endblock %}
-    </div><!-- /.navbar-collapse -->
-  </div><!-- /.container-fluid -->
-</nav>
-
+{% include "_navbar.html" with active_link="home" %}
 {% endblock navbar %}
 
 {% block messages %}
@@ -140,42 +78,21 @@
 {% endblock splash %}
 
 {% block container %}
-<div class="container">
-    <div class="starter-template">
-        <h1>New Project</h1>
-        <p class="lead">Use this document as a way to quickly start any new project.<br> All you get is this text and a
-            mostly barebones HTML document.</p>
-    </div>
-
-</div><!-- /.container -->
 {% endblock container %}
 
+{% if not user.is_authenticated %}
 <!-- Site footer -->
-{% block footer %}
-<!-- Some social button for contact will do -->
-<a id="contact"></a>
-<div class="container">
-    <div class="footer">
-        <div class="row">
-            <div class="col-lg-6">
-                <p>&copy; Company {% now 'Y' %}</p>
-            </div>
-            <div class="col-lg-6 text-right">
-                Connect with us on
-                <a href="#"><i class="fa fa-facebook"></i> Facebook</a> or
-                <a href="#"><i class="fa fa-twitter"></i> Twitter</a>
-            </div>
-        </div>
-    </div>
-</div>
-{% endblock %}
-
+  {% block footer %}
+    {% include "footer.html" %}
+  {% endblock footer %}
+{% endif %}
 <!-- Bootstrap core JavaScript
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+<script src="https://kit.fontawesome.com/ca27f61c7c.js" crossorigin="anonymous"></script>
 <script>
   $( function() {
     $( ".datepicker" ).datepicker();

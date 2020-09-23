@@ -1,49 +1,68 @@
-{% load client_comms %}
+{% load thumbnail %}
+<div class="container" style="margin-top: 20px;">
+    <div class="row">
+        <div class="sidebar">
+            <div class="card align-center card-container shadow p-3 mb-5 bg-white">
+                <img class="card-img-top home-image" src="{% thumbnail user.profile.picture|default:'default_profile.png' 30x30 crop %}"  alt="Card image cap">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">{{ user.get_full_name}}</li>
+                    <li class="list-group-item">Dapibus ac facilisis in</li>
+                    <li class="list-group-item">Vestibulum at eros</li>
+                </ul>
+            </div>
+            <div class="card align-center card-container shadow p-3 mb-5 bg-white">
+                <div class="card-header">
+                    Featured
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">Cras justo odio</li>
+                    <li class="list-group-item">Dapibus ac facilisis in</li>
+                    <li class="list-group-item">Vestibulum at eros</li>
+                </ul>
+            </div>
+        </div>
+        <div class="dashboard-main" >
+            <ul class="nav">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Manage Clients</a>
+                    <div class="dropdown-menu">
+                      <a class="dropdown-item" href="#">Action</a>
+                      <a class="dropdown-item" href="#">Another action</a>
+                      <a class="dropdown-item" href="#">Something else here</a>
+                      <div class="dropdown-divider"></div>
+                      <a class="dropdown-item" href="#">Separated link</a>
+                    </div>
+                  </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Manage Advisors</a>
+                    <div class="dropdown-menu">
+                      <a class="dropdown-item" href="#">Action</a>
+                      <a class="dropdown-item" href="#">Another action</a>
+                      <a class="dropdown-item" href="#">Something else here</a>
+                      <div class="dropdown-divider"></div>
+                      <a class="dropdown-item" href="#">Separated link</a>
+                    </div>
+                  </li>
+                  <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Manage Practise</a>
+                    <div class="dropdown-menu">
+                      <a class="dropdown-item" href="#">Action</a>
+                      <a class="dropdown-item" href="#">Another action</a>
+                      <a class="dropdown-item" href="#">Something else here</a>
+                      <div class="dropdown-divider"></div>
+                      <a class="dropdown-item" href="#">Separated link</a>
+                    </div>
+                  </li>
+                <li class="nav-item">
+                <a class="nav-link disabled" href="#">Financial Calculators</a>
+                </li>
+            </ul>
+            <p class="figly-heading figly-heading margin-left-35">Welcome home,  {{ user.get_full_name}}</p>
+            <div class="margin-left-35">
+              {% load clients_list %}
 
-{%client_comms id=user.id%}
-
-<div class="row">
-    <a href="{% url 'clients:add-client' %}">
-        <div class="col-md-6 col-sm-6">
-            <div class="container">
-                <h2>Add Client</h2>
+              {% clients_list user=user %}
             </div>
-        </div>
-    </a>
-</div>
-<div class="row">
-    <a href="{% url 'clients:clients-list' %}">
-        <div class="col-md-6 col-sm-6">
-            <div class="container">
-                <h2>View Clients</h2>
-            </div>
-        </div>
-    </a>
-</div>
-<div class="row">
-    <a href="{% url 'clients:add-client-dependents' %}">
-        <div class="col-md-6 col-sm-6">
-            <div class="container">
-                <h2>Add Client Dependents</h2>
-            </div>
-        </div>
-    </a>
-</div>
-<div class="row">
-    <a href="{% url 'practises:edit-advisor-reminder-config' pk=user.Advisor.reminder_config_freq_fk.id%}">
-        <div class="col-md-6 col-sm-6">
-            <div class="container">
-                <h2>Edit reminder default settings</h2>
-            </div>
-        </div>
-    </a>
-</div>
-<div class="row">
-    <a href="{% url 'calculator:show-calculator' %}">
-        <div class="col-md-6 col-sm-6">
-            <div class="container">
-                <h2>View Calculators</h2>
-            </div>
-        </div>
-    </a>
+          </div>
+    </div>
 </div>

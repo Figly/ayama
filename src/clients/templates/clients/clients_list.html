@@ -1,18 +1,17 @@
-{% extends "base.html" %}
 {% load i18n %}
 
 {% block content %}
 {% block container %}
-<div class="container">
-  <h1>Client List</h1>
+<div class="card card-container shadow p-3 mb-5 bg-white">
+    <div class="card-body">
+  <h3>Client List</h3>
     {% if clients %}
     <table class="table">
         <thead>
             <tr>
-                <th scope="col">ID</th>
                 <th scope="col">Name</th>
                 <th scope="col">Surname</th>
-                <th scope="col">Email</th>
+
                 {%if user.is_superuser %}
                 <th scope="col">Practise</th>
                 <th scope="col">Advisor</th>
@@ -20,18 +19,15 @@
                 {%if user.is_administrator %}
                 <th scope="col">Advisor</th>
                 {% endif %}
-                <th scope="col">Notes</th>
-                <th scope="col">Communication</th>
-                <th scope="col">Link Products</th>
+                <th scope="col">Email</th>
+                <th scope="col">Location</th>
             </tr>
         </thead>
         {% for client in clients %}
         <tbody>
             <tr scope="row">
-                <td>{{ client.id }}</td>
                 <td><a href="{% url 'clients:client-summary' pk=client.id %}">{{ client.names }}</a></td>
                 <td>{{ client.surnames }}</td>
-                <td>{{ client.client_contact_fk.email_address }}</td>
                 {% if user.is_superuser %}
                 <td>{{ client.advisor_id_fk.practise_id_fk}}</td>
                 <td>{{ client.advisor_id_fk}}</td>
@@ -39,15 +35,15 @@
                 {%if user.is_administrator %}
                 <td>{{ client.advisor_id_fk}}</td>
                 {% endif %}
-                <td><a href="{% url 'clients:client-note-list' pk=client.id %}">Notes ({{ client.notes.count }})</a></td>
-                <td><a href="{% url 'clients:edit-client-comms' pk=client.client_comms_fk.id %}"><span class="glyphicon glyphicon-pencil"></a></td>
-                <td><a href="{% url 'practises:view-client-product' client_id=client.id %}" style="color: green;"><span class="glyphicon glyphicon-plus"></a></td>
+                <td>{{ client.client_contact_fk.email_address }}</td>
+                <td></td>
             </tr>
         </tbody>
         {% endfor %}
     </table>
     {% else %}
     <p>No Clients to Display</p>
+</div>
 </div>
   {% endif %}
 {% endblock %}

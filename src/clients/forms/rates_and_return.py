@@ -1,10 +1,11 @@
 from __future__ import unicode_literals
 
-from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Column, Field, Layout, Row, Submit
 from django import forms
 
+from crispy_forms.helper import FormHelper
+from crispy_forms.layout import Column, Field, Layout, Row, Submit
 from practises.models import AdvisorDetail
+
 from ..models import RatesAndReturn
 
 
@@ -18,17 +19,21 @@ class AddClientRatesAndReturnForm(forms.ModelForm):
                 Column(
                     "inflation",
                     placeholder="Inflation Rate",
-                    css_class="form-group col-md-6 mb-0",
+                    css_class="form-group col-md-10",
                 ),
+            ),
+            Row(
                 Column(
                     "interest",
                     placeholder="Interest Rate",
-                    css_class="form-group col-md-6 mb-0",
+                    css_class="form-group col-md-10",
                 ),
+            ),
+            Row(
                 Column(
                     "return_rate",
                     placeholder="Return Rate",
-                    css_class="form-group col-md-6 mb-0",
+                    css_class="form-group col-md-10",
                 ),
             ),
         )
