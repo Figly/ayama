@@ -1,4 +1,5 @@
 from import_export import resources, fields, widgets
+from django.contrib import admin, messages
 
 from .models import (
     ClientContactDetail,
@@ -14,7 +15,7 @@ from practises.models import AdvisorDetail, AdvisorContactDetail
 
 class ClientImportResource(resources.ModelResource):
 
-    # Convert given values to options in model
+    # Convert given values to choices in model
     title = fields.Field(attribute="get_title_display", column_name=("Title"))
     medical_aid = fields.Field(
         attribute="get_medical_aid_display", column_name=("Medical Aid")
@@ -44,6 +45,13 @@ class ClientImportResource(resources.ModelResource):
             advisor_index = dataset.headers.index("advisor_email")
             sa_id_index = dataset.headers.index("sa_id")
 
+            # Pull advisors within practise
+            if user.is_superuser:
+                advisors = AdvisorDetail.objects.all()
+            elif user.is_administrator:
+                practise_id = user.Administrator.practise_id_fk
+                advisors = AdvisorDetail.objects.filter(practise_id_fk=practise_id)
+
             for row in dataset:
                 # Determine whether client with similar sa_id is present in DB, skip row if true
                 if (
@@ -71,8 +79,16 @@ class ClientImportResource(resources.ModelResource):
                         advisor_contact_fk=advisor_contact_id.id
                     )
 
-                    client_detail_dict["advisor_id_fk"] = advisor
+                    if advisor in advisors:
+                        client_detail_dict["advisor_id_fk"] = advisor
+
+                    else:
+                        raise NameError(
+                            f"Advisor {advisor} exists, but is not in this practise"
+                        )
+
                 except Exception as E:
+                    raise NameError(f"Advisor {advisor} does not exist practise")
                     # TODO : Add message when advisor email not existing in DB
                     print(E)
                     continue
