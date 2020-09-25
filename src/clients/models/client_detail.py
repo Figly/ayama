@@ -29,7 +29,7 @@ class ClientDetail(BaseModel):
     surnames = models.CharField("Surname", max_length=100)
     names = models.CharField("Name", max_length=100)
     known_as = models.CharField("Known As", max_length=50, blank=True, null=True)
-    sa_id = models.BigIntegerField("RSA ID Number")
+    sa_id = models.BigIntegerField("RSA ID Number", unique=True)
     passport_no = models.CharField(
         "Passport Number", max_length=50, blank=True, null=True
     )
