@@ -8,6 +8,27 @@
 
 {% block content %}
 {% block container %}
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+<div class="container">
+  <div class="row">
+
+    <div class="col-md-3">
+   
+    </div>
+
+    <div class="col-md-7">
+        <h1 class="figly-heading ">CLIENT DETAILS</h1>   
+    </div>
+
+  </div>
+          <hr style=" margin: 0px 0px 36px 50px;"/>
+
+</div>
+=======
+>>>>>>> a4556122c4d2853ae835b81daab61c351ee07ee9
+>>>>>>> 2507b00... XD designs complete
 <div class="container figly-container-main">
   <div class="row">
     <div class="col-md-3 client-stepper">
@@ -52,8 +73,18 @@
     </div>
     <div class="col-md-7">
       <div class="container">
+<<<<<<< HEAD
         <p class="figly-heading figly-heading-h1 client-register-heading">CLIENT DETAILS</p>
         <hr/>
+=======
+<<<<<<< HEAD
+        {% comment %} <p class="figly-heading figly-heading-h1 client-register-heading">CLIENT DETAILS</p>
+        <hr/> {% endcomment %}
+=======
+        <p class="figly-heading figly-heading-h1 client-register-heading">CLIENT DETAILS</p>
+        <hr/>
+>>>>>>> a4556122c4d2853ae835b81daab61c351ee07ee9
+>>>>>>> 2507b00... XD designs complete
         <form action="" method="POST">{% csrf_token %}
             {{ wizard.management_form }}
             {% if wizard.form.forms %}
@@ -64,17 +95,46 @@
             {% else %}
               {% crispy wizard.form %}
             {% endif %}
+<<<<<<< HEAD
           <div>
+=======
+<<<<<<< HEAD
+          <div class="figly-form-nav">
+=======
+          <div>
+>>>>>>> a4556122c4d2853ae835b81daab61c351ee07ee9
+>>>>>>> 2507b00... XD designs complete
               {% if wizard.steps.prev %}
             <button name="wizard_goto_step" formnovalidate value="{{ wizard.steps.prev }}" class="btn figly-btn-secondary offset-md-1">{% trans "Back" %}</button>
               {% endif %}
             <button type="submit" class="btn figly-btn-wizard-next col-xs-offset-right-2">{% trans "Continue" %}</button>
           </div>
         </form>
+<<<<<<< HEAD
         <hr style="margin-top: 60px"/>
+=======
+<<<<<<< HEAD
+=======
+        <hr style="margin-top: 60px"/>
+>>>>>>> a4556122c4d2853ae835b81daab61c351ee07ee9
+>>>>>>> 2507b00... XD designs complete
       </div>
     </div>
   </div>
 </div>
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+
+<div class="container">
+ <hr style=" margin: 60px 0px 60px 50px;"/>
+ </div>
+
+ {% block footer %}
+    {% include "footer.html" %}
+  {% endblock footer %}
+=======
+>>>>>>> a4556122c4d2853ae835b81daab61c351ee07ee9
+>>>>>>> 2507b00... XD designs complete
 {% endblock %}
 {% endblock %}

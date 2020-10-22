@@ -81,7 +81,15 @@ class AddClientContactDetailForm(forms.ModelForm):
                 ),
             ),
             HTML("<hr/>"),
+<<<<<<< HEAD
             HTML("<h3>Residential address</h3>"),
+=======
+<<<<<<< HEAD
+            HTML("<h3 class='figly-subheading'>Residential address</h3>"),
+=======
+            HTML("<h3>Residential address</h3>"),
+>>>>>>> a4556122c4d2853ae835b81daab61c351ee07ee9
+>>>>>>> 2507b00... XD designs complete
             Row(
                 Column(
                     "residential_address_line_1",
@@ -104,7 +112,15 @@ class AddClientContactDetailForm(forms.ModelForm):
                 ),
             ),
             HTML("<hr/>"),
+<<<<<<< HEAD
             HTML("<h3>Postal address</h3>"),
+=======
+<<<<<<< HEAD
+            HTML("<h3 class='figly-subheading'>Postal address</h3>"),
+=======
+            HTML("<h3>Postal address</h3>"),
+>>>>>>> a4556122c4d2853ae835b81daab61c351ee07ee9
+>>>>>>> 2507b00... XD designs complete
             HTML("<input id='same-as-residential' type='checkbox'/>"),
             HTML(
                 "<label type='checkbox' class='form-check-label' for='same-as-residential' style='margin-left:10px'>Same as residential address</label>"
