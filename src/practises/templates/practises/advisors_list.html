@@ -1,0 +1,43 @@
+{% load i18n %}
+
+{% block content %}
+{% block container %}
+<div class="card card-container shadow p-3 mb-5 bg-white">
+    <div class="card-body">
+  <h3>Advisor List</h3>
+    {% if advisors %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Surname</th>
+                <th scope="col">Email</th>
+                <th scope="col">ID Number</th>
+                <th scope="col">Tel Home</th>
+                <th scope="col">Cellphone</th>
+                <th scope="col">Is Administrator</th>
+            </tr>
+        </thead>
+        {% for advisor in advisors %}
+        <tbody>
+            <tr scope="row">
+                <td><a href="{% url 'practises:advisor-summary' pk=advisor.user_id %}">{{ advisor.names }}</a></td>
+                <td>{{ advisor.surnames }}</td>
+                <td>{{ advisor.advisor_contact_fk.email_address }}</td>
+                <td>{{ advisor.sa_id}}</td>
+                <td>{{ advisor.advisor_contact_fk.telephone_home }}</td>
+                <td>{{ advisor.advisor_contact_fk.cellphone_number }}</td>
+                <td>{{ advisor.user.is_administrator }}</td>
+                <td><a href="{% url 'practises:edit-advisor-roles' pk=advisor.user.id %}">edit roles</a></td>
+
+            </tr>
+        </tbody>
+        {% endfor %}
+    </table>
+    {% else %}
+    <p>No Advisors to Display</p>
+</div>
+</div>
+  {% endif %}
+{% endblock %}
+{% endblock %}

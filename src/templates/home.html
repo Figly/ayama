@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+
+
+{% block splash %}
+
+<body>
+  <div class="container figly-container-main">
+    <div class="row">
+      <div class="container container-home">
+        {% if user.is_authenticated %}
+        {% if user.is_superuser %}
+        {% include "superusers/home.html" %}
+        {% elif user.is_administrator%}
+        {% include "administration/home.html" %}
+        {% else %}
+        {% include "advisors/home.html" %}
+        {% endif %}
+        {% else %}
+        {% include "registration/home.html" %}
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</body>
+{% endblock splash %}
+
+{%block container%}
+{% endblock container %}
+
+{% block scripts %}
+<script src="{% static 'site/js/site.js' %}"></script>
+{% endblock scripts %}

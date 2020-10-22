@@ -1,0 +1,87 @@
+{%- for job in cron_jobs -%}
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  annotations:
+    description: {{ job.get('description', defaults.description) }}
+  labels:
+    app: {{ app }}
+    run: {{ app }}-{{ job.name }}
+    environment: "{{ environment }}"
+{%- for label, value in defaults.get('labels', {}).items() %}
+    {{ label }}: "{{ value }}"
+{%- endfor %}
+{%- for label, value in job.get('labels', {}).items() %}
+    {{ label }}: "{{ value }}"
+{%- endfor %}
+  name: {{ app }}-{{ job.name }}
+spec:
+  schedule: "{{ job.schedule }}"
+  jobTemplate:
+    spec:
+      backoffLimit: {{ job.get('retries', 3) }}
+      template:
+        metadata:
+          annotations:
+            description: {{ job.get('description', defaults.description) }}
+          labels:
+            app: {{ app }}
+            run: {{ app }}-{{ job.name }}
+            environment: "{{ environment }}"
+            type: cronjob
+{%- for label, value in defaults.get('labels', {}).items() %}
+            {{ label }}: "{{ value }}"
+{%- endfor %}
+{%- for label, value in job.get('labels', {}).items() %}
+            {{ label }}: "{{ value }}"
+{%- endfor %}
+        spec:
+{%- if environment != 'dev' %}
+{%- set target_nodepool = job.get('target_nodepool', {}).get(environment, defaults.get('target_nodepool', '')) %}
+{%- if target_nodepool %}
+          nodeSelector:
+            nodepool_type: "{{ target_nodepool }}"
+          tolerations:
+          - key: "nodepool_type"
+            operator: Equal
+            value: "{{ target_nodepool }}"
+            effect: NoSchedule
+{%- endif %}
+{%- endif %}
+          containers:
+          - name: {{ app }}-{{ job.name }}
+            image: {{ image_url }}
+            args: {{ job.args }}
+            env:
+            - name: GIT_HASH
+              value: "{{ git_sha }}"
+            - name: ENVIRONMENT
+              value: {{ environment }}
+            envFrom:
+            - configMapRef:
+                name: {{ app }}-env
+            - secretRef:
+                name: {{ app }}-env
+            volumeMounts:
+              - mountPath: /etc/gcloud/
+                name: credentials
+                readOnly: true
+{%- if environment == 'dev' %}
+              - mountPath: /usr/src/app
+                name: app
+{%- endif %}
+          restartPolicy: Never
+          volumes:
+            - name: credentials
+              secret:
+                secretName: ayama-credentials
+{%- if environment == 'dev' %}
+            - name: app
+              hostPath:
+                path: "{{ source_path }}"
+{%- endif %}
+          restartPolicy: Never
+      parallelism: {{ job.get('parallelism', {}).get(environment, 0) }}
+  concurrencyPolicy: {{ job.get('concurrencyPolicy', 'Forbid') }}
+{% endfor %}

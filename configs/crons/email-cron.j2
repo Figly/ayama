@@ -1,0 +1,24 @@
+cron_jobs:
+
+- name: test-send-email
+  description: 'send.email'
+  labels:
+    owner: ds
+  args:
+    - ./manage.py
+    - trigger_comms
+    - '--job=example.test_sendgrid'
+    - '--subject=Testing Email from Django via Sendgrid'
+    - '--body=Test body for test email from Ayama cronjob'
+    - '--to=coetzee.vs@gmail.com,info.hadoe@gmail.com,karelrverhoeven@gmail.com'
+    - '--from=karelrverhoeven@gmail.com'
+  schedule: "30 0 * * *"
+  concurrencyPolicy: 'Forbid'
+  resources:
+    production:
+      requests:
+        memory: 100Mi
+  retries: 1
+  parallelism:
+    production: 0
+    dev: 1

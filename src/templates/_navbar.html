@@ -1,0 +1,46 @@
+{% load thumbnail %}
+
+<nav class="navbar navbar-expand-lg navbar-light shadow p-3 mb-5 bg-white rounded">
+  <div class="container">
+  <a class="navbar-brand" href="#">Figly</a>
+  <ul class="navbar-nav ml-auto">
+    {% if not user.is_authenticated %}
+    <li class="nav-item">
+        <a class="nav-link" href="#" style="color: #012B3A;">
+          ABOUT US
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="#"  style="color: #012B3A;">
+          CONTACT US
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'accounts:login' %}" style="color: #869D96;">
+          LOG IN
+        </a>
+    </li>
+    {% endif %}
+    {% if user.is_authenticated %}
+    <!-- {% if user.is_superuser %}
+    <li class="nav-item" >
+      <a href="{% url 'admin:index' %}">
+        ADMIN
+      </a>
+    </li>
+    {% endif %} -->
+    <li lass="nav-item dropdown">
+      <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <img src="{% thumbnail user.profile.picture|default:'default_profile.png' 30x30 crop %}" alt="" class = "img-circle"/>
+        {{ user.get_full_name|truncatechars:20 }}
+        <span class="caret"></span>
+      </a>
+      <div class="dropdown-menu" aria-labelledby="navbarDropdown">>
+        <a class="dropdown-item" href="{% url 'profiles:show_self' %}">Profile</a>
+        <a class="dropdown-item" href="{% url 'accounts:logout' %}">Logout</a>
+      </div>
+    </li>
+    {% endif %}
+</ul>
+</div>
+</nav>

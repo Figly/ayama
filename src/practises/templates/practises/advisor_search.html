@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+{% block container %}
+
+    <div class="container">
+        <div id="messages" class="hidden" >
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <div id="messages_content"></div>
+        </div>
+        <h1>Advisor Search</h1>
+    <form method="get">
+        {% csrf_token %}
+        {{ filter.form|crispy }}
+        <button type="submit" class="btn btn-primary" name="search">Search</button>
+    </form>
+    </div>
+    <div class="container">
+        <h3>Recently signed up advisors:</h3>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Surname</th>
+                    <th scope="col">Email</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            {% for advisor in filter.qs %}
+            <tbody>
+                <tr scope="row">
+                    <td>{{ advisor.surnames }}</td>
+                    <td>{{ advisor.names }}</td>
+                    <td>{{ advisor.advisor_contact_fk.email_address }}</td>
+                    <td><button class="btn btn-success" data-advisor="{{ advisor.user.id }}" data-admin="{{ user.id }}"  onclick="sendInvite(this)" role="button">Invite</button></td>
+                </tr>
+            </tbody>
+            {% endfor %}
+        </table>
+    </div>
+{% endblock %}
+{% endblock %}
+
+{% block scripts %}
+  <script>
+        function sendInvite(e){
+            var advisorId = e.getAttribute('data-advisor');
+            var adminId = e.getAttribute('data-admin');
+            $('#ayama-modal').modal('show');
+            $.ajax({
+            type: 'POST',
+            headers:{
+            "X-CSRFToken": '{{ csrf_token }}'
+            },
+            url: "{% url 'practises:invite-advisor'%}",
+            data: {'advisor_id':advisorId, 'admin_id':adminId},
+            success: function (response) {
+                e.disabled = "disabled";
+                $(e).removeClass("btn-success").addClass("btn-secondary");
+                $('#messages').removeClass('hidden').addClass('alert alert-success ');
+                $('#messages_content').html('Email sent to advisor');
+                $('#ayama-modal').modal('hide');
+            },
+            error: function (response) {
+                $('#ayama-modal').modal('hide')
+                $('#messages').removeClass('hidden').addClass('alert alert-danger ');
+                $('#messages_content').html('An error occured. Please contact an administrator.');
+            }
+        });
+        }
+
+</script>
+{% endblock %}

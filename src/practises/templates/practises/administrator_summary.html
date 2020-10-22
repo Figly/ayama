@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+{% block container %}
+    {% if administrator %}
+    <div class="container" style="font-size: larger;" >
+        <h1>Administrator Details</h1>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <div class="col-md-6 col-sm-6">
+                        <h2>Personal Details</h2>
+                    </div>
+                    <div class="col-md-6 col-sm-6">
+                        <a href="{% url 'practises:edit-administrator-detail' pk=administrator.user_id %}"><span class="glyphicon glyphicon-pencil icon-edit-customer"></a>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-6">
+                        <p><strong>Title:</strong></p> {{administrator.title}}
+                        <p><strong>Name:</strong></p> {{administrator.names}}
+                        <p><strong>Surname:</strong></p> {{administrator.surnames}}
+                        <p><strong>Known as:</strong></p> {{administrator.known_as}}
+                        <p><strong>ID number:</strong></p> {{administrator.sa_id}}
+                        <p><strong>Passport No:</strong></p> {{administrator.passport_no}}
+                </div>
+                <div class="col-md-6 col-sm-6">
+                    <p><strong>Position:</strong></p> {{administrator.position}}
+                    <p><strong>Employment Date:</strong></p> {{administrator.employment_date}}
+                    <p><strong>Personnel No:</strong></p> {{administrator.personnel_number}}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <div class="col-md-6 col-sm-6">
+                        <h2>Contact Details</h2>
+                    </div>
+                    <div class="col-md-6 col-sm-6">
+                        <a href="{% url 'practises:edit-administrator-contact' pk=administrator.adminstrator_contact_fk.id %}"><span class="glyphicon glyphicon-pencil icon-edit-customer"></a>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-6">
+                        <p><strong>Telephone home:</strong></p> {{administrator.adminstrator_contact_fk.telephone_home}}
+                        <p><strong>Telephone work:</strong></p> {{administrator.adminstrator_contact_fk.telephone_work}}
+                        <p><strong>Cellphone:</strong></p> {{administrator.adminstrator_contact_fk.cellphone_number}}
+                        <p><strong>Postal Address:</strong></p> {{administrator.adminstrator_contact_fk.postal_address_line_1}}
+                </div>
+                <div class="col-md-6 col-sm-6">
+                    <p><strong>Fax Number:</strong></p> {{administrator.adminstrator_contact_fk.fax_number}}
+                    <p><strong>Email Address:</strong></p> {{administrator.adminstrator_contact_fk.email_address}}
+                    <p><strong>Residential Address:</strong></p> {{administrator.adminstrator_contact_fk.residential_address_line_1}}
+                </div>
+            </div>
+        </div>
+</div>
+  {% endif %}
+{% endblock %}
+{% endblock %}

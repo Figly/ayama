@@ -1,0 +1,618 @@
+@import "//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css";
+
+html,
+body {
+    height: 100%;
+    /* For full height images */
+}
+
+.starter-template {
+    padding: 40px 15px;
+    text-align: center;
+}
+
+.footer {
+    padding-top: 40px;
+    padding-bottom: 40px;
+    margin-top: 40px;
+    border-top: 1px solid #eee;
+}
+
+.alert {
+    margin-top: 55px;
+    margin-bottom: 0;
+}
+
+body>.navbar-transparent {
+    background-color: transparent;
+    border-color: transparent;
+    box-shadow: none;
+}
+
+.navbar-transparent .navbar-nav>.active>a {
+    background-color: transparent;
+}
+
+.navbar-form {
+    margin-right: 0;
+}
+
+.navbar-nav>li>a.profile-menu {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.navbar-nav>.btn {
+    margin-top: 10px;
+    margin-right: 1.7em;
+}
+
+.navbar-nav>li>a {
+    font-size: 16px;
+}
+
+.navbar-brand {
+    font-weight: bold;
+}
+
+.navbar-brand>img {
+    float: left;
+    margin-right: 10px;
+}
+
+.btn {
+    background-image: none;
+    -webkit-box-shadow: 0px 1px 0px #ddd;
+    -moz-box-shadow: 0px 1px 0px #ddd;
+    box-shadow: 0px 1px 0px #ddd;
+}
+
+.btn-lg {
+    width: 80px;
+}
+
+/* Home page styling */
+.corporate-jumbo {
+    background-image: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0)),
+        url("../img/benner.jpg");
+    background-repeat: no-repeat;
+    background-position: 80% center;
+    background-attachment: fixed;
+    -webkit-background-size: cover;
+    background-size: cover;
+    color: #3d3737;
+    padding: 10em 0;
+    margin-bottom: 0;
+    height: 100%;
+}
+
+.corporate-jumbo .well {
+    background-color: rgba(245, 245, 245, .7);
+}
+
+.corporate-jumbo p,
+.corporate-jumbo h1 {
+    color: #4c4444;
+    text-shadow: 0px 0px 2px black;
+}
+
+.corporate-jumbo p {
+    font-weight: 500;
+}
+
+.corporate-jumbo .well legend {
+    color: #333;
+}
+
+.corporate-jumbo>.container {
+    display: block;
+    position: absolute;
+    bottom: 2em;
+    left: 15px;
+}
+
+.contact-banner {
+    padding: 100px 0;
+    background: #e0e0e0;
+    margin-top: 100px;
+}
+
+.footer a:hover {
+    text-decoration: none;
+}
+
+/* About page styling */
+#sec1 {
+    background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAAJklEQVQIW2NkAIILFy78NzAwYATRjCABZEGwAEwFiA1WBlIOUwkA72gTdDIYVO4AAAAASUVORK5CYII=) repeat;
+}
+
+/* Profile page styling */
+.profile-head {
+    background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAAJklEQVQIW2NkAIILFy78NzAwYATRjCABZEGwAEwFiA1WBlIOUwkA72gTdDIYVO4AAAAASUVORK5CYII=) repeat;
+    padding: 70px 0px 30px 20px;
+}
+
+.profile-body {
+    padding: 4px 0px;
+}
+
+.text-page {
+    padding: 120px 0;
+}
+
+#map-outer {
+    height: 440px;
+    padding: 40px 20px;
+    margin-bottom: 20px;
+    background-color: #FFF
+}
+
+#map-container {
+    height: 400px
+}
+
+.img-dim {
+    opacity: 0.5;
+    box-shadow: inset 0px 0px 64px 64px #EA1717, 0px 0px 4px 4px #EA1717;
+}
+
+/* Authentication forms */
+.form-box form,
+.form-box .form-message {
+    max-width: 330px;
+    padding: 15px;
+    margin: 0 auto;
+}
+
+.form-box form .checkbox {
+    margin-bottom: 10px;
+}
+
+.form-box form .checkbox {
+    font-weight: normal;
+}
+
+.form-box form .form-control {
+    position: relative;
+    height: auto;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    padding: 10px;
+    font-size: 16px;
+
+}
+
+.form-box form .form-control:focus {
+    z-index: 2;
+}
+
+.remove_breadcrumb_css {
+    border-style: none;
+    border-width: 0px;
+    padding-left: 0px;
+    background-color: transparent;
+}
+
+.remove_breadcrumb_btn_css {
+    font-size: inherit;
+    font-weight: inherit;
+    text-transform: inherit;
+    padding: 0px;
+}
+
+.icon-edit-customer {
+    position: absolute;
+    top: 25px;
+    text-align: center;
+}
+
+.figly-heading {
+    font-family: 'Yantramanav', sans-serif;
+    color: #012B3A;
+    opacity: 100%;
+    font-size: 40px;
+    margin: 36px 0px;
+}
+
+.figly-heading-h1 {
+    margin-bottom: 90px;
+    margin-left: 90px;
+}
+
+.figly-heading-h4 {
+    text-align: left;
+    font: normal normal normal 16px/25px Poppins;
+    letter-spacing: 0px;
+    opacity: 1;
+}
+
+.signup-card {
+    width: 308px;
+    border-radius: 30px;
+    border-style: none;
+}
+
+.jumbotron {
+    background-color: white !important;
+    margin-bottom: 0px !important;
+}
+
+.navbar {
+    margin-bottom: 0rem !important
+}
+
+.figly-container-main {
+    max-width: 1360px;
+    background-color: inherit;
+    /* min-height: 67%; */
+}
+
+.btn-signup {
+    background-color: #012B3A;
+    color: white;
+    border-radius: 10px;
+    width: 251px;
+}
+
+.footer-main-heading {
+    font-family: 'Poppins', sans-serif;
+    font-size: 20px;
+    color: #869D96;
+}
+
+.footer-sub-heading {
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    color: #869D96;
+    margin-bottom: 0px;
+}
+
+.footer-text {
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    color: #ffffff;
+    padding-right: 10px;
+}
+
+.figly-footer {
+    background: #012B3A;
+    text-align: center;
+    margin-top: 68px;
+}
+
+.footer-container {
+
+    padding: 20px 0px 0px 30px;
+    text-align: left;
+}
+
+.figly-btn-primary {
+    background-color: #012B3A;
+    color: #ffffff;
+    border-radius: 10px;
+}
+
+.figly-btn-secondary {
+    background-color: #6c757d;
+    color: #ffffff;
+    border-radius: 10px;
+    width: 224px;
+}
+
+.figly-btn-wizard-next {
+    background-color: #012B3A;
+    color: #ffffff;
+    border-radius: 10px;
+    width: 224px;
+    float: right;
+}
+
+body {
+    background-color: #ffffff;
+}
+
+hr {
+    margin-top: 0px;
+    margin-bottom: 1rem;
+    border: 1px;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    background-color: #012B3A;
+}
+
+.login-form {
+    margin: 40px 0px 0px 20px;
+    width: 400px;
+}
+
+.login-text {
+    color: #869D96;
+    margin-left: 20px;
+}
+
+.figly-link {
+    color: #869D96;
+}
+
+.container-home {
+    /* margin-left: 10px; */
+}
+
+.margin-left-10 {
+    margin-left: 10px;
+}
+
+.margin-left-20 {
+    margin-left: 10px;
+}
+
+.col-xs-offset-right-12 {
+    margin-right: 100%;
+}
+
+.col-xs-offset-right-11 {
+    margin-right: 91.66666667%;
+}
+
+.col-xs-offset-right-10 {
+    margin-right: 83.33333333%;
+}
+
+.col-xs-offset-right-9 {
+    margin-right: 75%;
+}
+
+.col-xs-offset-right-8 {
+    margin-right: 66.66666667%;
+}
+
+.col-xs-offset-right-7 {
+    margin-right: 58.33333333%;
+}
+
+.col-xs-offset-right-6 {
+    margin-right: 50%;
+}
+
+.col-xs-offset-right-5 {
+    margin-right: 41.66666667%;
+}
+
+.col-xs-offset-right-4 {
+    margin-right: 33.33333333%;
+}
+
+.col-xs-offset-right-3 {
+    margin-right: 25%;
+}
+
+.col-xs-offset-right-2 {
+    margin-right: 16.66666667%;
+}
+
+.col-xs-offset-right-1 {
+    margin-right: 8.33333333%;
+}
+
+.col-xs-offset-right-0 {
+    margin-right: 0;
+}
+
+.profile-img {
+    border-radius: 50% !important;
+    width: 150px;
+    height: 150px;
+    margin: 16px auto;
+
+}
+
+.align-center {
+    text-align: center;
+}
+
+.card-container {
+    border-radius: 30px;
+    /* height: 100%; */
+    box-shadow: 0px 3px 6px #00000029;
+    margin: 40px 20px;
+    padding: 24px 24px;
+    opacity: 1;
+    border: none;
+
+}
+
+/* Steps */
+.step {
+    position: relative;
+    min-height: 1em;
+    color: #012B3A;
+}
+
+.step+.step {
+    margin-top: 1.5em
+}
+
+.step>div:first-child {
+    position: static;
+    height: 0;
+}
+
+.step>div:not(:first-child) {
+    margin-left: 1.5em;
+    padding-left: 1em;
+}
+
+.step.step-active {
+    color: #012B3A
+}
+
+.step.step-active .circle {
+    background-color: #012B3A;
+}
+
+/* Circle */
+.circle {
+    background: #FFFFFF;
+    position: relative;
+    width: 1em;
+    height: 1em;
+    line-height: 1.5em;
+    border-radius: 100%;
+    color: #fff;
+    text-align: center;
+    box-shadow: 0 0 0 1px #012B3A;
+}
+
+/* Vertical Line */
+.circle:after {
+    content: ' ';
+    position: absolute;
+    display: block;
+    top: 1px;
+    right: 50%;
+    bottom: 1px;
+    left: 50%;
+    height: 100%;
+    width: 1px;
+    transform: scale(1, 2);
+    transform-origin: 50% -100%;
+    background-color: rgba(0, 0, 0, 0.25);
+    z-index: -1;
+}
+
+.step:last-child .circle:after {
+    display: none
+}
+
+/* Stepper Titles */
+.title {
+    line-height: 1em;
+}
+
+.caption {
+    font-size: 0.8em;
+}
+
+.vl {
+    border-left: 1px solid #012B3A;
+    height: 45px;
+    margin-left: 7px;
+}
+
+.client-stepper {
+    padding-left: 136px;
+    padding-top: 24px;
+}
+
+.padding-left-0 {
+    padding-left: 0px !important;
+}
+
+.margin-bottom-0 {
+    margin-bottom: 0px !important;
+}
+
+.text-align-centre {
+    text-align: center !important;
+}
+
+.margin-left-0 {
+    margin-left: 0px !important
+}
+
+.padding-top-10 {
+    padding-top: 10px !important;
+}
+
+.client-register-heading {
+    padding-left: 0px !important;
+    margin-bottom: 0px !important;
+    text-align: center !important;
+    margin-left: 0px !important;
+    padding-top: 10px !important;
+}
+
+.figly-form-control {
+    border: 1px solid #869D96;
+    border-radius: 10px;
+}
+
+.form-row {
+    margin-left: 50px;
+}
+
+
+
+/* ++++++++++  +++     LOGIN PAGE  ++++++++++  +++      */
+
+.figly-form-group {
+    margin: 0px 0px 40px 0px;
+}
+
+
+/* ++++++++++  +++     FOOTER  ++++++++++  +++      */
+
+.figly-footer-group {
+    margin: 0px 0px 24px 0px;
+}
+
+.footer-link {
+    color: #FFFFFF;
+}
+
+/* ++++++++++  +++     HEADINGS  ++++++++++  +++      */
+
+.figly-subheading {
+    font-size: 24px;
+    font-family: 'Poppins', Arial, Helvetica, sans-serif;
+    margin: 24px 0px;
+}
+
+.figly-h4 {
+    font-size: 24px !important;
+    font-family: 'Yantramanav', Arial, Helvetica, sans-serif;
+}
+
+.figly-p {
+    font-size: 16px;
+    font-family: 'Poppins', Arial, Helvetica, sans-serif;
+}
+
+/* ++++++++++  +++     FORMS  ++++++++++  +++      */
+
+.figly-form-nav {
+    margin-top: 20px;
+}
+
+/* ++++++++++  +++    USER PROFILE   ++++++++++  +++      */
+
+.figly-card-hr {
+    border: 1px solid #012B3A;
+    width: 100%;
+}
+
+.dashboard-main {
+    margin-left: 24px;
+    padding-top: 24px !important;
+}
+
+.profile-columns {
+    margin: 0px auto;
+}
+
+.figly-icon {
+    margin-right: 16px;
+}
+
+.figly-client-list {
+    min-height: 350px !important;
+}
+
+.profile-dashboard-nav {
+    color: #A2C3A4;
+}
+
+.user-dash-link {
+    color: #012B3A;
+
+}

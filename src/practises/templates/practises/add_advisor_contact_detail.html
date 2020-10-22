@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block head %}
+{{ wizard.form.media }}
+{% load crispy_forms_tags %}
+{% endblock %}
+
+{% block content %}
+{% block container %}
+  <div class="container">
+    <form action="" method="POST">{% csrf_token %}
+      <p>Step {{ wizard.steps.step1 }} of {{ wizard.steps.count }}</p>
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb remove_breadcrumb_css">
+          <li class="breadcrumb-item"><button  class="btn btn-link remove_breadcrumb_btn_css" formnovalidate role="link" name="wizard_goto_step" value="{{ wizard.steps.first }}">Advisor Details</button></li>
+          <li class="breadcrumb-item active" aria-current="page">Contact details</li>
+        </ol>
+      </nav>
+      <h3>Advisor Contact Detail  {{ advisor_name }}</h3>
+      {{ wizard.management_form }}
+      {% if wizard.form.forms %}
+        {{ wizard.form.management_form }}
+        {% for form in wizard.form.forms %}
+          {% crispy form %}
+        {% endfor %}
+      {% else %}
+        {% crispy wizard.form %}
+      {% endif %}
+      <div class="row">
+        <div class="text-center">
+          {% if wizard.steps.prev %}
+          <button name="wizard_goto_step" formnovalidate value="{{ wizard.steps.prev }}" class="btn btn-secondary btn-lg">{% trans "Previous" %}</button>
+          {% endif %}
+          <button type="submit" class="btn btn-primary btn-lg">{% trans "Done" %}</button>
+        </div>
+      </div>
+    </form>
+  </div>
+{% endblock %}
+
+{% endblock %}
