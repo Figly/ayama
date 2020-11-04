@@ -14,13 +14,7 @@ ch_titles = (
 
 
 class AdvisorDetail(BaseModel):
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
 
-=======
->>>>>>> a4556122c4d2853ae835b81daab61c351ee07ee9
->>>>>>> 2507b00... XD designs complete
     """
     Class descriptor
     """
