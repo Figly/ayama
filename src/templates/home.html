@@ -5,52 +5,22 @@
 
 
 {% block splash %}
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
 
-=======
->>>>>>> a4556122c4d2853ae835b81daab61c351ee07ee9
->>>>>>> 2507b00... XD designs complete
 <body>
   <div class="container figly-container-main">
     <div class="row">
       <div class="container container-home">
-<<<<<<< HEAD
-      {% if user.is_authenticated %}
-=======
-<<<<<<< HEAD
         {% if user.is_authenticated %}
->>>>>>> 2507b00... XD designs complete
         {% if user.is_superuser %}
-          {% include "superusers/home.html" %}
+        {% include "superusers/home.html" %}
         {% elif user.is_administrator%}
-          {% include "administration/home.html" %}
+        {% include "administration/home.html" %}
         {% else %}
         {% include "advisors/home.html" %}
         {% endif %}
-<<<<<<< HEAD
-      {% else %}
-      {% include "registration/home.html" %}
-      {% endif %}
-=======
         {% else %}
         {% include "registration/home.html" %}
         {% endif %}
-=======
-      {% if user.is_authenticated %}
-        {% if user.is_superuser %}
-          {% include "superusers/home.html" %}
-        {% elif user.is_administrator%}
-          {% include "administration/home.html" %}
-        {% else %}
-        {% include "advisors/home.html" %}
-        {% endif %}
-      {% else %}
-      {% include "registration/home.html" %}
-      {% endif %}
->>>>>>> a4556122c4d2853ae835b81daab61c351ee07ee9
->>>>>>> 2507b00... XD designs complete
       </div>
     </div>
   </div>
@@ -62,12 +32,4 @@
 
 {% block scripts %}
 <script src="{% static 'site/js/site.js' %}"></script>
-<<<<<<< HEAD
 {% endblock scripts %}
-=======
-<<<<<<< HEAD
-{% endblock scripts %}
-=======
-{% endblock scripts %}
->>>>>>> a4556122c4d2853ae835b81daab61c351ee07ee9
->>>>>>> 2507b00... XD designs complete
