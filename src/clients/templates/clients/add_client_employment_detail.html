@@ -8,6 +8,21 @@
 
 {% block content %}
 {% block container %}
+<div class="container">
+  <div class="row">
+
+    <div class="col-md-3">
+   
+    </div>
+
+    <div class="col-md-7">
+        <h1 class="figly-heading ">CLIENT DETAILS</h1>   
+    </div>
+
+  </div>
+          <hr style=" margin: 0px 0px 36px 50px;"/>
+
+</div>
 <div class="container figly-container-main">
   <div class="row">
     <div class="col-md-3 client-stepper">
@@ -52,8 +67,8 @@
     </div>
     <div class="col-md-7">
       <div class="container">
-        <p class="figly-heading figly-heading-h1 client-register-heading">CLIENT DETAILS</p>
-        <hr/>
+        {% comment %} <p class="figly-heading figly-heading-h1 client-register-heading">CLIENT DETAILS</p>
+        <hr/> {% endcomment %}
         <form action="" method="POST">{% csrf_token %}
             {{ wizard.management_form }}
             {% if wizard.form.forms %}
@@ -64,17 +79,24 @@
             {% else %}
               {% crispy wizard.form %}
             {% endif %}
-          <div>
+          <div class="figly-form-nav">
               {% if wizard.steps.prev %}
             <button name="wizard_goto_step" formnovalidate value="{{ wizard.steps.prev }}" class="btn figly-btn-secondary offset-md-1">{% trans "Back" %}</button>
               {% endif %}
             <button type="submit" class="btn figly-btn-wizard-next col-xs-offset-right-2">{% trans "Continue" %}</button>
           </div>
         </form>
-        <hr style="margin-top: 60px"/>
       </div>
     </div>
   </div>
 </div>
+
+<div class="container">
+ <hr style=" margin: 60px 0px 60px 50px;"/>
+ </div>
+
+ {% block footer %}
+    {% include "footer.html" %}
+  {% endblock footer %}
 {% endblock %}
 {% endblock %}

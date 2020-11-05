@@ -81,7 +81,7 @@ class AddClientContactDetailForm(forms.ModelForm):
                 ),
             ),
             HTML("<hr/>"),
-            HTML("<h3>Residential address</h3>"),
+            HTML("<h3 class='figly-subheading'>Residential address</h3>"),
             Row(
                 Column(
                     "residential_address_line_1",
@@ -104,7 +104,7 @@ class AddClientContactDetailForm(forms.ModelForm):
                 ),
             ),
             HTML("<hr/>"),
-            HTML("<h3>Postal address</h3>"),
+            HTML("<h3 class='figly-subheading'>Postal address</h3>"),
             HTML("<input id='same-as-residential' type='checkbox'/>"),
             HTML(
                 "<label type='checkbox' class='form-check-label' for='same-as-residential' style='margin-left:10px'>Same as residential address</label>"

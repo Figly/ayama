@@ -14,6 +14,7 @@ ch_titles = (
 
 
 class AdvisorDetail(BaseModel):
+
     """
     Class descriptor
     """
