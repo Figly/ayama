@@ -74,7 +74,7 @@ urlpatterns = [
         SignUpAdvisorWizard.as_view(
             [SignUpAdministratorDetailForm, AddAdvisorContactDetailForm]
         ),
-        name="sign-up-advisor",
+name="sign-up-advisor",
     ),
     path("advisor_list/", AdvisorlistView.as_view(), name="advisor-list"),
     path("advisor_summary/<pk>/", AdvisorSummaryView.as_view(), name="advisor-summary"),
