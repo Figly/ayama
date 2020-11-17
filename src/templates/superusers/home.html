@@ -106,7 +106,7 @@
 
                     <div>
                         <p>
-                            <a href="" class="user-dash-link">
+                            <a href=" {% url 'clients:add-client' %} " class="user-dash-link">
                                 <svg width="1em" height="1em" viewBox="0 0 16 16"
                                     class="bi bi-person-plus-fill figly-icon" fill="currentColor"
                                     xmlns="http://www.w3.org/2000/svg">
@@ -120,7 +120,7 @@
                     <hr /> {% endcomment %}
                     <div>
                         <p>
-                            <a href="#" class="user-dash-link">
+                            <a href=" {% url 'clients:add-client-dependents' %}" class="user-dash-link">
                                 <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-people-fill figly-icon"
                                     fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                     <path fill-rule="evenodd"
@@ -136,7 +136,7 @@
                     </div>
                     <div>
                         <p>
-                            <a href="#" class="user-dash-link">
+                            <a href="{% url 'practises:sign-up-advisor' %}" class="user-dash-link">
                                 <svg width="1em" height="1em" viewBox="0 0 16 16"
                                     class="bi bi-briefcase-fill figly-icon" fill="currentColor"
                                     xmlns="http://www.w3.org/2000/svg">
@@ -155,6 +155,8 @@
                     <div>
                         <p>
                             <a href="#" class="user-dash-link">
+                            {% comment %} Capture current advisor, use advisor details as argument for {% url 'practises:edit-practise/<advisor-name>' %} {% endcomment %}
+                            {% comment %} <a href="{% url 'practises:edit-practise' %}" class="user-dash-link"> {% endcomment %}
                                 <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-building figly-icon"
                                     fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                     <path fill-rule="evenodd"
