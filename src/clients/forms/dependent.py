@@ -49,7 +49,7 @@ class AddClientDependentDetailsForm(forms.ModelForm):
                 Column(
                     "date_of_birth",
                     placeholder="Date Of Birth",
-                    css_class="form-group col-md-6 mb-0",
+                    css_class="form-group col-md-6 mb-0 calendar-dropdown",
                 ),
                 Column(
                     "relationship",
