@@ -2,7 +2,8 @@
 
 <nav class="navbar navbar-expand-lg navbar-light shadow p-3 mb-5 bg-white rounded">
   <div class="container">
-  <a class="navbar-brand" href="#">Figly</a>
+  <a class="navbar-brand" href="/">
+  <img src="{% thumbnail user.profile.picture|default:'logo-img.png' 50x100 %}" alt=""></a>
   <ul class="navbar-nav ml-auto">
     {% if not user.is_authenticated %}
     <li class="nav-item">
@@ -29,13 +30,13 @@
       </a>
     </li>
     {% endif %} -->
-    <li lass="nav-item dropdown">
+    <li class="nav-item dropdown">
       <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         <img src="{% thumbnail user.profile.picture|default:'default_profile.png' 30x30 crop %}" alt="" class = "img-circle"/>
         {{ user.get_full_name|truncatechars:20 }}
         <span class="caret"></span>
       </a>
-      <div class="dropdown-menu" aria-labelledby="navbarDropdown">>
+      <div class="dropdown-menu" aria-labelledby="navbarDropdown">
         <a class="dropdown-item" href="{% url 'profiles:show_self' %}">Profile</a>
         <a class="dropdown-item" href="{% url 'accounts:logout' %}">Logout</a>
       </div>

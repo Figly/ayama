@@ -212,7 +212,6 @@ body>.navbar-transparent {
     color: #012B3A;
     opacity: 100%;
     font-size: 40px;
-    margin: 36px 0px;
 }
 
 .figly-heading-h1 {
@@ -250,9 +249,19 @@ body>.navbar-transparent {
 
 .btn-signup {
     background-color: #012B3A;
-    color: white;
+    color: #fff;
     border-radius: 10px;
     width: 251px;
+}
+
+.btn-signup:hover {
+    background-color: #012B3A;
+    color: #fff;
+    border-radius: 10px;
+    width: 251px;
+    font-weight: 500;
+    box-shadow: 0 8px 6px -6px #012B3A;
+
 }
 
 .footer-main-heading {
@@ -615,4 +624,10 @@ hr {
 .user-dash-link {
     color: #012B3A;
 
+}
+
+.ui-datepicker {
+    background: #fff;
+    padding: 0px 10px;
+    /* border: 1px solid; */
 }

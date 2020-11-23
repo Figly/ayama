@@ -70,6 +70,7 @@ class AddAdvisorDetailForm(forms.ModelForm):
                     "employment_date",
                     placeholder="Employment Date",
                     css_class="form-group col-md-4 mb-0",
+                    
                 ),
                 Column(
                     "personnel_number",

@@ -47,7 +47,7 @@
                 </div>
             </li> {% endcomment %}
             <li class="nav-item ">
-                <a class="nav-link disabled profile-dashboard-nav" href="#">Financial Calculators</a>
+                <a class="nav-link  profile-dashboard-nav" href=" {% url 'calculator:show-calculator' %} ">Financial Calculators</a>
             </li>
         </ul>
     </div>
@@ -182,7 +182,7 @@
                 <div class="figly-h4">
                     Client List
                 </div>
-                <div class="container">
+                <div class="container" style="padding: 16px 0px 0px 0px !important;">
                     <div class="row">
                         <div class="col">
                             <p>Name</p>
