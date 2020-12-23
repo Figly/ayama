@@ -5,13 +5,14 @@ import logging
 from django.contrib import messages
 from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.contrib.sites.shortcuts import get_current_site
+from django.core.mail import send_mail
 from django.db import transaction
 from django.db.models.query_utils import Q
 from django.forms.models import construct_instance
 from django.http.response import HttpResponseRedirect
 from django.urls import reverse_lazy
 from django.views import generic
-
 from formtools.wizard.views import SessionWizardView
 
 from ..forms import AddAdvisorContactDetailForm, SignUpAdvisorDetailForm
@@ -116,6 +117,18 @@ class SignUpAdvisorWizard(SessionWizardView):
 
                 advisor.save()
 
+                link = "{0}://{1}{2}".format(
+                    self.request.scheme, self.request.get_host(), "/password-reset"
+                )
+
+                send_mail(
+                    "Complete registration below",
+                    "Click: " + link,
+                    "karelverhoeven@gmail.com",
+                    [advisorContact.email_address],
+                    fail_silently=False,
+                )
+
                 messages.add_message(
                     self.request, messages.SUCCESS, "Advisor successfully signed up."
                 )
@@ -127,7 +140,7 @@ class SignUpAdvisorWizard(SessionWizardView):
         except Exception as e:
             log.info(e)
             messages.add_message(
-                self.request, messages.ERROR, "An error occured. Please try again."
+                self.request, messages.ERROR, "An error occured. Please try again." + e
             )
             return HttpResponseRedirect(reverse_lazy("home"))
         return HttpResponseRedirect(reverse_lazy("home"))

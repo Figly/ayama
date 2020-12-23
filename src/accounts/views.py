@@ -1,13 +1,13 @@
 from __future__ import unicode_literals
 
+from authtools import views as authviews
+from braces import views as bracesviews
 from django.conf import settings
 from django.contrib import auth, messages
 from django.contrib.auth import get_user_model
+from django.http.response import HttpResponse
 from django.urls import reverse_lazy
 from django.views import generic
-
-from authtools import views as authviews
-from braces import views as bracesviews
 
 from . import forms
 
