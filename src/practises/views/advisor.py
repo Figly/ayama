@@ -15,7 +15,6 @@ from django.http.response import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse_lazy
 from django.views import generic
-
 from formtools.wizard.views import SessionWizardView
 
 from ..filters import AdvisorFilter
@@ -342,17 +341,14 @@ class InviteAdvisor(generic.View):
             admin = get_object_or_404(AdministratorDetail, pk=admin_id)
             practise = get_object_or_404(PractiseDetail, pk=admin.practise_id_fk.id)
 
-            # current_site = Site.objects.get_current()
-            # current_site.domain
-
-            # TODO:replace https below with the above
-            link = (
-                "https://www.figly.io/link_advisor?advisorid="
-                + advisor_id
-                + "&practiseid="
-                + str(admin.practise_id_fk.id)
+            link = "{0}://{1}{2}{3}{4}{5}".format(
+                self.request.scheme,
+                self.request.get_host(),
+                "/link_advisor?=",
+                advisor_id,
+                "&practiseid=",
+                str(admin.practise_id_fk.id),
             )
-
             send_mail(
                 practise.name + " invited you to join their practise.",
                 "Click: " + link,
