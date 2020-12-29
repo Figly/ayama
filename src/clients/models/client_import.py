@@ -69,15 +69,15 @@ class ClientImport(models.Model):
     fax_number = models.CharField("Fax Number", max_length=10, blank=True, null=True)
     email_address = models.EmailField("Email Address", max_length=50)
     residential_address_line_1 = models.CharField(
-        "Residential Address 1", max_length=100
+        "Residential Address Line 1", max_length=100
     )
     residential_address_line_2 = models.CharField(
-        "Residential Address 2", max_length=100, blank=True, null=True
+        "Residential Address Line 2", max_length=100, blank=True, null=True
     )
     residential_code = models.IntegerField("Residential Code")
-    postal_address_line_1 = models.CharField("Postal Address 1", max_length=100)
+    postal_address_line_1 = models.CharField("Postal Address Line 1", max_length=100)
     postal_address_line_2 = models.CharField(
-        "Postal Addres 2", max_length=100, blank=True, null=True
+        "Postal Addres Line 2", max_length=100, blank=True, null=True
     )
     postal_code = models.IntegerField("Postal Code")
 

@@ -2,10 +2,7 @@ from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Column, Field, Layout, Row, Submit
 from django import forms
 
-from ..models import (
-    AdministratorContactDetail,
-    AdministratorDetail,
-)
+from ..models import AdministratorContactDetail, AdministratorDetail
 
 
 class AddAdministratorDetailForm(forms.ModelForm):
@@ -187,68 +184,120 @@ class AddAdministratorContactDetailForm(forms.ModelForm):
             Row(
                 Column(
                     "telephone_home",
-                    placeholder="Telephone home",
-                    css_class="form-group col-md-6 mb-0",
-                ),
+                    placeholder="Home telephone number",
+                    css_class="form-group col-md-10",
+                )
+            ),
+            Row(
                 Column(
                     "telephone_work",
-                    placeholder="Telephone work",
-                    css_class="form-group col-md-6 mb-0",
+                    placeholder="Work Telephone number",
+                    css_class="form-group col-md-10",
                 ),
             ),
             Row(
                 Column(
                     "cellphone_number",
                     placeholder="Cellphone number",
-                    css_class="form-group col-md-6 mb-0",
+                    css_class="form-group col-md-10",
                 ),
+            ),
+            Row(
                 Column(
                     "fax_number",
                     placeholder="Fax number",
-                    css_class="form-group col-md-6 mb-0",
+                    css_class="form-group col-md-10",
                 ),
+            ),
+            Row(
                 Column(
                     "email_address",
-                    placeholder="Email",
-                    css_class="form-group col-md-6 mb-0",
+                    placeholder="Email address",
+                    css_class="form-group col-md-10",
                 ),
             ),
             Row(
                 Column(
                     "residential_address_line_1",
                     placeholder="Residential Line 1",
-                    css_class="form-group col-md-6 mb-0",
+                    css_class="form-group col-md-10",
                 ),
+            ),
+            Row(
                 Column(
                     "residential_address_line_2",
                     placeholder="Residential Line 2",
-                    css_class="form-group col-md-6 mb-0",
+                    css_class="form-group col-md-10",
+                ),
+            ),
+            Row(
+                Column(
+                    "residential_suburb",
+                    placeholder="Residential Suburb",
+                    css_class="form-group col-md-10",
+                ),
+            ),
+            Row(
+                Column(
+                    "residential_city",
+                    placeholder="Residential City",
+                    css_class="form-group col-md-10",
+                ),
+            ),
+            Row(
+                Column(
+                    "residential_country",
+                    placeholder="Residential Country",
+                    css_class="form-group col-md-10",
                 ),
             ),
             Row(
                 Column(
                     "residential_code",
                     placeholder="Residential Code",
-                    css_class="form-group col-md-3 mb-0",
+                    css_class="form-group col-md-10",
                 ),
             ),
             Row(
                 Column(
                     "postal_address_line_1",
                     placeholder="Postal Address Line 1",
-                    css_class="form-group col-md-6 mb-0",
+                    css_class="form-group col-md-10",
                 ),
+            ),
+            Row(
                 Column(
                     "postal_address_line_2",
                     placeholder="Postal Address Line 2",
-                    css_class="form-group col-md-6 mb-0",
+                    css_class="form-group col-md-10",
+                ),
+            ),
+            Row(
+                Column(
+                    "postal_suburb",
+                    placeholder="Postal Suburb",
+                    css_class="form-group col-md-10",
+                ),
+            ),
+            Row(
+                Column(
+                    "postal_city",
+                    placeholder="Postal City",
+                    css_class="form-group col-md-10",
+                ),
+            ),
+            Row(
+                Column(
+                    "postal_country",
+                    placeholder="Postal Country",
+                    css_class="form-group col-md-10",
                 ),
             ),
             Row(
                 Column(
                     "postal_code",
                     placeholder="Postal Code",
-                    css_class="form-group col-md-3 mb-0",
+                    css_class="form-group col-md-10",
                 ),
             ),
         )
@@ -263,8 +312,14 @@ class AddAdministratorContactDetailForm(forms.ModelForm):
             "email_address",
             "residential_address_line_1",
             "residential_address_line_2",
+            "residential_suburb",
+            "residential_city",
+            "residential_country",
             "residential_code",
             "postal_address_line_1",
             "postal_address_line_2",
+            "postal_suburb",
+            "postal_city",
+            "postal_country",
             "postal_code",
         ]

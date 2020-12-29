@@ -15,7 +15,6 @@ from django.http.response import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse_lazy
 from django.views import generic
-
 from formtools.wizard.views import SessionWizardView
 
 from ..filters import AdvisorFilter
@@ -263,9 +262,15 @@ class EditAdvisorContactView(
         "email_address",
         "residential_address_line_1",
         "residential_address_line_2",
+        "residential_suburb",
+        "residential_city",
+        "residential_country",
         "residential_code",
         "postal_address_line_1",
         "postal_address_line_2",
+        "postal_suburb",
+        "postal_city",
+        "postal_country",
         "postal_code",
     )
 
