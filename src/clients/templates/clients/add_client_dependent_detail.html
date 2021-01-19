@@ -3,13 +3,34 @@
 {% load crispy_forms_tags %}
 
 {% block container %}
-  <div class="container">
-    <h3>Client Dependents</h3>
-    <form action="" method="POST">
-      {% csrf_token %}
-      {% crispy form %}
-      <button type="submit" name="submit" class="btn btn-primary">Submit</button>
-      <button type="submit" name="add-another" class="btn btn-success">Add Another</button>
-    </form>
+
+<div class="container">
+  <div class="row">
+    <div>
+      <h2 class="figly-form-heading">ADD CLIENT DEPENDANT</h2>
+    </div>
   </div>
+  <hr style=" margin: 0px 0px 36px 50px;" />
+</div>
+
+<div class="container" id="add_client_dependants">
+
+  <form action="" method="POST">
+    {% csrf_token %}
+    {% crispy form %}
+
+    <div id="add-dependant-btns">
+      <div>
+        <button type="submit" name="submit" class="btn figly-btn-wizard-next ">Complete</button>
+      </div>
+      <div>
+        <button type="submit" name="add-another" class="btn ">Save And Add Another</button>
+      </div>
+    </div>
+
+
+
+
+  </form>
+</div>
 {% endblock %}

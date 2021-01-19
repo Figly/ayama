@@ -65,6 +65,11 @@ body>.navbar-transparent {
     -webkit-box-shadow: 0px 1px 0px #ddd;
     -moz-box-shadow: 0px 1px 0px #ddd;
     box-shadow: 0px 1px 0px #ddd;
+    border: 1px solid #012B3A;
+    border-radius: 8px;
+    width: 224px;
+    height: 48px;
+    margin-bottom: 48px;
 }
 
 .btn-lg {
@@ -312,9 +317,9 @@ body>.navbar-transparent {
 .figly-btn-wizard-next {
     background-color: #012B3A;
     color: #ffffff;
-    border-radius: 10px;
-    width: 224px;
-    float: right;
+    border-radius: 8px;
+
+
 }
 
 body {
@@ -420,10 +425,10 @@ hr {
 }
 
 .card-container {
-    border-radius: 30px;
+    border-radius: 8px;
     /* height: 100%; */
     box-shadow: 0px 3px 6px #00000029;
-    margin: 40px 20px;
+    margin: 30px 0px;
     padding: 24px 24px;
     opacity: 1;
     border: none;
@@ -544,11 +549,10 @@ hr {
 .figly-form-control {
     border: 1px solid #869D96;
     border-radius: 10px;
+    height: 54px;
 }
 
-.form-row {
-    margin-left: 50px;
-}
+
 
 
 
@@ -589,21 +593,62 @@ hr {
 
 /* ++++++++++  +++     FORMS  ++++++++++  +++      */
 
+#add_client_dependants #add-dependant-btns {
+    padding-right: 49px;
+    float: right;
+}
+
 .figly-form-nav {
     margin-top: 20px;
 }
 
-/* ++++++++++  +++    USER PROFILE   ++++++++++  +++      */
+.figly-form-heading {
+    font-size: 24px;
+    font-weight: 300;
+    margin: 0px 0px 0px 65px;
+    padding: 32px 0px 16px 0px;
+    font-family: 'Yantramanav',
+        Arial,
+        Helvetica,
+        sans-serif;
+
+}
+
+.form-row {
+    margin-left: 50px;
+    padding-bottom: 40px;
+    /* display: flex;
+    justify-content: center; */
+}
+
+
+.form-group {
+    margin: 0 auto;
+}
+
+.form-row-left-single-col {
+    margin-left: 47px;
+}
+
+.figly-left-form-input {
+    margin-right: 0px !important;
+}
+
+.figly-right-form-input {
+    margin-left: 0px !important;
+}
+
+/* ++++++++++  +++    DASHBOARD   ++++++++++  +++      */
 
 .figly-card-hr {
     border: 1px solid #012B3A;
     width: 100%;
 }
 
-.dashboard-main {
+/* .dashboard-main {
     margin-left: 24px;
     padding-top: 24px !important;
-}
+} */
 
 .profile-columns {
     margin: 0px auto;
@@ -630,4 +675,151 @@ hr {
     background: #fff;
     padding: 0px 10px;
     /* border: 1px solid; */
+}
+
+.left-dash-column {
+    padding-left: 0px;
+}
+
+.right-dash-column {
+    padding-right: 0px;
+}
+
+.figly-search .form-control {
+    padding-left: 2.375rem;
+}
+
+.figly-search .form-control-feedback {
+    position: absolute;
+    z-index: 2;
+    display: block;
+    width: 2.375rem;
+    height: 2.375rem;
+    line-height: 2.375rem;
+    text-align: center;
+    pointer-events: none;
+    color: #212529;
+}
+
+.figly-search ::placeholder {
+    color: #212529;
+}
+
+.dash-dropdown-btn {
+    position: relative;
+    height: 54px;
+    width: 100%;
+    border: 0px;
+    background: #fff;
+    text-align: left;
+    border-radius: 0px;
+    padding-left: 16px;
+
+
+}
+
+.dash-dropdown-btn:focus {
+    background-color: rgba(134, 157, 150, 0.15);
+    outline: none !important;
+}
+
+
+
+.dash-dropdown-btn:before {
+    position: absolute;
+    content: "+";
+    right: 10px;
+    top: 5px;
+}
+
+.dash-dropdown-btn[aria-expanded="true"]:before {
+    content: "-";
+}
+
+.left-dash-column .dropdown-button-container {
+    min-height: 400px;
+    padding: 30px 0px;
+
+}
+
+.dashboard_list_details thead tr {
+    border-top: hidden;
+}
+
+.dashboard_list_details tbody a {
+    text-decoration: none;
+    color: #212529 !important;
+}
+
+.dropdown-options {
+    padding-left: 8px;
+}
+
+.table_detail_rows {
+    max-height: 450px;
+    overflow: auto;
+}
+
+thead th {
+    position: sticky !important;
+    top: 0;
+    background: #fff;
+}
+
+
+
+/* ++++++++++  +++    OVERLAY ALERT   ++++++++++  +++      */
+
+#figly-overlay {
+    position: fixed;
+    /* Sit on top of the page content */
+    /* display: none; */
+    /* Hidden by default */
+    width: 100%;
+    /* Full width (cover the whole page) */
+    height: 100%;
+    /* Full height (cover the whole page) */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.2);
+    /* Black background with opacity */
+    z-index: 2;
+    /* Specify a stack order in case you're using a different order for other elements */
+    cursor: pointer;
+    /* Add a pointer on hover */
+}
+
+.alert {
+    margin-top: 0px;
+}
+
+#figly-overlay-card {
+    height: 392px;
+    width: 582px;
+    margin: 10vh auto 0 auto;
+    text-align: center;
+}
+
+#figly-overlay-card button {
+    margin-top: 40px;
+}
+
+.alert-header {
+    font-family: 'Yantramanav',
+        sans-serif;
+    font-size: 24px;
+    font-weight: 300;
+    color: #012B3A;
+    text-transform: uppercase;
+    text-align: center;
+}
+
+.alert-succes-icon img {
+    width: 73px;
+    height: 73px;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
 }

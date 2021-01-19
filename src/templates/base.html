@@ -4,101 +4,131 @@
 {% load thumbnail %}
 
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="{% block description %}{% endblock description %}">
-    <link rel="shortcut icon" href="{% static 'site/ico/favicon.ico' %}">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="{% block description %}{% endblock description %}">
+  <link rel="shortcut icon" href="{% static 'site/ico/favicon.ico' %}">
 
-    <title>{% block title %}{% include "_brandname.html" %} :: {% endblock %}</title>
+  <title>{% block title %}{% include "_brandname.html" %} :: {% endblock %}</title>
 
-    <!-- Bootstrap core CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
 
-    <!--JQuery css-->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+  <!--JQuery css-->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+    integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous">
+  </script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+    integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous">
+  </script>
 
-    <!-- Custom styles for this site -->
-    {% block styles %}
-    <link href="{% static 'site/css/main.css' %}" rel="stylesheet">
-    {% endblock styles %}
+  <!-- Custom styles for this site -->
+  {% block styles %}
+  <link href="{% static 'site/css/main.css' %}" rel="stylesheet">
+  {% endblock styles %}
 
-    <!-- Custom tags for the head tag -->
-    {% block extrahead %}{% endblock extrahead %}
+  <!-- Custom tags for the head tag -->
+  {% block extrahead %}{% endblock extrahead %}
 
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
+  <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
     <![endif]-->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
 </head>
 
 <body>
 
-{% block navbar %}
-{% include "_navbar.html" with active_link="home" %}
-{% endblock navbar %}
+  {% block navbar %}
+  {% include "_navbar.html" with active_link="home" %}
+  {% endblock navbar %}
 
-{% block messages %}
-{% if messages %}
-{% for message in messages %}
-<div class="container-fluid">
-  <div class="row">
-      <div class="col-md-10 col-md-offset-1">
-        <div class="alert alert-{{ message.tags }}">  <!-- singular -->
-          <a class="close" data-dismiss="alert">×</a>
-          {{ message|safe }}
+  {% block messages %}
+  {% if messages %}
+  {% for message in messages %}
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-10 col-md-offset-1 ">
+        <div id="figly-overlay" class="alert alert-{{ message.tags }}">
+          <div id="figly-overlay-card" class="card card-container">
+            <!-- singular -->
+            <div>
+              <a class="close" data-dismiss="alert">×</a>
+              {% comment %} <p class="alert-header"> {{ message|safe }}</p> {% endcomment %}
+              <p class="alert-header"> Client Successfully added</p>
+            </div>
+            <hr>
+            <div class="alert-succes-icon">
+              <img class="card-img-top profile-img" src="{% thumbnail 'success.png' 150x150 crop %}"
+                alt="Card image cap">
+            </div>
+            <p>You can now view and edit newly added client from your client list!
+            </p>
+            <div style="margin: 0px auto;">
+              <button type="submit" data-dismiss="alert"
+                class=" btn figly-btn-wizard-next col-xs-offset-right-2">CONTINUE</button>
+            </div>
+
+          </div>
+
         </div>
-      </div>
-  </div>
-</div>
-
-{% endfor %}
-{% endif %}
-{% endblock %}
-
-{% block modal%}
-<div class="modal" tabindex="-1" role="dialog" id="ayama-modal">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Please wait</h5>
-      </div>
-      <div class="modal-body">
-        <p>Loading...</p>
       </div>
     </div>
   </div>
-</div>
-{% endblock %}
+  {% endfor %}
+  {% endif %}
+  {% endblock %}
 
-{% block splash %}
-{% endblock splash %}
+  {% block modal%}
 
-{% block container %}
-{% endblock container %}
 
-{% if not user.is_authenticated %}
-<!-- Site footer -->
+  <div class="modal" tabindex="-1" role="dialog" id="ayama-modal">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Please wait</h5>
+        </div>
+        <div class="modal-body">
+          <p>Loading...</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endblock %}
+
+  {% block splash %}
+  {% endblock splash %}
+
+  {% block container %}
+  {% endblock container %}
+
+  {% if not user.is_authenticated %}
+  <!-- Site footer -->
   {% block footer %}
-    {% include "footer.html" %}
+  {% include "footer.html" %}
   {% endblock footer %}
-{% endif %}
-<!-- Bootstrap core JavaScript
+  {% endif %}
+  <!-- Bootstrap core JavaScript
 ================================================== -->
-<!-- Placed at the end of the document so the pages load faster -->
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
-<script src="https://kit.fontawesome.com/ca27f61c7c.js" crossorigin="anonymous"></script>
-<script>
-  $( function() {
-    $( ".datepicker" ).datepicker();
-  } );
+  <!-- Placed at the end of the document so the pages load faster -->
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+  <script src="https://kit.fontawesome.com/ca27f61c7c.js" crossorigin="anonymous"></script>
+  <script>
+    $(function () {
+      $(".datepicker").datepicker();
+    });
   </script>
-{% block scripts %}
-{% endblock scripts %}
+  {% block scripts %}
+  {% endblock scripts %}
 </body>
+
 </html>

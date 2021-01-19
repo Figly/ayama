@@ -17,47 +17,59 @@ class AddClientDependentDetailsForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper()
         self.helper.form_tag = False
+        self.fields["client_id_fk"].widget.attrs["class"] = "figly-form-control"
+        self.fields["relationship"].widget.attrs["class"] = "figly-form-control"
+        self.fields["names"].widget.attrs["class"] = "figly-form-control"
+        self.fields["surnames"].widget.attrs["class"] = "figly-form-control"
+        self.fields["rsa_resident"].widget.attrs["class"] = "figly-form-control"
+        self.fields["id_no"].widget.attrs["class"] = "figly-form-control"
+        self.fields["date_of_birth"].widget.attrs["class"] = "figly-form-control"
+        self.fields["other"].widget.attrs["class"] = "figly-form-control"
         self.helper.layout = Layout(
             Row(
                 Column(
                     "client_id_fk",
                     placeholder="Client",
-                    css_class="form-group col-md-2 mb-0",
-                )
+                    css_class="form-group col-md-5",
+                ),
+                Column(
+                    "relationship",
+                    placeholder="Relationship",
+                    css_class="form-group col-md-5",
+                ),
             ),
             Row(
-                Column(
-                    "names", placeholder="Names", css_class="form-group col-md-6 mb-0"
-                ),
+                Column("names", placeholder="Names", css_class="form-group col-md-5"),
                 Column(
                     "surnames",
                     placeholder="surnames",
-                    css_class="form-group col-md-6 mb-0",
+                    css_class="form-group col-md-5",
                 ),
+            ),
+            Row(
                 Column(
                     "rsa_resident",
                     placeholder="RSA Resident",
-                    css_class="form-group col-md-6 mb-0",
+                    css_class=" form-row-left-single-col col-md-5",
                 ),
             ),
             Row(
                 Column(
                     "id_no",
                     placeholder="ID Number",
-                    css_class="form-group col-md-6 mb-0",
+                    css_class="form-group  col-md-5 ",
                 ),
+                Column(
+                    "other",
+                    placeholder="other",
+                    css_class="form-group col-md-5 ",
+                ),
+            ),
+            Row(
                 Column(
                     "date_of_birth",
                     placeholder="Date Of Birth",
-                    css_class="form-group col-md-6 mb-0 calendar-dropdown",
-                ),
-                Column(
-                    "relationship",
-                    placeholder="Relationship",
-                    css_class="form-group col-md-6 mb-0",
-                ),
-                Column(
-                    "other", placeholder="Other", css_class="form-group col-md-6 mb-0"
+                    css_class="form-row-left-single-col col-md-5 calendar-dropdown",
                 ),
             ),
         )

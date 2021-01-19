@@ -2,6 +2,7 @@
 
 {% block content %}
 {% block container %}
+{% comment %} <h3>Client List</h3> {% endcomment %}
 {% if clients %}
 <div class="table_detail_rows">
 
@@ -9,12 +10,11 @@
         <thead>
             <tr>
                 <th scope="col">Name</th>
-                <th scope="col">Advisor</th>
+                {% comment %} <th scope="col">Advisor</th> {% endcomment %}
                 {% comment %} <th scope="col">Surname</th> {% endcomment %}
 
                 {%if user.is_superuser %}
                 <th scope="col">Email</th>
-                <th scope="col">Advisor</th>
                 {% endif %}
                 {%if user.is_administrator %}
                 <th scope="col">Advisor</th>
@@ -27,21 +27,27 @@
         </thead>
         {% for client in clients %}
         <tbody>
-            <tr scope="row">
+            <tr scope="row" data-href="{% url 'clients:client-summary' pk=client.id %}">
+
                 <td><a href="{% url 'clients:client-summary' pk=client.id %}">{{ client.names }}
                         {{ client.surnames }}</a>
                 </td>
-                <td><a href="{% url 'clients:client-summary' pk=client.id %}">{{ client.advisor_id_fk}}</a>
+                {% comment %} <td>{{ client.advisor_id_fk}} </td> {% endcomment %}
+
+                <td> <a href="{% url 'clients:client-summary' pk=client.id %}">{{ client.client_contact_fk.email_address }}
+                    </a></td>
                 </td>
-                <td><a
-                        href="{% url 'clients:client-summary' pk=client.id %}">{{ client.client_contact_fk.email_address }}</a>
+                <td> <a href="{% url 'clients:client-summary' pk=client.id %}">{{ client.client_contact_fk.residential_address_line_1 }}
+                    </a></td>
                 </td>
-                <td><a
-                        href="{% url 'clients:client-summary' pk=client.id %}">{{ client.client_contact_fk.residential_address_line_1 }}</a>
+                <td> <a href="{% url 'clients:client-summary' pk=client.id %}">{{ client.client_employment_fk.employment_date }}
+                    </a></td>
                 </td>
-                <td><a href="{% url 'clients:client-summary' pk=client.id %}">
-                        {{ client.client_employment_fk.employment_date }}</a>
+                <td> <a href="{% url 'clients:client-summary' pk=client.id %}">Login date?Last clicked?
+                    </a></td>
                 </td>
+
+
 
 
                 {% if user.is_superuser %}
@@ -52,13 +58,12 @@
                 <td>{{client.employment_date}}</td>
 
                 {% endif %}
-
-
             </tr>
+
         </tbody>
+
         {% endfor %}
     </table>
-
 </div>
 {% else %}
 <p>No Clients to Display</p>

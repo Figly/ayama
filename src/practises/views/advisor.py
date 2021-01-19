@@ -436,7 +436,9 @@ class EditRolesView(LoginRequiredMixin, UserPassesTestMixin, generic.UpdateView)
         model.save
 
         messages.add_message(
-            self.request, messages.SUCCESS, "advisor roles successfully edited.",
+            self.request,
+            messages.SUCCESS,
+            "advisor roles successfully edited.",
         )
         self.success_url = reverse_lazy("home")
         return super(EditRolesView, self).form_valid(form)
