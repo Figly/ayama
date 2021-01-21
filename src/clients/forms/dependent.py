@@ -63,6 +63,7 @@ class AddClientDependentDetailsForm(forms.ModelForm):
                     "other",
                     placeholder="other",
                     css_class="form-group col-md-5 ",
+
                 ),
             ),
             Row(
