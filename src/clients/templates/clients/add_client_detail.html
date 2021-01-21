@@ -11,96 +11,92 @@
 
 <div class="container">
   <div class="row">
-
-    <div class="col-md-3">
-   
+    <div>
+      <p class="figly-form-heading">ADD CLIENT</p>
     </div>
-
-    <div class="col-md-7">
-        <p class="figly-heading ">CLIENT DETAILS</p>   
-    </div>
-
   </div>
-          <hr style="margin-left: 50px;"/>
-
+  <hr style=" margin: 0px 0px 36px 50px;" />
 </div>
-  <div class="container figly-container-main">
-    <div class="row">
-      <div class="col-md-3 client-stepper">
-        <div class="vl"></div>
-          <div class="step step-active">
-            <div>
-              <div class="circle"></div>
-            </div>
-            <div>
-              <div class="title">Personal details</div>
-              <div class="caption"></div>
-            </div>
-          </div>
-          <div class="vl"></div>
-          <div class="step">
-            <div>
-              <div class="circle"></div>
-            </div>
-            <div>
-              <div class="title">Contact details</div>
-            </div>
-          </div>
-          <div class="vl"></div>
-          <div class="step">
-            <div>
-              <div class="circle"></div>
-            </div>
-            <div>
-              <div class="title">Employment details</div>
-            </div>
-          </div>
-          <div class="vl"></div>
-          <div class="step">
-            <div>
-              <div class="circle"></div>
-            </div>
-            <div>
-              <div class="title">Financial details</div>
-            </div>
-          </div>
-          <div class="vl"></div>
-      </div>
-      <div class="col-md-7">
-        <div class="container">
 
-          {% comment %} <p class="figly-heading figly-heading-h1 client-register-heading">CLIENT DETAILS</p>
-          <hr/> {% endcomment %}
-
-          <form action="" method="POST">{% csrf_token %}
-              {{ wizard.management_form }}
-              {% if wizard.form.forms %}
-                {{ wizard.form.management_form }}
-                {% for form in wizard.form.forms %}
-                  {% crispy form %}
-                {% endfor %}
-              {% else %}
-                {% crispy wizard.form %}
-              {% endif %}
-            <div class="figly-form-nav">
-                {% if wizard.steps.prev %}
-              <button name="wizard_goto_step" formnovalidate value="{{ wizard.steps.prev }}" class="btn btn-secondary btn-lg">{% trans "Previous" %}</button>
-                {% endif %}
-              <button type="submit" class="btn figly-btn-wizard-next col-xs-offset-right-2">{% trans "Continue" %}</button>
-            </div>
-          </form>
+<div class="container figly-container-main">
+  <div class="row">
+    <div class="col-md-3 client-stepper">
+      <div class="vl"></div>
+      <div class="step step-active">
+        <div>
+          <div class="circle"></div>
+        </div>
+        <div>
+          <div class="title">Personal details</div>
+          <div class="caption"></div>
         </div>
       </div>
+      <div class="vl"></div>
+      <div class="step">
+        <div>
+          <div class="circle"></div>
+        </div>
+        <div>
+          <div class="title">Contact details</div>
+        </div>
+      </div>
+      <div class="vl"></div>
+      <div class="step">
+        <div>
+          <div class="circle"></div>
+        </div>
+        <div>
+          <div class="title">Employment details</div>
+        </div>
+      </div>
+      <div class="vl"></div>
+      <div class="step">
+        <div>
+          <div class="circle"></div>
+        </div>
+        <div>
+          <div class="title">Financial details</div>
+        </div>
+      </div>
+      <div class="vl"></div>
+    </div>
+    <div class="col-md-7">
+      <div class="container">
+
+        {% comment %} <p class="figly-heading figly-heading-h1 client-register-heading">CLIENT DETAILS</p>
+        <hr /> {% endcomment %}
+
+        <form action="" method="POST">{% csrf_token %}
+          {{ wizard.management_form }}
+          {% if wizard.form.forms %}
+          {{ wizard.form.management_form }}
+          {% for form in wizard.form.forms %}
+          {% crispy form %}
+          {% endfor %}
+          {% else %}
+          {% crispy wizard.form %}
+          {% endif %}
+          <div class="figly-form-nav">
+            {% if wizard.steps.prev %}
+            <button name="wizard_goto_step" formnovalidate value="{{ wizard.steps.prev }}"
+              class="btn btn-secondary btn-lg">{% trans "Previous" %}</button>
+            {% endif %}
+            <button type="submit"
+              class="btn figly-btn-wizard-next col-xs-offset-right-2">{% trans "Continue" %}</button>
+          </div>
+        </form>
+      </div>
     </div>
   </div>
+</div>
 
-  <div class="container">
- <hr style=" margin: 60px 0px 60px 50px;"/>
- </div>
+<div class="container">
+  <hr style=" margin: 60px 0px 60px 50px;" />
+</div>
 
-    {% block footer %}
-    {% include "footer.html" %}
-  {% endblock footer %}
+{% block footer %}
+{% include "footer.html" %}
+{% endblock footer %}
 {% endblock %}
 
 {% endblock %}

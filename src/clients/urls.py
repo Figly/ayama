@@ -11,6 +11,7 @@ from .forms import (
 from .views import (
     AddClientDependentView,
     AddClientNoteView,
+    AdvisorClientsView,
     ClientlistView,
     ClientNoteListView,
     ClientSummaryView,
@@ -45,6 +46,7 @@ urlpatterns = [
         name="add-client-dependents",
     ),
     path("clients_list/", ClientlistView.as_view(), name="clients-list"),
+    path("advisor_clients/", AdvisorClientsView.as_view(), name="advisor-clients"),
     path("client_summary/<pk>/", ClientSummaryView.as_view(), name="client-summary"),
     path(
         "edit_client/<pk>/", EditClientDetailsView.as_view(), name="edit-client-details"
