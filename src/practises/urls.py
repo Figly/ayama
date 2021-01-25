@@ -74,7 +74,7 @@ urlpatterns = [
         SignUpAdvisorWizard.as_view(
             [SignUpAdministratorDetailForm, AddAdvisorContactDetailForm]
         ),
-name="sign-up-advisor",
+        name="sign-up-advisor",
     ),
     path("advisor_list/", AdvisorlistView.as_view(), name="advisor-list"),
     path("advisor_summary/<pk>/", AdvisorSummaryView.as_view(), name="advisor-summary"),
@@ -114,10 +114,20 @@ name="sign-up-advisor",
         name="edit-advisor-reminder-config",
     ),
     url(r"^search/$", AdvisorSearch, name="advisor-search"),
-    path("invite_advisor", InviteAdvisor.as_view(), name="invite-advisor",),
-    path("link_advisor", LinkAdvisor.as_view(), name="link-advisor",),
     path(
-        "edit_advisor_roles/<pk>/", EditRolesView.as_view(), name="edit-advisor-roles",
+        "invite_advisor",
+        InviteAdvisor.as_view(),
+        name="invite-advisor",
+    ),
+    path(
+        "link_advisor",
+        LinkAdvisor.as_view(),
+        name="link-advisor",
+    ),
+    path(
+        "edit_advisor_roles/<pk>/",
+        EditRolesView.as_view(),
+        name="edit-advisor-roles",
     ),
     path("add_product/", AddProductView.as_view(), name="add-product"),
     path("product_list/", ProductlistView.as_view(), name="list-products"),
@@ -127,5 +137,9 @@ name="sign-up-advisor",
         ViewClientProductView.as_view(),
         name="view-client-product",
     ),
-    path("add_client_product/", AddClientProductView, name="add-client-product",),
+    path(
+        "add_client_product/",
+        AddClientProductView,
+        name="add-client-product",
+    ),
 ]
