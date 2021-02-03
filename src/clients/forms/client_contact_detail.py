@@ -1,9 +1,8 @@
 from __future__ import unicode_literals
 
-from django import forms
-
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import HTML, Column, Field, Fieldset, Layout, Row, Submit
+from django import forms
 from practises.models import AdvisorDetail
 
 from ..models import ClientContactDetail
@@ -31,6 +30,12 @@ class AddClientContactDetailForm(forms.ModelForm):
         self.fields["residential_address_line_2"].widget.attrs[
             "id"
         ] = "residential-line-2-id"
+        self.fields["residential_suburb"].widget.attrs["class"] = "figly-form-control"
+        self.fields["residential_suburb"].widget.attrs["id"] = "residential-suburb-id"
+        self.fields["residential_city"].widget.attrs["class"] = "figly-form-control"
+        self.fields["residential_city"].widget.attrs["id"] = "residential-city-id"
+        self.fields["residential_country"].widget.attrs["class"] = "figly-form-control"
+        self.fields["residential_country"].widget.attrs["id"] = "residential-country-id"
         self.fields["residential_code"].widget.attrs["class"] = "figly-form-control"
         self.fields["residential_code"].widget.attrs["id"] = "residential-code-id"
         self.fields["postal_address_line_1"].widget.attrs[
@@ -41,9 +46,14 @@ class AddClientContactDetailForm(forms.ModelForm):
             "class"
         ] = "figly-form-control"
         self.fields["postal_address_line_2"].widget.attrs["id"] = "postal-line-2-id"
+        self.fields["postal_suburb"].widget.attrs["class"] = "figly-form-control"
+        self.fields["postal_suburb"].widget.attrs["id"] = "postal-suburb-id"
+        self.fields["postal_city"].widget.attrs["class"] = "figly-form-control"
+        self.fields["postal_city"].widget.attrs["id"] = "postal-city-id"
+        self.fields["postal_country"].widget.attrs["class"] = "figly-form-control"
+        self.fields["postal_country"].widget.attrs["id"] = "postal-country-id"
         self.fields["postal_code"].widget.attrs["class"] = "figly-form-control"
         self.fields["postal_code"].widget.attrs["id"] = "postal-code-id"
-
         self.helper.layout = Layout(
             Row(
                 Column(
@@ -98,6 +108,27 @@ class AddClientContactDetailForm(forms.ModelForm):
             ),
             Row(
                 Column(
+                    "residential_suburb",
+                    placeholder="Residential Suburb",
+                    css_class="form-group col-md-10",
+                ),
+            ),
+            Row(
+                Column(
+                    "residential_city",
+                    placeholder="Residential City",
+                    css_class="form-group col-md-10",
+                ),
+            ),
+            Row(
+                Column(
+                    "residential_country",
+                    placeholder="Residential Country",
+                    css_class="form-group col-md-10",
+                ),
+            ),
+            Row(
+                Column(
                     "residential_code",
                     placeholder="Residential Code",
                     css_class="form-group col-md-10",
@@ -125,6 +156,27 @@ class AddClientContactDetailForm(forms.ModelForm):
             ),
             Row(
                 Column(
+                    "postal_suburb",
+                    placeholder="Postal Suburb",
+                    css_class="form-group col-md-10",
+                ),
+            ),
+            Row(
+                Column(
+                    "postal_city",
+                    placeholder="Postal City",
+                    css_class="form-group col-md-10",
+                ),
+            ),
+            Row(
+                Column(
+                    "postal_country",
+                    placeholder="Postal Country",
+                    css_class="form-group col-md-10",
+                ),
+            ),
+            Row(
+                Column(
                     "postal_code",
                     placeholder="Postal Code",
                     css_class="form-group col-md-10",
@@ -142,8 +194,14 @@ class AddClientContactDetailForm(forms.ModelForm):
             "email_address",
             "residential_address_line_1",
             "residential_address_line_2",
+            "residential_suburb",
+            "residential_city",
+            "residential_country",
             "residential_code",
             "postal_address_line_1",
             "postal_address_line_2",
+            "postal_suburb",
+            "postal_city",
+            "postal_country",
             "postal_code",
         ]

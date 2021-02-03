@@ -7,7 +7,6 @@ from django.forms.models import construct_instance
 from django.http.response import HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
 from django.views import generic
-
 from formtools.wizard.views import SessionWizardView
 from practises.models import AdvisorDetail, AdvisorReminderConfig
 
@@ -176,6 +175,7 @@ class ClientlistView(LoginRequiredMixin, generic.ListView):
         context = {"clients": clients}
         return context
 
+
 class AdvisorClientsView(LoginRequiredMixin, generic.ListView):
     template_name = "clients/advisor_clients.html"
     model = ClientDetail
@@ -254,9 +254,14 @@ class EditClientContactView(LoginRequiredMixin, generic.UpdateView):
         "email_address",
         "residential_address_line_1",
         "residential_address_line_2",
+        "residential_suburb",
+        "residential_city",
+        "residential_country",
         "residential_code",
         "postal_address_line_1",
         "postal_address_line_2",
+        "postal_suburb",
+        "postal_city",
         "postal_code",
     )
 
