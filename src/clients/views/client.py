@@ -176,6 +176,31 @@ class ClientlistView(LoginRequiredMixin, generic.ListView):
         return context
 
 
+class AdvisorClientsView(LoginRequiredMixin, generic.ListView):
+    template_name = "clients/advisor_clients.html"
+    model = ClientDetail
+
+    def get_context_data(self, **kwargs):
+        context = super(AdvisorClientsView, self).get_context_data(**kwargs)
+        user = self.request.user
+
+        if user.is_superuser:
+            clients = ClientDetail.objects.all().select_related("client_contact_fk")
+        elif user.is_administrator:
+            practise_id = user.Administrator.practise_id_fk
+            advisors = AdvisorDetail.objects.filter(practise_id_fk=practise_id)
+            clients = ClientDetail.objects.filter(
+                advisor_id_fk__in=advisors
+            ).select_related("client_contact_fk")
+        elif user.is_advisor:
+            clients = ClientDetail.objects.filter(advisor_id_fk=user.id).select_related(
+                "client_contact_fk"
+            )
+
+        context = {"clients": clients}
+        return context
+
+
 class ClientSummaryView(LoginRequiredMixin, generic.DetailView):
     template_name = "clients/client_summary.html"
     model = ClientDetail
