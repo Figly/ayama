@@ -18,11 +18,16 @@ from django.views import generic
 from formtools.wizard.views import SessionWizardView
 
 from ..filters import AdvisorFilter
-from ..forms import AddAdvisorContactDetailForm, AddAdvisorDetailForm
+from ..forms import (
+    AddAdvisorContactDetailForm,
+    AddAdvisorDetailForm,
+    AddAdvisorEmploymentForm,
+)
 from ..models import (
     AdministratorDetail,
     AdvisorContactDetail,
     AdvisorDetail,
+    AdvisorEmploymentDetail,
     AdvisorReminderConfig,
     PractiseDetail,
     User,
@@ -31,11 +36,13 @@ from ..models import (
 FORMS = [
     ("0", AddAdvisorDetailForm),
     ("1", AddAdvisorContactDetailForm),
+    ("2", AddAdvisorEmploymentForm),
 ]
 
 TEMPLATES = {
     "0": "practises/add_advisor_detail.html",
     "1": "practises/add_advisor_contact_detail.html",
+    "2": "practises/add_advisor_employment_detail.html",
 }
 
 log = logging.getLogger(__name__)
@@ -99,6 +106,7 @@ class AddAdvisorWizard(LoginRequiredMixin, UserPassesTestMixin, SessionWizardVie
             # models backing db
             advisor = AdvisorDetail()
             advisorContact = AdvisorContactDetail()
+            advisorEmployment = AdvisorEmploymentDetail()
             advisorCommsConfig = AdvisorReminderConfig()
 
             # form instances
@@ -115,6 +123,13 @@ class AddAdvisorWizard(LoginRequiredMixin, UserPassesTestMixin, SessionWizardVie
                 advisorContact,
                 form_dict["1"]._meta.fields,
                 form_dict["1"]._meta.exclude,
+            )
+
+            advisorEmployment = construct_instance(
+                form_dict["2"],
+                advisorEmployment,
+                form_dict["2"]._meta.fields,
+                form_dict["2"]._meta.exclude,
             )
 
             existing_user = User.objects.filter(
@@ -141,6 +156,10 @@ class AddAdvisorWizard(LoginRequiredMixin, UserPassesTestMixin, SessionWizardVie
                 advisorContact.modified_by = self.request.user
                 advisorContact.save()
                 advisor.advisor_contact_fk = advisorContact
+
+                advisorEmployment.modified_by = self.request.user
+                advisorEmployment.save()
+                advisor.advisor_employment_fk = advisorEmployment
 
                 advisorCommsConfig.modified_by = self.request.user
                 advisorCommsConfig.save()

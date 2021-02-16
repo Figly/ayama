@@ -2,14 +2,10 @@ from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Column, Field, Layout, Row, Submit
 from django import forms
 
-from ..models import AdvisorContactDetail, AdvisorDetail
+from ..models import AdvisorContactDetail, AdvisorDetail, AdvisorEmploymentDetail
 
 
 class AddAdvisorDetailForm(forms.ModelForm):
-    employment_date = forms.DateField(
-        widget=forms.TextInput(attrs={"class": "datepicker"})
-    )
-
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper()
@@ -76,23 +72,6 @@ class AddAdvisorDetailForm(forms.ModelForm):
                     css_class="form-group col-md-10 ",
                 ),
             ),
-            Row(
-                Column(
-                    "position",
-                    placeholder="Position",
-                    css_class="form-group col-md-5 mb-0",
-                ),
-                Column(
-                    "employment_date",
-                    placeholder="Employment Date",
-                    css_class="form-group col-md-4 mb-0",
-                ),
-                Column(
-                    "personnel_number",
-                    placeholder="Personnel Number",
-                    css_class="form-group col-md-3 mb-0",
-                ),
-            ),
         )
 
     class Meta:
@@ -106,9 +85,6 @@ class AddAdvisorDetailForm(forms.ModelForm):
             "known_as",
             "sa_id",
             "passport_no",
-            "position",
-            "employment_date",
-            "personnel_number",
         ]
 
 
@@ -159,23 +135,6 @@ class SignUpAdvisorDetailForm(forms.ModelForm):
                     css_class="form-group col-md-6 mb-0",
                 ),
             ),
-            Row(
-                Column(
-                    "position",
-                    placeholder="Position",
-                    css_class="form-group col-md-5 mb-0",
-                ),
-                Column(
-                    "employment_date",
-                    placeholder="Employment Date",
-                    css_class="form-group col-md-4 mb-0",
-                ),
-                Column(
-                    "personnel_number",
-                    placeholder="Personnel Number",
-                    css_class="form-group col-md-3 mb-0",
-                ),
-            ),
         )
 
     class Meta:
@@ -188,9 +147,6 @@ class SignUpAdvisorDetailForm(forms.ModelForm):
             "known_as",
             "sa_id",
             "passport_no",
-            "position",
-            "employment_date",
-            "personnel_number",
         ]
 
 
@@ -341,4 +297,42 @@ class AddAdvisorContactDetailForm(forms.ModelForm):
             "postal_city",
             "postal_country",
             "postal_code",
+        ]
+
+
+class AddAdvisorEmploymentForm(forms.ModelForm):
+    employment_date = forms.DateField(
+        widget=forms.TextInput(attrs={"class": "datepicker"})
+    )
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_tag = False
+        self.helper.layout = Layout(
+            Row(
+                Column(
+                    "position",
+                    placeholder="Position",
+                    css_class="form-group col-md-5 mb-0",
+                ),
+                Column(
+                    "employment_date",
+                    placeholder="Employment Date",
+                    css_class="form-group col-md-4 mb-0",
+                ),
+                Column(
+                    "personnel_number",
+                    placeholder="Personnel Number",
+                    css_class="form-group col-md-3 mb-0",
+                ),
+            ),
+        )
+
+    class Meta:
+        model = AdvisorEmploymentDetail
+        fields = [
+            "position",
+            "employment_date",
+            "personnel_number",
         ]

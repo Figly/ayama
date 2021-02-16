@@ -6,6 +6,7 @@ from .forms import (
     AddAdministratorDetailForm,
     AddAdvisorContactDetailForm,
     AddAdvisorDetailForm,
+    AddAdvisorEmploymentForm,
     AddPractiseDetailForm,
     SignUpAdministratorDetailForm,
     SignUpAdvisorDetailForm,
@@ -43,7 +44,13 @@ urlpatterns = [
     path("edit_practise/<pk>/", EditPractiseView.as_view(), name="edit-practise"),
     path(
         "advisor/",
-        AddAdvisorWizard.as_view([AddAdvisorDetailForm, AddAdvisorContactDetailForm]),
+        AddAdvisorWizard.as_view(
+            [
+                AddAdvisorDetailForm,
+                AddAdvisorContactDetailForm,
+                AddAdvisorEmploymentForm,
+            ]
+        ),
         name="add-advisor",
     ),
     path(
@@ -74,7 +81,7 @@ urlpatterns = [
         SignUpAdvisorWizard.as_view(
             [SignUpAdministratorDetailForm, AddAdvisorContactDetailForm]
         ),
-    name="sign-up-advisor",
+        name="sign-up-advisor",
     ),
     path("advisor_list/", AdvisorlistView.as_view(), name="advisor-list"),
     path("advisor_summary/<pk>/", AdvisorSummaryView.as_view(), name="advisor-summary"),
