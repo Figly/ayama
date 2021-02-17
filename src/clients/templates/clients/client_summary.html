@@ -13,7 +13,6 @@
     </div>
     <hr style=" margin: 0px 0px 36px 50px;" />
 </div>
-
 <div class="container" style="font-size: larger;">
     <div class="container">
         <div class="row dashboard_list_details">
@@ -35,7 +34,6 @@
                         <div class="summary-datail-row">
                             <p>Passport number</p>
                         </div>
-
                     </div>
                     <div class="col-lg-3">
                         <div class="summary-datail-row">
@@ -54,9 +52,6 @@
                 </div>
             </div>
         </div>
-
-
-
         <div class="row">
             <div class="card-container col-lg-12">
                 <div>
@@ -88,7 +83,6 @@
                 </div>
             </div>
         </div>
-
         <div class="row">
             <div class="card-container col-lg-12">
                 <div>
@@ -114,7 +108,6 @@
                         <div class="summary-datail-row">
                             <p>Postal Address</p>
                         </div>
-
                     </div>
                     <div class="col-lg-3">
                         <div class="summary-datail-row">
@@ -139,8 +132,6 @@
                 </div>
             </div>
         </div>
-
-
         <div class="row">
             <div class="card-container col-lg-12">
                 <div>
@@ -169,7 +160,6 @@
                         <div class="summary-datail-row">
                             <p>Group Life Cover</p>
                         </div>
-
                     </div>
                     <div class="col-lg-3">
                         <div class="summary-datail-row">
@@ -197,8 +187,6 @@
                 </div>
             </div>
         </div>
-
-
         <div class="row">
             <div class="card-container col-lg-12">
                 <div>
@@ -230,15 +218,10 @@
                 </div>
             </div>
         </div>
-
-
-
-
         {% if client.dependents.count > 0%}
         <div class="row">
             <h2>Dependents</h2>
             {% for dependent in client.dependents.all %}
-
 
             <div class="col-md-12 col-sm-12">
                 <div class="col-md-6 col-sm-6">
@@ -249,9 +232,7 @@
                             class="glyphicon glyphicon-pencil icon-edit-customer"></a>
                 </div>
             </div>
-
             <div class="col-md-6 col-sm-6">
-
                 <p><strong>Surname:</strong></p> {{dependent.surnames}}
                 <p><strong>ID Number:</strong></p> {{dependent.id_no}}
                 <p><strong>South African Resident:</strong></p> {{dependent.rsa_resident}}
@@ -272,3 +253,4 @@
 {% endif %}
 {% endblock %}
 {% endblock %}
+    
