@@ -15,7 +15,7 @@
                         <p class="figly-p">{{ user.residential_address_line_1}}Company/practise name</p>
                         {% comment %} <p>{{user.number}}</p> {% endcomment %}
                     </div>
-                    <hr />
+                    <hr/>
                     <p class="figly-p">
                         <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-telephone-fill figly-icon"
                             fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -24,7 +24,6 @@
                         </svg>
                         <a href="#" class="user-dash-link">(012) 345 6789</a>
                     </p>
-
                     <p class="figly-p">
                         <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-envelope-fill figly-icon"
                             fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -36,7 +35,6 @@
                     </p>
                     <hr />
                 </div>
-
                 <div class="card  card-container dropdown-button-container">
 
                     {% comment %} +++++++++ MANAGE CLIENTS DROPDOWN ++++++++ {% endcomment %}
@@ -50,7 +48,8 @@
                                 <div>
                                     <p class="dropdown-options">
                                         <a href=" {% url 'clients:add-client' %} " class="user-dash-link">
-                                            Add Client</a>
+                                            Add Client
+                                        </a>
                                     </p>
                                 </div>
                                 <div>
@@ -109,7 +108,6 @@
 
             <div class="container ">
                 <div class="row " style=" display: flex; justify-content: space-between;">
-
                     <div class="col-xl-3 card card-container check-in-card">
                         <h3 class="figly-heading figly-bold">4</h3>
                         <p>Clients are overdue for a check in</p>
@@ -132,12 +130,9 @@
                         <p>Clients in total</p>
                     </div>
                 </div>
-
-
             </div>
 
             <div class="card-container dashboard_list_details">
-
                 <div class="row">
                     <div class="col-xl-8">
                         <div class="figly-h4">
