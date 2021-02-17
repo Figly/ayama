@@ -12,13 +12,10 @@
   </div>
   <hr style=" margin: 0px 0px 36px 50px;" />
 </div>
-
 <div class="container" id="add_client_dependants">
-
   <form action="" method="POST">
     {% csrf_token %}
     {% crispy form %}
-
     <div id="add-dependant-btns">
       <div>
         <button type="submit" name="submit" class="btn figly-btn-wizard-next ">Complete</button>
@@ -27,10 +24,6 @@
         <button type="submit" name="add-another" class="btn ">Save And Add Another</button>
       </div>
     </div>
-
-
-
-
   </form>
 </div>
 {% endblock %}
