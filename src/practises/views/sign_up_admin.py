@@ -5,13 +5,13 @@ import logging
 from django.contrib import messages
 from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.core.mail import send_mail
 from django.db import transaction
 from django.db.models import Q
 from django.forms.models import construct_instance
 from django.http.response import HttpResponseRedirect
 from django.urls import reverse_lazy
 from django.views import generic
-
 from formtools.wizard.views import SessionWizardView
 
 from ..forms import (
@@ -19,11 +19,7 @@ from ..forms import (
     AddPractiseDetailForm,
     SignUpAdministratorDetailForm,
 )
-from ..models import (
-    AdministratorContactDetail,
-    AdministratorDetail,
-    PractiseDetail,
-)
+from ..models import AdministratorContactDetail, AdministratorDetail, PractiseDetail
 
 FORMS = [
     ("0", SignUpAdministratorDetailForm),
@@ -126,6 +122,18 @@ class SignUpAdministratorWizard(SessionWizardView):
 
                 administrator.modified_by = administrator.user
                 administrator.save()
+
+                link = "{0}://{1}{2}".format(
+                    self.request.scheme, self.request.get_host(), "/password-reset"
+                )
+
+                send_mail(
+                    "Complete registration below",
+                    "Click: " + link + " to set up a new password.",
+                    "karelverhoeven@gmail.com",
+                    [administratorContactDetail.email_address],
+                    fail_silently=False,
+                )
 
                 messages.add_message(
                     self.request,
