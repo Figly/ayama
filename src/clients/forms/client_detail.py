@@ -35,11 +35,15 @@ class AddClientDetailForm(forms.ModelForm):
                 ),
             ),
             Row(
-                Column("title", placeholder="Title", css_class="form-group col-md-5"),
+                Column(
+                    "title",
+                    placeholder="Title",
+                    css_class="form-group col-md-5 figly-left-form-input",
+                ),
                 Column(
                     "initials",
                     placeholder="Initials",
-                    css_class="form-group col-md-5",
+                    css_class="form-group col-md-5 figly-right-form-input",
                 ),
             ),
             Row(

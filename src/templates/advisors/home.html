@@ -24,6 +24,7 @@
                         </svg>
                         <a href="#" class="user-dash-link">(012) 345 6789</a>
                     </p>
+
                     <p class="figly-p">
                         <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-envelope-fill figly-icon"
                             fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -41,7 +42,7 @@
                     {% comment %} +++++++++ MANAGE CLIENTS DROPDOWN ++++++++ {% endcomment %}
 
                     <div>
-                        <button class="figly-h4 dash-dropdown-btn" type="button" data-toggle="collapse"
+                        <button class="figly-h5 dash-dropdown-btn" type="button" data-toggle="collapse"
                             data-target="#multiCollapseExample1" aria-expanded="false"
                             aria-controls="multiCollapseExample1">MANAGE CLIENTS</button>
                         <div class="col">
@@ -54,7 +55,7 @@
                                 </div>
                                 <div>
                                     <p class="dropdown-options">
-                                        <a href=" {% url 'clients:add-client-dependents' %}" class="user-dash-link">
+                                        <a href="{% url 'clients:add-client-dependents' %}" class="user-dash-link">
                                             Add Client Dependants</a>
                                     </p>
                                 </div>
@@ -65,7 +66,7 @@
                     {% comment %} +++++++++ MANAGE ADVISORS DROPDOWN ++++++++ {% endcomment %}
 
                     <div>
-                        <button class="figly-h4 dash-dropdown-btn" type="button" data-toggle="collapse"
+                        <button class="figly-h5 dash-dropdown-btn" type="button" data-toggle="collapse"
                             data-target="#multiCollapseExample2" aria-expanded="false"
                             aria-controls="multiCollapseExample2">CALCULATORS</button>
                         <div class="col">
@@ -106,11 +107,11 @@
 
         <div class="col-xl-9 right-dash-column">
 
-            <div class="container dashboard_list_details ">
+            <div class="container ">
                 <div class="row " style=" display: flex; justify-content: space-between;">
 
                     <div class="col-xl-3 card card-container check-in-card">
-                        <h3 class="figly-heading">4</h3>
+                        <h3 class="figly-heading figly-bold">4</h3>
                         <p>Clients are overdue for a check in</p>
                         {% comment %} <div class="form-group figly-search">
                             <span class="fa fa-search form-control-feedback"></span>
@@ -118,16 +119,16 @@
                         </div> {% endcomment %}
                     </div>
                     <div class="col-xl-3 card card-container check-in-card">
-                        <h3 class="figly-heading">7</h3>
+                        <h3 class="figly-heading figly-bold">7</h3>
                         <p>Clients are almost due for a check in</p>
 
                     </div>
                     <div class="col-xl-3 card card-container check-in-card">
-                        <h3 class="figly-heading">31</h3>
+                        <h3 class="figly-heading figly-bold">31</h3>
                         <p>Clients are happy. Well done!</p>
                     </div>
                     <div class="col-xl-3 card card-container check-in-card">
-                        <h3 class="figly-heading">42</h3>
+                        <h3 class="figly-heading figly-bold">42</h3>
                         <p>Clients in total</p>
                     </div>
                 </div>

@@ -40,20 +40,14 @@
 
                 <td><a href="{% url 'practises:edit-advisor-roles' pk=advisor.user.id %}">{{advisor.clients.count}}</a>
                 </td>
-
             </tr>
         </tbody>
-
-
         {% endfor %}
-
-
     </table>
 </div>
 {% else %}
 <p>No Advisors to Display</p>
 
 {% endif %}
-{% endblock %}
 {% endblock %}
 {% endblock %}
