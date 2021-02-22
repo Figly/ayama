@@ -1,9 +1,8 @@
 import datetime
 
+from clients.models import ClientDetail
 from django import template
 from django.db.models import DateField, ExpressionWrapper, F
-
-from clients.models import ClientDetail
 from practises.models import AdvisorDetail
 
 register = template.Library()
