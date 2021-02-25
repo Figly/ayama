@@ -21,10 +21,11 @@
                 {% endif %}
                 <th scope="col">Email</th>
                 <th scope="col">Location</th>
-                <th scope="col">Dependants</th>
-                <th scope="col">Last Visit</th>
+                <th scope="col">Last contact </th>
+                <th scope="col">Status</th>
             </tr>
         </thead>
+        {% load client_status %}
         {% for client in clients %}
         <tbody>
             <tr scope="row" data-href="{% url 'clients:client-summary' pk=client.id %}">
@@ -40,16 +41,14 @@
                 <td> <a href="{% url 'clients:client-summary' pk=client.id %}">{{ client.client_contact_fk.residential_address_line_1 }}
                     </a></td>
                 </td>
-                <td> <a href="{% url 'clients:client-summary' pk=client.id %}">{{ client.client_employment_fk.employment_date }}
-                    </a></td>
+                <td> <a href="{% url 'clients:client-summary' pk=client.id %}">{{ client.client_comms_fk.last_contacted }}
+                    </a>
+                    <button class="btn">btn</button>
                 </td>
-                <td> <a href="{% url 'clients:client-summary' pk=client.id %}">Login date?Last clicked?
-                    </a></td>
                 </td>
-
-
-
-
+                <td> <a href="{% url 'clients:client-summary' pk=client.id %}">{% client_status client.client_comms_fk.last_contacted %}
+                    </a>
+                </td>
                 {% if user.is_superuser %}
                 <td>{{ client.advisor_id_fk.practise_id_fk}}</td>
                 <td>{{ client.advisor_id_fk}}</td>
