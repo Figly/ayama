@@ -21,10 +21,11 @@
                 {% endif %}
                 <th scope="col">Email</th>
                 <th scope="col">Location</th>
-                <th scope="col">Dependants</th>
-                <th scope="col">Last Visit</th>
+                <th scope="col">Last contact </th>
+                <th scope="col">Status</th>
             </tr>
         </thead>
+        {% load client_status %}
         {% for client in clients %}
         <tbody>
             <tr scope="row" data-href="{% url 'clients:client-summary' pk=client.id %}">
@@ -40,16 +41,14 @@
                 <td> <a href="{% url 'clients:client-summary' pk=client.id %}">{{ client.client_contact_fk.residential_address_line_1 }}
                     </a></td>
                 </td>
-                <td> <a href="{% url 'clients:client-summary' pk=client.id %}">{{ client.client_employment_fk.employment_date }}
-                    </a></td>
+                <td>
+                    <input class="datepicker" id={{client.client_comms_fk.id}} date-format='yyyy-mm-dd' value = "{{ client.client_comms_fk.last_contacted }}">
+                    <button class="btn" onclick="updateComms(this)" role="button" data-id={{client.client_comms_fk.id}}>update</button>
                 </td>
-                <td> <a href="{% url 'clients:client-summary' pk=client.id %}">Login date?Last clicked?
-                    </a></td>
                 </td>
-
-
-
-
+                <td> <a href="{% url 'clients:client-summary' pk=client.id %}">{% client_status client.client_comms_fk.last_contacted %}
+                    </a>
+                </td>
                 {% if user.is_superuser %}
                 <td>{{ client.advisor_id_fk.practise_id_fk}}</td>
                 <td>{{ client.advisor_id_fk}}</td>
@@ -70,4 +69,36 @@
 
 {% endif %}
 {% endblock %}
+{% endblock %}
+
+{% block scripts %}
+  <script>
+function updateComms(e){
+    var client_comms_id = e.getAttribute('data-id');
+    var dateValue = convertDate(new Date(document.getElementById(client_comms_id).value));
+    $.ajax({
+        type: 'POST',
+        headers:{
+        "X-CSRFToken": '{{ csrf_token }}'
+        },
+        url: "{% url 'clients:update-comms'%}",
+        data: {'client_comms_id':client_comms_id, 'date_value': dateValue},
+        success: function (response) {
+            e.value = dateValue
+        },
+        error: function (response) {
+        }
+    });
+}
+function convertDate(date) {
+  var yyyy = date.getFullYear().toString();
+  var mm = (date.getMonth()+1).toString();
+  var dd  = date.getDate().toString();
+
+  var mmChars = mm.split('');
+  var ddChars = dd.split('');
+
+  return yyyy + '-' + (mmChars[1]?mm:"0"+mmChars[0]) + '-' + (ddChars[1]?dd:"0"+ddChars[0]);
+}
+</script>
 {% endblock %}

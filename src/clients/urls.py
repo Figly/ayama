@@ -24,6 +24,7 @@ from .views import (
     EditClientNoteView,
     EditClientRatesView,
     UpdateClientCommunicationHistoryView,
+    UpdateLastSeen,
 )
 
 app_name = "clients"
@@ -56,6 +57,7 @@ urlpatterns = [
         EditClientContactView.as_view(),
         name="edit-client-contact",
     ),
+    path("update_comms", UpdateLastSeen.as_view(), name="update-comms",),
     path(
         "edit_client_employment/<pk>/",
         EditClientEmploymentView.as_view(),
