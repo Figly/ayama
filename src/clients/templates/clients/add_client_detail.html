@@ -76,13 +76,26 @@
           {% else %}
           {% crispy wizard.form %}
           {% endif %}
-          <div class="figly-form-nav">
+          {% comment %} <div class="figly-form-nav">
             {% if wizard.steps.prev %}
             <button name="wizard_goto_step" formnovalidate value="{{ wizard.steps.prev }}"
               class="btn btn-secondary btn-lg">{% trans "Previous" %}</button>
             {% endif %}
             <button type="submit"
               class="btn figly-btn-wizard-next col-xs-offset-right-2">{% trans "Continue" %}</button>
+          </div> {% endcomment %}
+          <div class="form-row figly-form-nav">
+            {% if wizard.steps.prev %}
+            <button name="wizard_goto_step" formnovalidate value="{{ wizard.steps.prev }}"
+              class="btn figly-btn-secondary ">{% trans "Back" %}
+            </button>
+
+            {% endif %}
+
+            <div>
+              <button type="submit" class="btn figly-btn-wizard-next ">{% trans "Continue" %}
+              </button>
+            </div>
           </div>
         </form>
       </div>
@@ -98,5 +111,4 @@
 {% include "footer.html" %}
 {% endblock footer %}
 {% endblock %}
-
 {% endblock %}

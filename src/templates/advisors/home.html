@@ -33,15 +33,14 @@
                         <a href="#" class="user-dash-link">{{user.email}}
                         </a>
                     </p>
-                    <hr/>
+                    <hr />
                 </div>
-
                 <div class="card  card-container dropdown-button-container">
 
                     {% comment %} +++++++++ MANAGE CLIENTS DROPDOWN ++++++++ {% endcomment %}
 
                     <div>
-                        <button class="figly-h4 dash-dropdown-btn" type="button" data-toggle="collapse"
+                        <button class="figly-h5 dash-dropdown-btn" type="button" data-toggle="collapse"
                             data-target="#multiCollapseExample1" aria-expanded="false"
                             aria-controls="multiCollapseExample1">MANAGE CLIENTS</button>
                         <div class="col">
@@ -49,12 +48,13 @@
                                 <div>
                                     <p class="dropdown-options">
                                         <a href=" {% url 'clients:add-client' %} " class="user-dash-link">
-                                            Add Client</a>
+                                            Add Client
+                                        </a>
                                     </p>
                                 </div>
                                 <div>
                                     <p class="dropdown-options">
-                                        <a href=" {% url 'clients:add-client-dependents' %}" class="user-dash-link">
+                                        <a href="{% url 'clients:add-client-dependents' %}" class="user-dash-link">
                                             Add Client Dependants</a>
                                     </p>
                                 </div>
@@ -65,7 +65,7 @@
                     {% comment %} +++++++++ MANAGE ADVISORS DROPDOWN ++++++++ {% endcomment %}
 
                     <div>
-                        <button class="figly-h4 dash-dropdown-btn" type="button" data-toggle="collapse"
+                        <button class="figly-h5 dash-dropdown-btn" type="button" data-toggle="collapse"
                             data-target="#multiCollapseExample2" aria-expanded="false"
                             aria-controls="multiCollapseExample2">CALCULATORS</button>
                         <div class="col">
@@ -106,6 +106,7 @@
 
         <div class="col-xl-9 right-dash-column">
 
+
             <div class="card-container dashboard_list_details">
                 <div class="row">
                     <div class="col-xl-8">
@@ -124,11 +125,23 @@
                             <input type="text" class="form-control" placeholder="Quick search">
                         </div> {% endcomment %}
                     </div>
+                    <div class="col-xl-3 card card-container check-in-card">
+                        <h3 class="figly-heading figly-bold">7</h3>
+                        <p>Clients are almost due for a check in</p>
+
+                    </div>
+                    <div class="col-xl-3 card card-container check-in-card">
+                        <h3 class="figly-heading figly-bold">31</h3>
+                        <p>Clients are happy. Well done!</p>
+                    </div>
+                    <div class="col-xl-3 card card-container check-in-card">
+                        <h3 class="figly-heading figly-bold">42</h3>
+                        <p>Clients in total</p>
+                    </div>
                 </div>
             </div>
 
             <div class="card-container dashboard_list_details">
-
                 <div class="row">
                     <div class="col-xl-8">
                         <div class="figly-h4">
@@ -136,6 +149,7 @@
                         </div>
                     </div>
                     {% comment %} <div class="col-xl-4">
+
                         <div class="form-group figly-search">
                             <span class="fa fa-search form-control-feedback"></span>
                             <input type="text" class="form-control" placeholder="Quick search">

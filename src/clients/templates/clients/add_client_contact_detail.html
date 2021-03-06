@@ -1,11 +1,9 @@
 {% extends "base.html" %}
 {% load i18n %}
-
 {% block head %}
 {{ wizard.form.media }}
 {% load crispy_forms_tags %}
 {% endblock %}
-
 {% block content %}
 {% block container %}
 <div class="container">
@@ -16,7 +14,6 @@
   </div>
   <hr style=" margin: 0px 0px 36px 50px;" />
 </div>
-
 <div class="container figly-container-main">
   <div class="row">
     <div class="col-md-3 client-stepper">
@@ -62,7 +59,7 @@
     <div class="col-md-7">
       <div class="container">
         {% comment %} <p class="figly-heading figly-heading-h1 client-register-heading">CLIENT DETAILS</p>
-        <hr/> {% endcomment %}
+        <hr /> {% endcomment %}
         <form action="" method="POST">{% csrf_token %}
           {{ wizard.management_form }}
           {% if wizard.form.forms %}
@@ -73,13 +70,18 @@
           {% else %}
           {% crispy wizard.form %}
           {% endif %}
-          <div class="figly-form-nav">
+          <div class="form-row">
             {% if wizard.steps.prev %}
-            <button name="wizard_goto_step" formnovalidate value="{{ wizard.steps.prev }}"
-              class="btn figly-btn-secondary offset-md-1">{% trans "Back" %}</button>
+            <div class="col-md-5 figly-left-form-input form-group">
+              <button name="wizard_goto_step" formnovalidate value="{{ wizard.steps.prev }}"
+                class="btn figly-btn-secondary ">{% trans "Back" %}
+              </button>
+            </div>
             {% endif %}
-            <button type="submit"
-              class="btn figly-btn-wizard-next col-xs-offset-right-2">{% trans "Continue" %}</button>
+            <div class="col-md-5 figly-right-form-input form-group">
+              <button type="submit" class="btn figly-btn-wizard-next ">{% trans "Continue" %}
+              </button>
+            </div>
           </div>
         </form>
       </div>

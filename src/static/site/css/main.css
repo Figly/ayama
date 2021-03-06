@@ -6,6 +6,10 @@ body {
     /* For full height images */
 }
 
+.container {
+    max-width: 1300px !important;
+}
+
 .starter-template {
     padding: 40px 15px;
     text-align: center;
@@ -247,7 +251,7 @@ body>.navbar-transparent {
 }
 
 .figly-container-main {
-    max-width: 1360px;
+    max-width: 1400px;
     background-color: inherit;
     /* min-height: 67%; */
 }
@@ -358,10 +362,6 @@ hr {
     color: #869D96;
 }
 
-.container-home {
-    /* margin-left: 10px; */
-}
-
 .margin-left-10 {
     margin-left: 10px;
 }
@@ -435,7 +435,7 @@ hr {
 }
 
 .card-container {
-    border-radius: 8px;
+    border-radius: 30px;
     /* height: 100%; */
     box-shadow: 0px 3px 6px #00000029;
     margin: 30px 0px;
@@ -596,8 +596,21 @@ hr {
     font-family: 'Yantramanav', Arial, Helvetica, sans-serif;
 }
 
+.figly-h5 {
+    font-size: 16px !important;
+    font-family: 'Poppins',
+        Arial,
+        Helvetica,
+        sans-serif;
+    font-weight: normal;
+}
+
+.figly-bold {
+    font-weight: 900;
+}
+
 .figly-p {
-    font-size: 16px;
+    font-size: 14px;
     font-family: 'Poppins', Arial, Helvetica, sans-serif;
 }
 
@@ -609,7 +622,8 @@ hr {
 }
 
 .figly-form-nav {
-    margin-top: 20px;
+    float: right;
+
 }
 
 .figly-form-heading {
@@ -640,12 +654,18 @@ hr {
     margin-left: 47px;
 }
 
+
+
 .figly-left-form-input {
     margin-right: 0px !important;
 }
 
 .figly-right-form-input {
     margin-left: 0px !important;
+}
+
+.figly-right-form-input .figly-btn-wizard-next {
+    float: right;
 }
 
 /* ++++++++++  +++    DASHBOARD   ++++++++++  +++      */
@@ -691,6 +711,10 @@ hr {
     padding-left: 0px;
 }
 
+.left-dash-column .figly-h5 {
+    font-size: 16px;
+}
+
 .right-dash-column {
     padding-right: 0px;
 }
@@ -723,7 +747,7 @@ hr {
     background: #fff;
     text-align: left;
     border-radius: 0px;
-    padding-left: 16px;
+    /* padding-left: 16px; */
 
 
 }
@@ -739,7 +763,7 @@ hr {
     position: absolute;
     content: "+";
     right: 10px;
-    top: 5px;
+    top: 15px;
 }
 
 .dash-dropdown-btn[aria-expanded="true"]:before {
@@ -748,9 +772,14 @@ hr {
 
 .left-dash-column .dropdown-button-container {
     min-height: 400px;
-    padding: 30px 0px;
+    padding: 30px 18px;
 
 }
+
+.dashboard_list_details {
+    margin-top: 0px;
+}
+
 
 .dashboard_list_details thead tr {
     border-top: hidden;
@@ -758,7 +787,12 @@ hr {
 
 .dashboard_list_details tbody a {
     text-decoration: none;
-    color: #212529 !important;
+    color: #212529;
+    font-size: 14px;
+}
+
+.dashboard_list_details .figly-h4 {
+    margin-bottom: 24px;
 }
 
 .dropdown-options {
@@ -770,10 +804,32 @@ hr {
     overflow: auto;
 }
 
-thead th {
+
+.table_detail_rows tbody tr th {
     position: sticky !important;
     top: 0;
     background: #fff;
+    /* border-bottom: 1px solid #012B3A; */
+    /* border-bottom: 1px solid red; */
+    border-top: 0px;
+}
+
+.update-last-contact {
+    font-size: 9px;
+    color: #fff;
+    background: #012B3A;
+    border-radius: 6px;
+    padding: 4px 8px;
+    font-weight: 400;
+
+}
+
+.update-last-contact span {
+    font-family: 'Poppins',
+        sans-serif !important;
+    padding-left: 3px;
+    font-weight: 400;
+
 }
 
 
@@ -832,5 +888,57 @@ thead th {
     margin-left: auto;
     margin-right: auto;
     display: block;
+}
 
+.check-in-card {
+    max-width: 23%;
+    height: 180px;
+    /* width: calc(80% / 4); */
+    display: inline-block;
+    vertical-align: top;
+    text-align: center;
+
+}
+
+.check-in-card:nth-child(1) {
+    background: #BD533E;
+}
+
+.check-in-card:nth-child(2) {
+    background: #D4D4AA;
+}
+
+.check-in-card:nth-child(3) {
+    background: #A2C3A4;
+}
+
+.table td,
+.table th {
+    padding: 1rem 0.75rem 1rem 0px;
+
+}
+
+.client-contact-overdue {
+    font-weight: bold;
+    color: #BD533E !important;
+}
+
+.client-contact-due {
+    font-weight: bold;
+    color: #E8871E;
+}
+
+.client-contact-happy {
+    font-weight: bold;
+    color: #A2C3A4;
+}
+
+
+/* ++++++++ CLIENT SUMMARY PAGE +++++++++++ */
+.summary-datail-row {
+    padding: 8px 0px;
+}
+
+.summary-datail-row p {
+    margin-bottom: 0px;
 }

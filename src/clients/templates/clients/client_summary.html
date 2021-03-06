@@ -3,150 +3,254 @@
 
 {% block content %}
 {% block container %}
-    {% if client %}
-    <div class="container" style="font-size: larger;" >
-        <h1>Client Details</h1>
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12 col-sm-12">
-                    <div class="col-md-6 col-sm-6">
-                        <h2>Personal Details</h2>
-                    </div>
-                    <div class="col-md-6 col-sm-6">
-                        <a href="{% url 'clients:edit-client-details' pk=client.id %}"><span class="glyphicon glyphicon-pencil icon-edit-customer"></a>
-                    </div>
-                </div>
-                <div class="col-md-6 col-sm-6">
-                        <p><strong>Title:</strong></p> {{client.title}}
-                        <p><strong>Name:</strong></p> {{client.names}}
-                        <p><strong>Surname:</strong></p> {{client.surnames}}
-                </div>
-                <div class="col-md-6 col-sm-6">
-                    <p><strong>Known as:</strong></p> {{client.known_as}}
-                    <p><strong>ID number:</strong></p> {{client.sa_id}}
-                    <p><strong>Passport No:</strong></p> {{client.passport_no}}
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12 col-sm-12">
-                    <div class="col-md-6 col-sm-6">
-                        <h2>Communication history</h2>
-                    </div>
-                </div>
-                <div class="col-md-6 col-sm-6">
-                    <p><strong>Last face to face:</strong></p> {{client.client_comms_fk.last_date_face_to_face}}
-                    <p><strong>Last Email:</strong></p> {{client.client_comms_fk.last_date_email}}
-                </div>
-                <div class="col-md-6 col-sm-6">
-                    <p><strong>Last Call:</strong></p> {{client.client_comms_fk.last_date_call}}
-                    <p><strong>Last SMS:</strong></p> {{client.client_comms_fk.last_date_sms}}
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12 col-sm-12">
-                    <div class="col-md-6 col-sm-6">
-                        <h2>Contact Details</h2>
-                    </div>
-                    <div class="col-md-6 col-sm-6">
-                        <a href="{% url 'clients:edit-client-contact' pk=client.client_contact_fk.id %}"><span class="glyphicon glyphicon-pencil icon-edit-customer"></a>
-                    </div>
-                </div>
-                <div class="col-md-6 col-sm-6">
-                        <p><strong>Telephone home:</strong></p> {{client.client_contact_fk.telephone_home}}
-                        <p><strong>Telephone work:</strong></p> {{client.client_contact_fk.telephone_work}}
-                        <p><strong>Cellphone:</strong></p> {{client.client_contact_fk.cellphone_number}}
-                        <p><strong>Postal Address:</strong></p> {{client.client_contact_fk.postal_address_line_1}}
-                </div>
-                <div class="col-md-6 col-sm-6">
-                    <p><strong>Fax Number:</strong></p> {{client.client_contact_fk.fax_number}}
-                    <p><strong>Email Address:</strong></p> {{client.client_contact_fk.email_address}}
-                    <p><strong>Residential Address:</strong></p> {{client.client_contact_fk.residential_address_line_1}}
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12 col-sm-12">
-                    <div class="col-md-6 col-sm-6">
-                        <h2>Employment Detail</h2>
-                    </div>
-                    <div class="col-md-6 col-sm-6">
-                        <a href="{% url 'clients:edit-client-employment' pk=client.client_employment_fk.id %}"><span class="glyphicon glyphicon-pencil icon-edit-customer"></span></a>
-                    </div>
-                </div>
-                <div class="col-md-6 col-sm-6">
-                        <p><strong>Company Name:</strong></p> {{client.client_employment_fk.company_name}}
-                        <p><strong>Occupation:</strong></p> {{client.client_employment_fk.occupation}}
-                        <p><strong>Employment Date:</strong></p> {{client.client_employment_fk.employment_date}}
-                        <p><strong>Personnel Number:</strong></p> {{client.client_employment_fk.personnel_number}}
-                </div>
-                <div class="col-md-6 col-sm-6">
-                    <p><strong>Medical Aid:</strong></p> {{client.client_employment_fk.medical_aid}}
-                    <p><strong>Retirement Fund Value:</strong></p> {{client.client_employment_fk.retirement_fund_current_value}}
-                    <p><strong>Group Life Cover:</strong></p> {{client.client_employment_fk.group_life_cover}}
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12 col-sm-12">
-                    <div class="col-md-6 col-sm-6">
-                        <h2>Rates and Return</h2>
-                    </div>
-                    <div class="col-md-6 col-sm-6">
-                        <a href="{% url 'clients:edit-client-rates' pk=client.client_rates_fk.id %}"><span class="glyphicon glyphicon-pencil icon-edit-customer"></a>
-                    </div>
-                </div>
-                 <div class="col-md-6 col-sm-6">
-                        <p><strong>Inflation:</strong></p> {{client.client_rates_fk.inflation}}
-                        <p><strong>Interest:</strong></p> {{client.client_rates_fk.interest}}
-                        <p><strong>Return Rate:</strong></p> {{client.client_rates_fk.return_rate}}
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12 col-sm-12">
-                    <div class="col-md-6 col-sm-6">
-                        <h2>Communication frequency</h2>
-                    </div>
-                    <div class="col-md-6 col-sm-6">
-                        <a href="{% url 'clients:edit-client-communication-frequency' pk=client.client_comms_freq_fk.id %}"><span class="glyphicon glyphicon-pencil icon-edit-customer"></a>
-                    </div>
-                </div>
-                 <div class="col-md-6 col-sm-6">
-                    <p><strong>Face to face (weeks):</strong></p> {{client.client_comms_freq_fk.face_to_face_frequency}}
-                    <p><strong>Email (weeks):</strong></p> {{client.client_comms_freq_fk.email_frequency}}
-                </div>
-                <div class="col-md-6 col-sm-6">
-                    <p><strong>Call (weeks):</strong></p> {{client.client_comms_freq_fk.calls_frequency}}
-                    <p><strong>SMS (weeks):</strong></p> {{client.client_comms_freq_fk.sms_frequency}}
-                </div>
-            </div>
-            {% if client.dependents.count > 0%}
-            <div class="row">
-                <h2>Dependents</h2>
-                {% for dependent in client.dependents.all %}
+{% if client %}
 
-
-                <div class="col-md-12 col-sm-12">
-                    <div class="col-md-6 col-sm-6">
-                        <h3>{{dependent.names}}</h3>
-                    </div>
-                    <div class="col-md-6 col-sm-6">
-                        <a href="{% url 'clients:edit-client-dependent' pk=dependent.id %}"><span class="glyphicon glyphicon-pencil icon-edit-customer"></a>
-                    </div>
-                </div>
-
-                    <div class="col-md-6 col-sm-6">
-
-                        <p><strong>Surname:</strong></p> {{dependent.surnames}}
-                        <p><strong>ID Number:</strong></p> {{dependent.id_no}}
-                        <p><strong>South African Resident:</strong></p> {{dependent.rsa_resident}}
-                    </div>
-                    <div class="col-md-6 col-sm-6">
-                        <p><strong>Date of Birth:</strong></p> {{dependent.date_of_birth}}
-                        <p><strong>Relationship:</strong></p> {{dependent.relationship}}
-                    </div>
-                {% endfor %}
-            </div>
-            {% endif %}
+<div class="container">
+    <div class="row">
+        <div>
+            <p class="figly-form-heading">CLIENT DETAILS</p>
         </div>
+    </div>
+    <hr style=" margin: 0px 0px 36px 50px;" />
 </div>
-  {% endif %}
+<div class="container" style="font-size: larger;">
+    <div class="container">
+        <div class="row dashboard_list_details">
+            <div class="card-container col-lg-12">
+                <div>
+                    <h5 class="figly-h5 figly-bold summary-datail-row">PERSONAL INFORMATION</h5>
+                </div>
+                <div class="row">
+                    <div class="col-lg-3">
+                        <div class="summary-datail-row">
+                            <p>Advisor</p>
+                        </div>
+                        <div class="summary-datail-row">
+                            <p>Client name</p>
+                        </div>
+                        <div class="summary-datail-row">
+                            <p>RSA ID number</p>
+                        </div>
+                        <div class="summary-datail-row">
+                            <p>Passport number</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="summary-datail-row">
+                            <p>{{ user.get_full_name}}</p>
+                        </div>
+                        <div class="summary-datail-row">
+                            <p>{{client.title}} {{client.names}} {{client.surnames}}</p>
+                        </div>
+                        <div class="summary-datail-row">
+                            <p>{{client.sa_id}}</p>
+                        </div>
+                        <div class="summary-datail-row">
+                            <p>{{client.passport_no}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="card-container col-lg-12">
+                <div>
+                    <h5 class="figly-h5 figly-bold summary-datail-row">COMMUNICATION DETAILS</h5>
+                </div>
+                <div class="row">
+                    <div class="col-lg-3">
+                        <div class="summary-datail-row">
+                            <p>Last Contact</p>
+                        </div>
+                        <div class="summary-datail-row">
+                            <p>Contact Frequency</p>
+                        </div>
+                        <div class="summary-datail-row">
+                            <p>Status</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="summary-datail-row">
+                            <p>{{client.client_comms_fk.last_date_face_to_face}}</p>
+                        </div>
+                        <div class="summary-datail-row">
+                            <p>{{client.title}} {{client.names}} {{client.surnames}}</p>
+                        </div>
+                        <div class="summary-datail-row">
+                            <p>{{client.sa_id}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="card-container col-lg-12">
+                <div>
+                    <h5 class="figly-h5 figly-bold summary-datail-row">Contact Details</h>
+                </div>
+                <div class="row">
+                    <div class="col-lg-3">
+                        <div class="summary-datail-row">
+                            <p>Home Telephone Number</p>
+                        </div>
+                        <div class="summary-datail-row">
+                            <p>Work Telephone Number</p>
+                        </div>
+                        <div class="summary-datail-row">
+                            <p>Fax Number</p>
+                        </div>
+                        <div class="summary-datail-row">
+                            <p>Email Address</p>
+                        </div>
+                        <div class="summary-datail-row">
+                            <p>Residential Address</p>
+                        </div>
+                        <div class="summary-datail-row">
+                            <p>Postal Address</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="summary-datail-row">
+                            <p>{{client.client_contact_fk.telephone_home}}</p>
+                        </div>
+                        <div class="summary-datail-row">
+                            <p>{{client.client_contact_fk.telephone_work}}</p>
+                        </div>
+                        <div class="summary-datail-row">
+                            <p>{{client.client_contact_fk.fax_number}}</p>
+                        </div>
+                        <div class="summary-datail-row">
+                            <p>{{client.client_contact_fk.email_address}}</p>
+                        </div>
+                        <div class="summary-datail-row">
+                            <p>{{client.client_contact_fk.residential_address_line_1}}</p>
+                        </div>
+                        <div class="summary-datail-row">
+                            <p>{{client.client_contact_fk.postal_address_line_1}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="card-container col-lg-12">
+                <div>
+                    <h5 class="figly-h5 figly-bold summary-datail-row">EMPLOYMENT DETAILS</h5>
+                </div>
+                <div class="row">
+                    <div class="col-lg-3">
+                        <div class="summary-datail-row">
+                            <p>Company Name</p>
+                        </div>
+                        <div class="summary-datail-row">
+                            <p>Occupation</p>
+                        </div>
+                        <div class="summary-datail-row">
+                            <p>Personnel Number</p>
+                        </div>
+                        <div class="summary-datail-row">
+                            <p>Employment Date</p>
+                        </div>
+                        <div class="summary-datail-row">
+                            <p>Medical Aid</p>
+                        </div>
+                        <div class="summary-datail-row">
+                            <p>Retirement Fund Value</p>
+                        </div>
+                        <div class="summary-datail-row">
+                            <p>Group Life Cover</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="summary-datail-row">
+                            <p>{{client.client_employment_fk.company_name}}</p>
+                        </div>
+                        <div class="summary-datail-row">
+                            <p>{{client.client_employment_fk.occupation}}</p>
+                        </div>
+                        <div class="summary-datail-row">
+                            <p>{{client.client_employment_fk.personnel_number}}</p>
+                        </div>
+                        <div class="summary-datail-row">
+                            <p>{{client.client_employment_fk.employment_date}}</p>
+                        </div>
+                        <div class="summary-datail-row">
+                            <p>{{client.client_employment_fk.medical_aid}}</p>
+                        </div>
+                        <div class="summary-datail-row">
+                            <p>{{client.client_employment_fk.retirement_fund_current_value}}</p>
+                        </div>
+                        <div class="summary-datail-row">
+                            <p>{{client.client_employment_fk.group_life_cover}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="card-container col-lg-12">
+                <div>
+                    <h5 class="figly-h5 figly-bold summary-datail-row">FINANCIAL DETAILS</h5>
+                </div>
+                <div class="row">
+                    <div class="col-lg-3">
+                        <div class="summary-datail-row">
+                            <p>Inflation</p>
+                        </div>
+                        <div class="summary-datail-row">
+                            <p>Interest</p>
+                        </div>
+                        <div class="summary-datail-row">
+                            <p>Return Rate</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="summary-datail-row">
+                            <p>{{client.client_rates_fk.inflation}}</p>
+                        </div>
+                        <div class="summary-datail-row">
+                            <p>{{client.client_rates_fk.interest}}</p>
+                        </div>
+                        <div class="summary-datail-row">
+                            <p>{{client.client_rates_fk.return_rate}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% if client.dependents.count > 0%}
+        <div class="row">
+            <h2>Dependents</h2>
+            {% for dependent in client.dependents.all %}
+
+            <div class="col-md-12 col-sm-12">
+                <div class="col-md-6 col-sm-6">
+                    <h3>{{dependent.names}}</h3>
+                </div>
+                <div class="col-md-6 col-sm-6">
+                    <a href="{% url 'clients:edit-client-dependent' pk=dependent.id %}"><span
+                            class="glyphicon glyphicon-pencil icon-edit-customer"></a>
+                </div>
+            </div>
+            <div class="col-md-6 col-sm-6">
+                <p><strong>Surname:</strong></p> {{dependent.surnames}}
+                <p><strong>ID Number:</strong></p> {{dependent.id_no}}
+                <p><strong>South African Resident:</strong></p> {{dependent.rsa_resident}}
+            </div>
+            <div class="col-md-6 col-sm-6">
+                <p><strong>Date of Birth:</strong></p> {{dependent.date_of_birth}}
+                <p><strong>Relationship:</strong></p> {{dependent.relationship}}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+{% block footer %}
+{% include "footer.html" %}
+{% endblock footer %}
+{% endif %}
 {% endblock %}
 {% endblock %}
+    
