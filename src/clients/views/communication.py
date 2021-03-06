@@ -1,14 +1,19 @@
-import datetime
+import logging
+from datetime import datetime
 
 from django import forms
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import JsonResponse
 from django.http.response import HttpResponseRedirect
+from django.shortcuts import get_object_or_404
 from django.urls import reverse, reverse_lazy
 from django.views import generic
 
 from ..forms import UpdateClientCommunicationHistory
 from ..models import ClientCommunication, ClientCommunicationFrequency
+
+log = logging.getLogger(__name__)
 
 
 class EditClientCommunicationFrequencyView(LoginRequiredMixin, generic.UpdateView):
@@ -74,3 +79,26 @@ class UpdateClientCommunicationHistoryView(LoginRequiredMixin, generic.UpdateVie
         )
         self.success_url = home
         return super(UpdateClientCommunicationHistoryView, self).form_valid(form)
+
+
+class UpdateLastSeen(generic.View):
+    def post(self, request, *args, **kwargs):
+        try:
+            client_comms_id = request.POST.get("client_comms_id", None)
+            date_value = request.POST.get("date_value")
+
+            if client_comms_id is None:
+                return JsonResponse({"valid": False}, status=400)
+
+            clientComms = get_object_or_404(ClientCommunication, pk=client_comms_id)
+            clientComms.last_contacted = date_value
+
+            clientComms.save()
+
+            return JsonResponse({"valid": True}, status=200)
+        except Exception as e:
+            log.info(e)
+            return JsonResponse(
+                {"valid": "An error occured. Please contact an administrator"},
+                status=400,
+            )

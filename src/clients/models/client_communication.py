@@ -41,6 +41,14 @@ class ClientCommunication(BaseModel):
         blank=True,
         null=True,
     )
+    last_contacted = models.DateField(
+        "Last date contacted",
+        auto_now=False,
+        auto_now_add=False,
+        default=None,
+        blank=True,
+        null=True,
+    )
 
     def __str__(self):
         """Return a human readable representation of the model instance."""

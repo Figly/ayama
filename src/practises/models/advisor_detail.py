@@ -35,6 +35,9 @@ class AdvisorDetail(BaseModel):
     advisor_contact_fk = models.ForeignKey(
         "AdvisorContactDetail", on_delete=models.CASCADE
     )
+    advisor_employment_fk = models.ForeignKey(
+        "AdvisorEmploymentDetail", on_delete=models.CASCADE
+    )
     title = models.CharField(
         "Title", max_length=30, choices=ch_titles, default="not specified"
     )
@@ -46,13 +49,7 @@ class AdvisorDetail(BaseModel):
     passport_no = models.CharField(
         "Passport Number", max_length=50, blank=True, null=True
     )
-    position = models.CharField("Position", max_length=50, blank=True, null=True)
-    employment_date = models.DateField(
-        "Employment Date", auto_now=False, auto_now_add=False
-    )
-    personnel_number = models.CharField(
-        "Personnel Number", max_length=50, blank=True, null=True
-    )
+
     reminder_config_freq_fk = models.ForeignKey(
         "AdvisorReminderConfig",
         on_delete=models.CASCADE,

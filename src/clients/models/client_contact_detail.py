@@ -23,10 +23,26 @@ class ClientContactDetail(BaseModel):
     residential_address_line_2 = models.CharField(
         "Residential Address 2", max_length=100, blank=True, null=True
     )
+    residential_suburb = models.CharField(
+        "Residential Suburb", max_length=100, blank=True, null=True
+    )
+    residential_city = models.CharField(
+        "Residential City", max_length=100, blank=True, null=True
+    )
+    residential_country = models.CharField(
+        "Residential Country", max_length=100, blank=True, null=True
+    )
     residential_code = models.IntegerField("Residential Code")
     postal_address_line_1 = models.CharField("Postal Address 1", max_length=100)
     postal_address_line_2 = models.CharField(
         "Postal Addres 2", max_length=100, blank=True, null=True
+    )
+    postal_suburb = models.CharField(
+        "Postal Suburb", max_length=100, blank=True, null=True
+    )
+    postal_city = models.CharField("Postal City", max_length=100, blank=True, null=True)
+    postal_country = models.CharField(
+        "Postal Country", max_length=100, blank=True, null=True
     )
     postal_code = models.IntegerField("Postal Code")
 

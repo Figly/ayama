@@ -5,6 +5,7 @@ from .models import (
     AdministratorDetail,
     AdvisorContactDetail,
     AdvisorDetail,
+    AdvisorEmploymentDetail,
     PractiseDetail,
 )
 
@@ -30,9 +31,6 @@ class AdvisorDetailAdmin(admin.ModelAdmin):
         "known_as",
         "sa_id",
         "passport_no",
-        "position",
-        "employment_date",
-        "personnel_number",
     )
 
 
@@ -49,6 +47,14 @@ class AdvisorContactDetailAdmin(admin.ModelAdmin):
         "postal_address_line_1",
         "postal_address_line_2",
         "postal_code",
+    )
+
+
+class AdvisorEmploymentDetailAdmin(admin.ModelAdmin):
+    list_display = (
+        "position",
+        "employment_date",
+        "personnel_number",
     )
 
 
@@ -86,5 +92,6 @@ class AdministratorContactDetailAdmin(admin.ModelAdmin):
 admin.site.register(PractiseDetail, PractiseDetailAdmin)
 admin.site.register(AdvisorDetail, AdvisorDetailAdmin)
 admin.site.register(AdvisorContactDetail, AdvisorContactDetailAdmin)
+admin.site.register(AdvisorEmploymentDetail, AdvisorEmploymentDetailAdmin)
 admin.site.register(AdministratorDetail, AdministratorDetailAdmin)
 admin.site.register(AdministratorContactDetail, AdministratorContactDetailAdmin)

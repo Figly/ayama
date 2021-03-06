@@ -31,47 +31,53 @@
             <th scope="col">Status</th>
         </tr>
 
+                {%if user.is_superuser %}
+                <th scope="col">Email</th>
+                {% endif %}
+                {%if user.is_administrator %}
+                <th scope="col">Advisor</th>
+                {% endif %}
+                <th scope="col">Email</th>
+                <th scope="col">Location</th>
+                <th scope="col">Last contact </th>
+                <th scope="col">Status</th>
+            </tr>
+        </thead>
+        {% load client_status %}
         {% for client in clients %}
+        <tbody>
+            <tr scope="row" data-href="{% url 'clients:client-summary' pk=client.id %}">
 
-        <tr scope="row" data-href="{% url 'clients:client-summary' pk=client.id %}">
+                <td><a href="{% url 'clients:client-summary' pk=client.id %}">{{ client.names }}
+                        {{ client.surnames }}</a>
+                </td>
+                {% comment %} <td>{{ client.advisor_id_fk}} </td> {% endcomment %}
 
-            <td>
-                <a href="{% url 'clients:client-summary' pk=client.id %}">{{ client.names }}
-                    {{ client.surnames }}
-                </a>
-            </td>
-            <td> <a href="{% url 'clients:client-summary' pk=client.id %}">{{ client.client_contact_fk.email_address }}
-                </a>
-            </td>
-            <td> 
-                <a href="{% url 'clients:client-summary' pk=client.id %}">{{ client.client_contact_fk.cellphone_number }}
-                </a>
-            </td>
-            <td> 
-                <a href="{% url 'clients:client-summary' pk=client.id %}">{{ client.client_contact_fk.residential_address_line_1 }}
-                </a>
-            </td>
-            <td> 
-                <a href="{% url 'clients:client-summary' pk=client.id %}">{{ client.client_employment_fk.employment_date | date:"SHORT_DATE_FORMAT" }}
-                    <i class="fa fa-refresh update-last-contact" aria-hidden="true">
-                        <span>
-                            UPDATE
-                        </span>
-                    </i>
-                </a>
-            </td>
-            <td> 
-                <a class="client-contact-overdue" href="{% url 'clients:client-summary' pk=client.id %}">Overdue
-                </a>
-            </td>
-            {% if user.is_superuser %}
-            <td>{{ client.advisor_id_fk.practise_id_fk}}</td>
-            <td>{{ client.advisor_id_fk}}</td>
-            {% endif %}
-            {%if user.is_administrator %}
-            <td>{{client.employment_date}}</td>
-            {% endif %}
-        </tr>
+                <td> <a href="{% url 'clients:client-summary' pk=client.id %}">{{ client.client_contact_fk.email_address }}
+                    </a></td>
+                </td>
+                <td> <a href="{% url 'clients:client-summary' pk=client.id %}">{{ client.client_contact_fk.residential_address_line_1 }}
+                    </a></td>
+                </td>
+                <td>
+                    <input class="datepicker" id={{client.client_comms_fk.id}} date-format='yyyy-mm-dd' value = "{{ client.client_comms_fk.last_contacted }}">
+                    <button class="btn" onclick="updateComms(this)" role="button" data-id={{client.client_comms_fk.id}}>update</button>
+                </td>
+                </td>
+                <td> <a href="{% url 'clients:client-summary' pk=client.id %}">{% client_status client.client_comms_fk.last_contacted %}
+                    </a>
+                </td>
+                {% if user.is_superuser %}
+                <td>{{ client.advisor_id_fk.practise_id_fk}}</td>
+                <td>{{ client.advisor_id_fk}}</td>
+                {% endif %}
+                {%if user.is_administrator %}
+                <td>{{client.employment_date}}</td>
+
+                {% endif %}
+            </tr>
+
+        </tbody>
         {% endfor %}
     </table>
 </div>
@@ -79,4 +85,36 @@
 <p>No Clients to Display</p>
 {% endif %}
 {% endblock %}
+{% endblock %}
+
+{% block scripts %}
+  <script>
+function updateComms(e){
+    var client_comms_id = e.getAttribute('data-id');
+    var dateValue = convertDate(new Date(document.getElementById(client_comms_id).value));
+    $.ajax({
+        type: 'POST',
+        headers:{
+        "X-CSRFToken": '{{ csrf_token }}'
+        },
+        url: "{% url 'clients:update-comms'%}",
+        data: {'client_comms_id':client_comms_id, 'date_value': dateValue},
+        success: function (response) {
+            e.value = dateValue
+        },
+        error: function (response) {
+        }
+    });
+}
+function convertDate(date) {
+  var yyyy = date.getFullYear().toString();
+  var mm = (date.getMonth()+1).toString();
+  var dd  = date.getDate().toString();
+
+  var mmChars = mm.split('');
+  var ddChars = dd.split('');
+
+  return yyyy + '-' + (mmChars[1]?mm:"0"+mmChars[0]) + '-' + (ddChars[1]?dd:"0"+ddChars[0]);
+}
+</script>
 {% endblock %}

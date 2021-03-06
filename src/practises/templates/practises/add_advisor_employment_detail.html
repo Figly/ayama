@@ -17,7 +17,7 @@
           <li class="breadcrumb-item active" aria-current="page">Contact details</li>
         </ol>
       </nav>
-      <h3>Advisor Contact Detail  {{ advisor_name }}</h3>
+      <h3>Advisor Employment Detail  {{ advisor_name }}</h3>
       {{ wizard.management_form }}
       {% if wizard.form.forms %}
         {{ wizard.form.management_form }}
@@ -30,13 +30,9 @@
       <div class="row">
         <div class="text-center">
           {% if wizard.steps.prev %}
-          <button name="wizard_goto_step" formnovalidate value="{{ wizard.steps.prev }}"
-            class="btn btn-secondary btn-lg">{% trans "Previous" %}</button>
+          <button name="wizard_goto_step" formnovalidate value="{{ wizard.steps.prev }}" class="btn btn-secondary btn-lg">{% trans "Previous" %}</button>
           {% endif %}
-          {% comment %} <button type="submit" class="btn btn-primary btn-lg">{% trans "Next" %}</button>
-          {% endcomment %}
-        <button type="submit"
-          class="btn figly-btn-wizard-next col-xs-offset-right-2">{% trans "Continue" %}</button>
+          <button type="submit" class="btn btn-primary btn-lg">{% trans "Done" %}</button>
         </div>
       </div>
     </form>

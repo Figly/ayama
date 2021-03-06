@@ -15,15 +15,19 @@ from django.http.response import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse_lazy
 from django.views import generic
-
 from formtools.wizard.views import SessionWizardView
 
 from ..filters import AdvisorFilter
-from ..forms import AddAdvisorContactDetailForm, AddAdvisorDetailForm
+from ..forms import (
+    AddAdvisorContactDetailForm,
+    AddAdvisorDetailForm,
+    AddAdvisorEmploymentForm,
+)
 from ..models import (
     AdministratorDetail,
     AdvisorContactDetail,
     AdvisorDetail,
+    AdvisorEmploymentDetail,
     AdvisorReminderConfig,
     PractiseDetail,
     User,
@@ -32,11 +36,13 @@ from ..models import (
 FORMS = [
     ("0", AddAdvisorDetailForm),
     ("1", AddAdvisorContactDetailForm),
+    ("2", AddAdvisorEmploymentForm),
 ]
 
 TEMPLATES = {
     "0": "practises/add_advisor_detail.html",
     "1": "practises/add_advisor_contact_detail.html",
+    "2": "practises/add_advisor_employment_detail.html",
 }
 
 log = logging.getLogger(__name__)
@@ -100,6 +106,7 @@ class AddAdvisorWizard(LoginRequiredMixin, UserPassesTestMixin, SessionWizardVie
             # models backing db
             advisor = AdvisorDetail()
             advisorContact = AdvisorContactDetail()
+            advisorEmployment = AdvisorEmploymentDetail()
             advisorCommsConfig = AdvisorReminderConfig()
 
             # form instances
@@ -116,6 +123,13 @@ class AddAdvisorWizard(LoginRequiredMixin, UserPassesTestMixin, SessionWizardVie
                 advisorContact,
                 form_dict["1"]._meta.fields,
                 form_dict["1"]._meta.exclude,
+            )
+
+            advisorEmployment = construct_instance(
+                form_dict["2"],
+                advisorEmployment,
+                form_dict["2"]._meta.fields,
+                form_dict["2"]._meta.exclude,
             )
 
             existing_user = User.objects.filter(
@@ -142,6 +156,10 @@ class AddAdvisorWizard(LoginRequiredMixin, UserPassesTestMixin, SessionWizardVie
                 advisorContact.modified_by = self.request.user
                 advisorContact.save()
                 advisor.advisor_contact_fk = advisorContact
+
+                advisorEmployment.modified_by = self.request.user
+                advisorEmployment.save()
+                advisor.advisor_employment_fk = advisorEmployment
 
                 advisorCommsConfig.modified_by = self.request.user
                 advisorCommsConfig.save()
@@ -263,9 +281,15 @@ class EditAdvisorContactView(
         "email_address",
         "residential_address_line_1",
         "residential_address_line_2",
+        "residential_suburb",
+        "residential_city",
+        "residential_country",
         "residential_code",
         "postal_address_line_1",
         "postal_address_line_2",
+        "postal_suburb",
+        "postal_city",
+        "postal_country",
         "postal_code",
     )
 
@@ -342,17 +366,14 @@ class InviteAdvisor(generic.View):
             admin = get_object_or_404(AdministratorDetail, pk=admin_id)
             practise = get_object_or_404(PractiseDetail, pk=admin.practise_id_fk.id)
 
-            # current_site = Site.objects.get_current()
-            # current_site.domain
-
-            # TODO:replace https below with the above
-            link = (
-                "https://www.figly.io/link_advisor?advisorid="
-                + advisor_id
-                + "&practiseid="
-                + str(admin.practise_id_fk.id)
+            link = "{0}://{1}{2}{3}{4}{5}".format(
+                self.request.scheme,
+                self.request.get_host(),
+                "/link_advisor?=",
+                advisor_id,
+                "&practiseid=",
+                str(admin.practise_id_fk.id),
             )
-
             send_mail(
                 practise.name + " invited you to join their practise.",
                 "Click: " + link,
@@ -436,9 +457,7 @@ class EditRolesView(LoginRequiredMixin, UserPassesTestMixin, generic.UpdateView)
         model.save
 
         messages.add_message(
-            self.request,
-            messages.SUCCESS,
-            "advisor roles successfully edited.",
+            self.request, messages.SUCCESS, "advisor roles successfully edited.",
         )
         self.success_url = reverse_lazy("home")
         return super(EditRolesView, self).form_valid(form)
