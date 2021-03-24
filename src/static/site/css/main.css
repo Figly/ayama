@@ -181,7 +181,7 @@ body>.navbar-transparent {
     font-weight: normal;
 }
 
-.form-box form .form-control {
+/* .form-box form .form-control {
     position: relative;
     height: auto;
     -webkit-box-sizing: border-box;
@@ -190,7 +190,9 @@ body>.navbar-transparent {
     padding: 10px;
     font-size: 16px;
 
-}
+} */
+
+
 
 .form-box form .form-control:focus {
     z-index: 2;
@@ -210,11 +212,11 @@ body>.navbar-transparent {
     padding: 0px;
 }
 
-.icon-edit-customer {
+/* .icon-edit-customer {
     position: absolute;
     top: 25px;
     text-align: center;
-}
+} */
 
 .figly-heading {
     font-family: 'Yantramanav', sans-serif;
@@ -260,7 +262,10 @@ body>.navbar-transparent {
     background-color: #012B3A;
     color: #fff;
     border-radius: 10px;
-    width: 251px;
+    border-radius: 8px;
+    width: 224px;
+    padding: 12px 44px;
+    margin-bottom: 48px !important;
 }
 
 .btn-signup:hover {
@@ -268,20 +273,11 @@ body>.navbar-transparent {
     color: #fff;
     border-radius: 10px;
     width: 251px;
-    font-weight: 500;
     box-shadow: 0 8px 6px -6px #012B3A;
 
 }
 
-.btn-signup:hover {
-    background-color: #012B3A;
-    color: #fff;
-    border-radius: 10px;
-    width: 251px;
-    font-weight: 500;
-    box-shadow: 0 8px 6px -6px #012B3A;
 
-}
 
 .footer-main-heading {
     font-family: 'Poppins', sans-serif;
@@ -322,18 +318,26 @@ body>.navbar-transparent {
 }
 
 .figly-btn-secondary {
-    background-color: #6c757d;
+    background-color: #012B3A;
     color: #ffffff;
     border-radius: 10px;
     width: 224px;
+}
+
+.figly-btn-secondary:hover {
+    box-shadow: 0 8px 6px -6px #012B3A;
+    color: #fff;
 }
 
 .figly-btn-wizard-next {
     background-color: #012B3A;
     color: #ffffff;
     border-radius: 8px;
+}
 
-
+.figly-btn-wizard-next:hover {
+    box-shadow: 0 8px 6px -6px #012B3A;
+    color: #fff;
 }
 
 body {
@@ -524,7 +528,7 @@ hr {
 }
 
 .client-stepper {
-    padding-left: 136px;
+    padding-left: 24px;
     padding-top: 24px;
 }
 
@@ -606,7 +610,7 @@ hr {
 }
 
 .figly-bold {
-    font-weight: 900;
+    font-weight: bold;
 }
 
 .figly-p {
@@ -616,14 +620,23 @@ hr {
 
 /* ++++++++++  +++     FORMS  ++++++++++  +++      */
 
-#add_client_dependants #add-dependant-btns {
+#add_client_dependants .add-dependant-btns {
     padding-right: 49px;
-    float: right;
+    display: flex;
+    justify-content: flex-end;
+
 }
 
 .figly-form-nav {
-    float: right;
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 54px;
+    padding-top: 40px;
+    padding-bottom: 0px !important;
+}
 
+.figly-form-nav button {
+    margin-bottom: 0px;
 }
 
 .figly-form-heading {
@@ -703,8 +716,15 @@ hr {
 
 .ui-datepicker {
     background: #fff;
-    padding: 0px 10px;
-    /* border: 1px solid; */
+    padding: 16px;
+    background-image: none;
+    -webkit-box-shadow: 0px 3px 6px #00000029;
+    -moz-box-shadow: 0px 3px 6px #00000029;
+    box-shadow: 0px 3px 6px #00000029;
+    border: 1px solid #012B3A;
+    border-radius: 30px;
+
+    margin-bottom: 48px;
 }
 
 .left-dash-column {
@@ -791,10 +811,6 @@ hr {
     font-size: 14px;
 }
 
-.dashboard_list_details .figly-h4 {
-    margin-bottom: 24px;
-}
-
 .dropdown-options {
     padding-left: 8px;
 }
@@ -805,7 +821,7 @@ hr {
 }
 
 
-.table_detail_rows tbody tr th {
+.table_detail_rows thead tr th {
     position: sticky !important;
     top: 0;
     background: #fff;
@@ -831,6 +847,46 @@ hr {
     font-weight: 400;
 
 }
+
+.last-contact-update-btn {
+    padding: 0px 0px;
+    margin: 0px !important;
+    max-height: 18px;
+    border: none;
+    background: #fff;
+}
+
+.last-contact-date-input {
+    max-width: 97px;
+    font-size: 14px;
+    padding: 0px;
+    border: none;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.client-data-body td .Happy {
+    color: #A2C3A4;
+    font-weight: bold;
+}
+
+.client-data-body td .Overdue {
+    color: #BD533E;
+    font-weight: bold;
+
+}
+
+.client-data-body td .Due {
+    color: #E8871E;
+    font-weight: bold;
+}
+
+.spacer {
+    margin: 50px;
+}
+
+
+
 
 
 
@@ -900,6 +956,11 @@ hr {
 
 }
 
+.check-in-card h3 {
+    font-family: 'Poppins',
+        sans-serif;
+}
+
 .check-in-card:nth-child(1) {
     background: #BD533E;
 }
@@ -941,4 +1002,31 @@ hr {
 
 .summary-datail-row p {
     margin-bottom: 0px;
+    font-family: 'Poppins';
+    font-size: 16px;
+    font-weight: 300;
 }
+
+.edit-client-icon {
+    color: #000;
+}
+
+
+/* DIRTY STYLING HACK FOR EDIT CLIENT SUMMARY FORMS - NEEDS ATTENTION ASAP */
+.edit-client-container .form-control {
+    border: 1px solid #869D96;
+    border-radius: 10px;
+    height: 54px;
+    margin-bottom: 40px;
+    max-width: 80%;
+}
+
+.edit-client-container .form-row {
+    margin-left: 0px;
+}
+
+.edit-client-container .figly-right-form-input .figly-btn-wizard-next {
+    float: none;
+}
+
+/* END OF DIRTY STYLING HACK FOR EDIT CLIENT SUMMARY FORMS - NEEDS ATTENTION ASAP */

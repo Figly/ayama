@@ -11,15 +11,24 @@
             <p class="figly-form-heading">CLIENT DETAILS</p>
         </div>
     </div>
-    <hr style=" margin: 0px 0px 36px 50px;" />
+    <hr style=" margin: 0px 50px 36px 50px;" />
 </div>
+
 <div class="container" style="font-size: larger;">
     <div class="container">
         <div class="row dashboard_list_details">
             <div class="card-container col-lg-12">
-                <div>
-                    <h5 class="figly-h5 figly-bold summary-datail-row">PERSONAL INFORMATION</h5>
-                </div>
+                <div class="row">
+                    <div class="col-lg-3"> 
+                        <h5 class="figly-h5 figly-bold summary-datail-row">PERSONAL INFORMATION</h5>
+                    </div>
+                    <div class="col-lg-3"> 
+                        <a href="{% url 'clients:edit-client-details' pk=client.client_contact_fk.id %}"> 
+                        <i class="fa fa-pencil fa-sm edit-client-icon " aria-hidden="true"></i></a>
+                    </div>
+               </div>
+                    <div class="col-md-6 col-sm-6">
+                    </div>
                 <div class="row">
                     <div class="col-lg-3">
                         <div class="summary-datail-row">
@@ -40,7 +49,7 @@
                             <p>{{ user.get_full_name}}</p>
                         </div>
                         <div class="summary-datail-row">
-                            <p>{{client.title}} {{client.names}} {{client.surnames}}</p>
+                            <p>{{client.title}} {{client.names}} {{client.surnames}} </p>
                         </div>
                         <div class="summary-datail-row">
                             <p>{{client.sa_id}}</p>
@@ -52,11 +61,19 @@
                 </div>
             </div>
         </div>
+                {% load client_status %}
+
         <div class="row">
             <div class="card-container col-lg-12">
-                <div>
-                    <h5 class="figly-h5 figly-bold summary-datail-row">COMMUNICATION DETAILS</h5>
-                </div>
+             <div class="row">
+                 <div class="col-lg-3"> 
+                     <h5 class="figly-h5 figly-bold summary-datail-row">COMMUNICATION DETAILS</h5>
+                 </div>
+                 <div class="col-lg-3"> 
+                     <a href="{% url 'clients:edit-client-communication-frequency' pk=client.client_contact_fk.id %}"> 
+                     <i class="fa fa-pencil fa-sm edit-client-icon" aria-hidden="true"></i></a>
+                 </div>
+             </div>
                 <div class="row">
                     <div class="col-lg-3">
                         <div class="summary-datail-row">
@@ -71,13 +88,13 @@
                     </div>
                     <div class="col-lg-3">
                         <div class="summary-datail-row">
-                            <p>{{client.client_comms_fk.last_date_face_to_face}}</p>
+                            <p> {{ client.client_comms_fk.last_contacted}}</p>
                         </div>
                         <div class="summary-datail-row">
-                            <p>{{client.title}} {{client.names}} {{client.surnames}}</p>
+                            <p>TBC</p>
                         </div>
                         <div class="summary-datail-row">
-                            <p>{{client.sa_id}}</p>
+                            <p>{% client_status client.client_comms_fk.last_contacted %}</p>
                         </div>
                     </div>
                 </div>
@@ -85,10 +102,16 @@
         </div>
         <div class="row">
             <div class="card-container col-lg-12">
-                <div>
-                    <h5 class="figly-h5 figly-bold summary-datail-row">Contact Details</h>
-                </div>
-                <div class="row">
+             <div class="row">
+                 <div class="col-lg-3"> 
+                     <h5 class="figly-h5 figly-bold summary-datail-row">CONTACT DETAILS</h5>
+                 </div>
+                 <div class="col-lg-3"> 
+                     <a href="{% url 'clients:edit-client-contact' pk=client.client_contact_fk.id %}"> 
+                     <i class="fa fa-pencil fa-sm edit-client-icon" aria-hidden="true"></i></a>
+                 </div>
+             </div>  
+             <div class="row">
                     <div class="col-lg-3">
                         <div class="summary-datail-row">
                             <p>Home Telephone Number</p>
@@ -133,10 +156,16 @@
             </div>
         </div>
         <div class="row">
-            <div class="card-container col-lg-12">
-                <div>
-                    <h5 class="figly-h5 figly-bold summary-datail-row">EMPLOYMENT DETAILS</h5>
-                </div>
+            <div class="card-container col-lg-12">               
+                <div class="row">
+                 <div class="col-lg-3"> 
+                     <h5 class="figly-h5 figly-bold summary-datail-row">EMPLOYMENT DETAILS</h5>
+                 </div>
+                 <div class="col-lg-3"> 
+                     <a href="{% url 'clients:edit-client-employment' pk=client.client_contact_fk.id %}"> 
+                     <i class="fa fa-pencil fa-sm edit-client-icon" aria-hidden="true"></i></a>
+                 </div>
+             </div>
                 <div class="row">
                     <div class="col-lg-3">
                         <div class="summary-datail-row">
@@ -189,9 +218,15 @@
         </div>
         <div class="row">
             <div class="card-container col-lg-12">
-                <div>
-                    <h5 class="figly-h5 figly-bold summary-datail-row">FINANCIAL DETAILS</h5>
-                </div>
+                 <div class="row">
+                 <div class="col-lg-3"> 
+                     <h5 class="figly-h5 figly-bold summary-datail-row">FINANCIAL DETAILS</h5>
+                 </div>
+                 <div class="col-lg-3"> 
+                     <a href="{% url 'clients:edit-client-rates' pk=client.client_contact_fk.id %}"> 
+                     <i class="fa fa-pencil fa-sm edit-client-icon" aria-hidden="true"></i></a>
+                 </div>
+             </div>
                 <div class="row">
                     <div class="col-lg-3">
                         <div class="summary-datail-row">
@@ -218,28 +253,58 @@
                 </div>
             </div>
         </div>
+
         {% if client.dependents.count > 0%}
+        
         <div class="row">
-            <h2>Dependents</h2>
+             <div class="card-container col-lg-12">               
+                <div class="row">
+                 <div class="col-lg-3"> 
+                     <h5 class="figly-h5 figly-bold summary-datail-row">DEPENDENTS</h5>
+                 </div>
+                 <div class="col-lg-3"> 
+                     {% comment %} <a href="{% url 'clients:edit-client-dependent' pk=dependent.id %}"> 
+                     <i class="fa fa-pencil fa-sm edit-client-icon" aria-hidden="true"></i></a>  {% endcomment %}
+                 </div>
+             </div>
             {% for dependent in client.dependents.all %}
 
-            <div class="col-md-12 col-sm-12">
-                <div class="col-md-6 col-sm-6">
-                    <h3>{{dependent.names}}</h3>
+            <div class="row">
+                    <div class="col-lg-3">
+                        <div class="summary-datail-row">
+                            <p>Full Name</p>
+                        </div>
+                        <div class="summary-datail-row">
+                            <p>ID Number</p>
+                        </div>
+                        <div class="summary-datail-row">
+                            <p>South African Resident</p>
+                        </div>
+                        <div class="summary-datail-row">
+                            <p>Date of Birth</p>
+                        </div>
+                        <div class="summary-datail-row">
+                            <p>Relationship</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="summary-datail-row">
+                            <p>{{dependent.names}} {{dependent.surnames}}</p>
+                        </div>
+                        <div class="summary-datail-row">
+                            <p>{{dependent.id_no}}</p>
+                        </div>
+                        <div class="summary-datail-row">
+                            <p>{{dependent.rsa_resident}}</p>
+                        </div>
+                        <div class="summary-datail-row">
+                            <p>{{dependent.date_of_birth}}</p>
+                        </div>
+                        <div class="summary-datail-row">
+                            <p>{{dependent.relationship}}</p>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-md-6 col-sm-6">
-                    <a href="{% url 'clients:edit-client-dependent' pk=dependent.id %}"><span
-                            class="glyphicon glyphicon-pencil icon-edit-customer"></a>
-                </div>
-            </div>
-            <div class="col-md-6 col-sm-6">
-                <p><strong>Surname:</strong></p> {{dependent.surnames}}
-                <p><strong>ID Number:</strong></p> {{dependent.id_no}}
-                <p><strong>South African Resident:</strong></p> {{dependent.rsa_resident}}
-            </div>
-            <div class="col-md-6 col-sm-6">
-                <p><strong>Date of Birth:</strong></p> {{dependent.date_of_birth}}
-                <p><strong>Relationship:</strong></p> {{dependent.relationship}}
             </div>
             {% endfor %}
         </div>

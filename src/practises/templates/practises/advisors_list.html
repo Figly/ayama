@@ -4,47 +4,29 @@
 {% block container %}
 {% if advisors %}
 <div class="table_detail_rows">
-    <table class="table">
+    <table class="table sortable-table">
         <thead>
             <tr>
-                <th scope="col">Name</th>
-                {% comment %} <th scope="col">Surname</th> {% endcomment %}
-                <th scope="col">Email</th>
-                {% comment %} <th scope="col">ID Number</th> {% endcomment %}
-                <th scope="col">Location</th>
-                {% comment %} <th scope="col">Tel Home</th> {% endcomment %}
-                <th scope="col">Employment Date</th>
-                {% comment %} <th scope="col">Cellphone</th> {% endcomment %}
-                <th scope="col">Clients</th>
-                {% comment %} <th scope="col">Is Administrator</th> {% endcomment %}
+                <th scope="col" class="sort_list_alphabetically">Name</th>
+                <th scope="col" class="sort_list_alphabetically">Email</th>
+                <th scope="col" class="sort_list_alphabetically">Location</th>
+                <th scope="col" class="numeric-sort">Employment Date</th>
+                <th scope="col" class="numeric-sort">Clients</th>
             </tr>
         </thead>
         {% for advisor in advisors  %}
-        <tbody>
             <tr scope="row">
-                <td>
-                    <a href="{% url 'practises:advisor-summary' pk=advisor.user_id %}">{{ advisor.names }}
-                        {{ advisor.surnames }}
-                    </a>
+                <td><a href="{% url 'practises:advisor-summary' pk=advisor.user_id %}">{{ advisor.names }} {{ advisor.surnames }}</a>
                 </td>
-                <td>
-                    <a href="{% url 'practises:advisor-summary' pk=advisor.user_id %}">{{ advisor.advisor_contact_fk.email_address }}
-                    </a>
+                <td><a href="{% url 'practises:advisor-summary' pk=advisor.user_id %}">{{ advisor.advisor_contact_fk.email_address }}</a>
                 </td>
-                <td>
-                    <a href="{% url 'practises:advisor-summary' pk=advisor.user_id %}">{{ advisor.advisor_contact_fk.residential_address_line_1}}
-                    </a>
+                <td><a href="{% url 'practises:advisor-summary' pk=advisor.user_id %}">{{ advisor.advisor_contact_fk.residential_city}}</a>
                 </td>
-                <td>
-                    <a href="{% url 'practises:advisor-summary' pk=advisor.user_id %}">{{ advisor.employment_date }}
-                    </a>
+                <td><a href="{% url 'practises:advisor-summary' pk=advisor.user_id %}">{{ advisor.advisor_employment_fk.employment_date }}</a>
                 </td>
-                <td>
-                    <a href="{% url 'practises:edit-advisor-roles' pk=advisor.user.id %}">{{advisor.clients.count}}
-                    </a>
+                <td><a href="{% url 'practises:edit-advisor-roles' pk=advisor.user.id %}">{{advisor.clients.count}}</a>
                 </td>
             </tr>
-        </tbody>
         {% endfor %}
     </table>
 </div>

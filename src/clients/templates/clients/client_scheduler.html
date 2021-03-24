@@ -4,13 +4,42 @@
 {% block container %}
 {% comment %} <h3>Client List</h3> {% endcomment %}
 
-<div>
+{% comment %} <div>
 
 Overdue: {{over_due}}
 due: {{due}}
 happy: {{happy}}
 
-</div>
+</div> {% endcomment %}
+
+<div class="container ">
+                <div class="row " style=" display: flex; justify-content: space-between;">
+
+                    <div class="col-xl-3 card card-container check-in-card">
+                        <h3 class="figly-heading figly-bold">{{over_due}}</h3>
+                        <p>Clients are overdue for a check in</p>
+                        {% comment %} <div class="form-group figly-search">
+                            <span class="fa fa-search form-control-feedback"></span>
+                            <input type="text" class="form-control" placeholder="Quick search">
+                        </div> {% endcomment %}
+                    </div>
+                    <div class="col-xl-3 card card-container check-in-card">
+                        <h3 class="figly-heading figly-bold">{{due}}</h3>
+                        <p>Clients are almost due for a check in</p>
+
+                    </div>
+                    <div class="col-xl-3 card card-container check-in-card">
+                        <h3 class="figly-heading figly-bold">{{happy}}</h3>
+                        <p>Clients are happy. Well done!</p>
+                    </div>
+                    <div class="col-xl-3 card card-container check-in-card">
+                        <h3 class="figly-heading figly-bold">TBC</h3>
+                        <p>Clients in total</p>
+                    </div>
+                </div>
+
+
+            </div>
 
 {% endblock %}
 {% endblock %}

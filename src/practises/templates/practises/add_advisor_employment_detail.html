@@ -8,16 +8,52 @@
 
 {% block content %}
 {% block container %}
-  <div class="container">
-    <form action="" method="POST">{% csrf_token %}
-      <p>Step {{ wizard.steps.step1 }} of {{ wizard.steps.count }}</p>
-      <nav aria-label="breadcrumb">
-        <ol class="breadcrumb remove_breadcrumb_css">
-          <li class="breadcrumb-item"><button  class="btn btn-link remove_breadcrumb_btn_css" formnovalidate role="link" name="wizard_goto_step" value="{{ wizard.steps.first }}">Advisor Details</button></li>
-          <li class="breadcrumb-item active" aria-current="page">Contact details</li>
-        </ol>
-      </nav>
-      <h3>Advisor Employment Detail  {{ advisor_name }}</h3>
+
+<div class="container">
+  <div class="row">
+    <div>
+      <p class="figly-form-heading">ADD ADVISOR</p>
+    </div>
+  </div>
+  <hr style=" margin: 0px 0px 36px 50px;" />
+</div>
+
+<div class="container figly-container-main">
+  <div class="row">
+    <div class="col-md-3 client-stepper">
+      <div class="vl"></div>
+      <div class="step step-active">
+        <div>
+          <div class="circle"></div>
+        </div>
+        <div>
+          <div class="title">Personal details</div>
+          <div class="caption"></div>
+        </div>
+      </div>
+      <div class="vl"></div>
+      <div class="step step-active">
+        <div>
+          <div class="circle"></div>
+        </div>
+        <div>
+          <div class="title">Contact details</div>
+        </div>
+      </div>
+      <div class="vl"></div>
+      <div class="step">
+        <div>
+          <div class="circle"></div>
+        </div>
+        <div>
+          <div class="title">Employment details</div>
+        </div>
+      </div>
+      <div class="vl"></div>
+    </div>
+    <div class="col-md-7">
+      <div class="container">
+    <form action="" method="POST">{% csrf_token %}     
       {{ wizard.management_form }}
       {% if wizard.form.forms %}
         {{ wizard.form.management_form }}
@@ -27,16 +63,30 @@
       {% else %}
         {% crispy wizard.form %}
       {% endif %}
-      <div class="row">
-        <div class="text-center">
-          {% if wizard.steps.prev %}
-          <button name="wizard_goto_step" formnovalidate value="{{ wizard.steps.prev }}" class="btn btn-secondary btn-lg">{% trans "Previous" %}</button>
-          {% endif %}
-          <button type="submit" class="btn btn-primary btn-lg">{% trans "Done" %}</button>
-        </div>
-      </div>
+
+
+      <div class="form-row">
+            {% if wizard.steps.prev %}
+            <div class="col-md-5 figly-left-form-input form-group">
+              <button name="wizard_goto_step" formnovalidate value="{{ wizard.steps.prev }}"
+                class="btn figly-btn-secondary ">{% trans "Back" %}
+              </button>
+            </div>
+            {% endif %}
+            <div class="col-md-5 figly-right-form-input form-group">
+              <button type="submit" class="btn figly-btn-wizard-next ">{% trans "Continue" %}
+              </button>
+            </div>
+          </div>
+
     </form>
   </div>
-{% endblock %}
+    </div>
+  </div>
+</div>
 
+{% block footer %}
+{% include "footer.html" %}
+{% endblock footer %}
+{% endblock %}
 {% endblock %}

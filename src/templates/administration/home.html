@@ -105,23 +105,19 @@
         {% comment %} ++++++++++++ LEFT/PROFILE INFO END +++++++++++ {% endcomment %}
 
         <div class="col-xl-9 right-dash-column">
-            <div class="card-container dashboard_list_details">
-                <div class="row">
-                    <div class="col-xl-8">
-                        <div class="figly-h4">
-                            Advisor List
-                        </div>
-                    </div>
-                    {% comment %} <div class="col-xl-4">
-                        <div class="form-group figly-search">
-                            <span class="fa fa-search form-control-feedback"></span>
-                            <input type="text" class="form-control" placeholder="Quick search">
-                        </div>
-                    </div> {% endcomment %}
-                </div>
-                {% load advisors_list %}
 
-                {% advisors_list user=user %}
+            <div class=" card-container dashboard_list_details" style="margin-top: 30px;">
+                <div class="row">
+                        <div class="col-xl-8">
+                            <div class="figly-h4">
+                                Advisors List
+                            </div>
+                        </div>                  
+                    </div>
+                    {% load advisors_list %}
+
+                    {% advisors_list user=user %}
+
             </div>
             <div class="card-container dashboard_list_details">
                 <div class="row">
@@ -129,19 +125,13 @@
                         <div class="figly-h4">
                             Clients List
                         </div>
-                    </div>
-                    {% comment %} <div class="col-xl-4">
-                        <div class="form-group figly-search">
-                            <span class="fa fa-search form-control-feedback"></span>
-                            <input type="text" class="form-control" placeholder="Quick search">
-                        </div>
-                    </div> {% endcomment %}
+                    </div>                  
                 </div>
 
                 {% load clients_list %}
-
                 {% clients_list user=user %}
             </div>
-        </div>
+        </div>        
+            
     </div>
 </div>
