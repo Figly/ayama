@@ -3,52 +3,39 @@
 {% block content %}
 {% block container %}
 {% if clients %}
+
 <div class="table_detail_rows">
-    <table class="table">
+    <table class="table sortable-table">
         <thead>
             <tr>
-                <th scope="col">Name</th>
-                <th scope="col">Advisor</th>
+                <th scope="col" class="sort_list_alphabetically">Name</th>
+                <th scope="col" class="sort_list_alphabetically">Email</th>
+                <th scope="col" class="sort_list_alphabetically">Location</th>
+                <th scope="col">Cellphone </th>
+                <th scope="col" class="numeric-sort">Last Visit</th>
                 {% comment %} <th scope="col">Surname</th> {% endcomment %}
-                {%if user.is_superuser %}
+                {% comment %} {%if user.is_superuser %}
                 <th scope="col">Email</th>
                 <th scope="col">Advisor</th>
                 {% endif %}
                 {%if user.is_administrator %}
                 <th scope="col">Advisor</th>
-                {% endif %}
-                <th scope="col">Email</th>
-                <th scope="col">Location</th>
-                <th scope="col">Dependants</th>
-                <th scope="col">Last Visit</th>
+                {% endif %} {% endcomment %}
+                
             </tr>
         </thead>
         {% for client in clients %}
-        <tbody>
-            <tr scope="row">
-                <td><a href="{% url 'clients:client-summary' pk=client.id %}">{{ client.names }}
-                        {{ client.surnames }}
-                    </a>
+            <tr scope="row"  class="client-data-body" >
+                <td ><a href="{% url 'clients:client-summary' pk=client.id %}">{{ client.names }} {{ client.surnames }}</a>
+                </td>              
+                <td> <ahref="{% url 'clients:client-summary' pk=client.id %}">{{ client.client_contact_fk.email_address }}</a>
                 </td>
-                <td>
-                    <a href="{% url 'clients:client-summary' pk=client.id %}">{{ client.advisor_id_fk}}
-                    </a>
+                <td><a href="{% url 'clients:client-summary' pk=client.id %}">{{ client.client_contact_fk.residential_city }}</a>
                 </td>
-                <td>
-                    <a
-                        href="{% url 'clients:client-summary' pk=client.id %}">{{ client.client_contact_fk.email_address }}
-                    </a>
+                <td><a href="{% url 'clients:client-summary' pk=client.id %}">{{ client.client_contact_fk.cellphone_number }}</a>
+                </td> 
+                <td><a href="{% url 'clients:client-summary' pk=client.id %}">{{ client.client_employment_fk.employment_date }}</a>
                 </td>
-                <td>
-                    <a href="{% url 'clients:client-summary' pk=client.id %}">{{ client.client_contact_fk.residential_address_line_1 }}
-                    </a>
-                </td>
-                <td>
-                    <a href="{% url 'clients:client-summary' pk=client.id %}">
-                        {{ client.client_employment_fk.employment_date }}
-                    </a>
-                </td>
-
                 {% if user.is_superuser %}
                 <td>{{ client.advisor_id_fk.practise_id_fk}}</td>
                 <td>{{ client.advisor_id_fk}}</td>
@@ -57,7 +44,6 @@
                 <td>{{client.employment_date}}</td>
                 {% endif %}
             </tr>
-        </tbody>
         {% endfor %}
     </table>
 </div>

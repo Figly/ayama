@@ -1,5 +1,5 @@
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Column, Field, Layout, Row, Submit
+from crispy_forms.layout import HTML, Column, Field, Fieldset, Layout, Row, Submit
 from django import forms
 
 from ..models import AdvisorContactDetail, AdvisorDetail, AdvisorEmploymentDetail
@@ -191,6 +191,8 @@ class AddAdvisorContactDetailForm(forms.ModelForm):
                     css_class="form-group col-md-10",
                 ),
             ),
+            HTML("<hr/>"),
+            HTML("<h3 class='figly-subheading'>Residential address</h3>"),
             Row(
                 Column(
                     "residential_address_line_1",
@@ -233,6 +235,14 @@ class AddAdvisorContactDetailForm(forms.ModelForm):
                     css_class="form-group col-md-10",
                 ),
             ),
+
+            HTML("<hr/>"),
+            HTML("<h3 class='figly-subheading'>Postal address</h3>"),
+            HTML("<input id='same-as-residential' type='checkbox'/>"),
+            HTML(
+                "<label type='checkbox' class='form-check-label' for='same-as-residential' style='margin-left:10px'>Same as residential address</label>"
+            ),
+
             Row(
                 Column(
                     "postal_address_line_1",
@@ -314,19 +324,24 @@ class AddAdvisorEmploymentForm(forms.ModelForm):
                 Column(
                     "position",
                     placeholder="Position",
-                    css_class="form-group col-md-5 mb-0",
-                ),
+                    css_class="form-group col-md-10",
+                ),              
+               
+            ),
+            Row(
                 Column(
                     "employment_date",
                     placeholder="Employment Date",
-                    css_class="form-group col-md-4 mb-0",
-                ),
-                Column(
-                    "personnel_number",
-                    placeholder="Personnel Number",
-                    css_class="form-group col-md-3 mb-0",
+                    css_class="form-group col-md-10",
                 ),
             ),
+            Row(
+                 Column(
+                    "personnel_number",
+                    placeholder="Personnel Number",
+                    css_class="form-group col-md-10",
+                ),
+            )
         )
 
     class Meta:

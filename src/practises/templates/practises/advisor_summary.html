@@ -4,56 +4,169 @@
 {% block content %}
 {% block container %}
     {% if advisor %}
-    <div class="container" style="font-size: larger;" >
-        <h1>Advisor Details</h1>
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12 col-sm-12">
-                    <div class="col-md-6 col-sm-6">
-                        <h2>Personal Details</h2>
-                    </div>
-                    <div class="col-md-6 col-sm-6">
-                        <a href="{% url 'practises:edit-advisor-detail' pk=advisor.user_id %}"><span class="glyphicon glyphicon-pencil icon-edit-customer"></a>
-                    </div>
-                </div>
-                <div class="col-md-6 col-sm-6">
-                        <p><strong>Title:</strong></p> {{advisor.title}}
-                        <p><strong>Name:</strong></p> {{advisor.names}}
-                        <p><strong>Surname:</strong></p> {{advisor.surnames}}
-                        <p><strong>Known as:</strong></p> {{advisor.known_as}}
-                        <p><strong>ID number:</strong></p> {{advisor.sa_id}}
-                        <p><strong>Passport No:</strong></p> {{advisor.passport_no}}
-                </div>
-                <div class="col-md-6 col-sm-6">
-                    <p><strong>Position:</strong></p> {{advisor.position}}
-                    <p><strong>Employment Date:</strong></p> {{advisor.employment_date}}
-                    <p><strong>Personnel No:</strong></p> {{advisor.personnel_number}}
-                    <p><strong>No of clients:</strong></p> {{advisor.clients.count}}
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12 col-sm-12">
-                    <div class="col-md-6 col-sm-6">
-                        <h2>Contact Details</h2>
-                    </div>
-                    <div class="col-md-6 col-sm-6">
-                        <a href="{% url 'practises:edit-advisor-contact' pk=advisor.advisor_contact_fk.id %}"><span class="glyphicon glyphicon-pencil icon-edit-customer"></a>
-                    </div>
-                </div>
-                <div class="col-md-6 col-sm-6">
-                        <p><strong>Telephone home:</strong></p> {{advisor.advisor_contact_fk.telephone_home}}
-                        <p><strong>Telephone work:</strong></p> {{advisor.advisor_contact_fk.telephone_work}}
-                        <p><strong>Cellphone:</strong></p> {{advisor.advisor_contact_fk.cellphone_number}}
-                        <p><strong>Postal Address:</strong></p> {{advisor.advisor_contact_fk.postal_address_line_1}}
-                </div>
-                <div class="col-md-6 col-sm-6">
-                    <p><strong>Fax Number:</strong></p> {{advisor.advisor_contact_fk.fax_number}}
-                    <p><strong>Email Address:</strong></p> {{advisor.advisor_contact_fk.email_address}}
-                    <p><strong>Residential Address:</strong></p> {{advisor.advisor_contact_fk.residential_address_line_1}}
-                </div>
-            </div>
+
+<div class="container">
+    <div class="row">
+        <div>
+            <p class="figly-form-heading">ADVISOR DETAILS</p>
         </div>
+    </div>
+    <hr style=" margin: 0px 50px 36px 50px;" />
 </div>
+
+<div class="container" style="font-size: larger;" >
+        <div class="container">
+            <div class="row dashboard_list_details">
+                <div class="card-container col-lg-12">
+                    <div class="row">
+                            <div class="col-lg-3"> 
+                                <h5 class="figly-h5 figly-bold summary-datail-row">PERSONAL INFORMATION</h5>
+                            </div>
+                            <div class="col-lg-3"> 
+                                <a href="{% url 'practises:edit-advisor-detail' pk=advisor.user_id %}"> 
+                                <i class="fa fa-pencil fa-sm edit-client-icon " aria-hidden="true"></i></a>
+                            </div>
+                    </div>
+                       <div class="col-md-6 col-sm-6">
+                    </div>
+                          <div class="row">
+                    <div class="col-lg-3">
+                        <div class="summary-datail-row">
+                            <p>Title</p>
+                        </div>
+                        <div class="summary-datail-row">
+                            <p>Name</p>
+                        </div>
+                        <div class="summary-datail-row">
+                            <p>Surname</p>
+                        </div>
+                        <div class="summary-datail-row">
+                            <p>Known As</p>
+                        </div>
+                        <div class="summary-datail-row">
+                            <p>ID Number</p>
+                        </div>
+                        <div class="summary-datail-row">
+                            <p>Passport No.</p>
+                        </div>
+                        <div class="summary-datail-row">
+                            <p>Position</p>
+                        </div>
+                        <div class="summary-datail-row">
+                            <p>Employment Date</p>
+                        </div>
+                        <div class="summary-datail-row">
+                            <p>Personnel No.</p>
+                        </div>
+                        <div class="summary-datail-row">
+                            <p>No. of Clients</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="summary-datail-row">
+                            <p> {{advisor.title}}</p>
+                        </div>
+                        <div class="summary-datail-row">
+                            <p>{{advisor.names}} </p>
+                        </div>
+                        <div class="summary-datail-row">
+                            <p>{{advisor.surnames}}</p>
+                        </div>
+                        <div class="summary-datail-row">
+                            <p> {{advisor.known_as}}</p>
+                        </div>
+                        <div class="summary-datail-row">
+                            <p>{{advisor.sa_id}}</p>
+                        </div>
+                        <div class="summary-datail-row">
+                            <p>{{advisor.passport_no}}</p>
+                        </div>
+                        <div class="summary-datail-row">
+                            <p>{{advisor.position}}</p>
+                        </div>
+                        <div class="summary-datail-row">
+                            <p>{{advisor.employment_date}}</p>
+                        </div>
+                        <div class="summary-datail-row">
+                            <p>{{advisor.personnel_number}}</p>
+                        </div>
+                        <div class="summary-datail-row">
+                            <p>{{advisor.clients.count}}</p>
+                        </div>
+                    </div>
+                </div>                          
+            </div>
+            </div>
+            <div class="row dashboard_list_details">
+                <div class="card-container col-lg-12">
+                    <div class="row">
+                            <div class="col-lg-3"> 
+                                <h5 class="figly-h5 figly-bold summary-datail-row">CONTACT DETAILS</h5>
+                            </div>
+                            <div class="col-lg-3"> 
+                                <a href="{% url 'practises:edit-advisor-contact' pk=advisor.advisor_contact_fk.id %}"> 
+                                <i class="fa fa-pencil fa-sm edit-client-icon " aria-hidden="true"></i></a>
+                            </div>
+                    </div>
+                       <div class="col-md-6 col-sm-6">
+                    </div>
+                          <div class="row">
+                    <div class="col-lg-3">
+                        <div class="summary-datail-row">
+                            <p>Telephone Home</p>
+                        </div>
+                        <div class="summary-datail-row">
+                            <p>Telephone Work</p>
+                        </div>
+                        <div class="summary-datail-row">
+                            <p>Cellphone</p>
+                        </div>
+                        <div class="summary-datail-row">
+                            <p>Postal Address</p>
+                        </div>
+                        <div class="summary-datail-row">
+                            <p>Fax Number</p>
+                        </div>
+                        <div class="summary-datail-row">
+                            <p>Email Address</p>
+                        </div>
+                        <div class="summary-datail-row">
+                            <p>Residential Address</p>
+                        </div>                        
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="summary-datail-row">
+                            <p> {{advisor.advisor_contact_fk.telephone_home}}</p>
+                        </div>
+                        <div class="summary-datail-row">
+                            <p>{{advisor.advisor_contact_fk.telephone_work}} </p>
+                        </div>
+                        <div class="summary-datail-row">
+                            <p>{{advisor.advisor_contact_fk.cellphone_number}}</p>
+                        </div>
+                        <div class="summary-datail-row">
+                            <p> {{advisor.advisor_contact_fk.postal_address_line_1}}</p>
+                        </div>
+                        <div class="summary-datail-row">
+                            <p>{{advisor.advisor_contact_fk.fax_number}}</p>
+                        </div>
+                        <div class="summary-datail-row">
+                            <p> {{advisor.advisor_contact_fk.email_address}}</p>
+                        </div>
+                        <div class="summary-datail-row">
+                            <p>{{advisor.advisor_contact_fk.residential_address_line_1}}</p>
+                        </div>                       
+                    </div>
+                </div>                          
+            </div>
+            
+        </div>
+    </div>
+</div>
+
+{% block footer %}
+{% include "footer.html" %}
+{% endblock footer %}
   {% endif %}
 {% endblock %}
 {% endblock %}

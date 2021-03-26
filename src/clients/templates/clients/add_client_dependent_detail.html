@@ -16,14 +16,22 @@
   <form action="" method="POST">
     {% csrf_token %}
     {% crispy form %}
-    <div id="add-dependant-btns">
-      <div>
-        <button type="submit" name="submit" class="btn figly-btn-wizard-next ">Complete</button>
-      </div>
-      <div>
-        <button type="submit" name="add-another" class="btn ">Save And Add Another</button>
-      </div>
+    <div class="add-dependant-btns" >
+             <button type="submit" name="submit" class="btn figly-btn-wizard-next ">Complete</button>
+
+     </div>
+         <div class="add-dependant-btns" >
+
+             <button type="submit" name="add-another" class="btn ">Save And Add Another</button>
+
+     </div>
+
     </div>
   </form>
 </div>
+
+{% block footer %}
+{% include "footer.html" %}
+{% endblock footer %}
+
 {% endblock %}

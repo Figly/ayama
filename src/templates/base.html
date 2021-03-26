@@ -27,6 +27,9 @@
     integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous">
   </script>
 
+  <link rel="stylesheet" href="{% static 'site/css/sortable-tables.min.css' %}">
+  <script src="{% static 'site/js/sortable-tables.min.js' %}" type="text/javascript"></script>
+
   <!-- Custom styles for this site -->
   {% block styles %}
   <link href="{% static 'site/css/main.css' %}" rel="stylesheet">
@@ -120,9 +123,20 @@
   <script src="https://kit.fontawesome.com/ca27f61c7c.js" crossorigin="anonymous"></script>
   <script>
     $(function () {
-      $(".datepicker").datepicker();
+      $(".datepicker").datepicker({
+        autoclose: true,
+    todayHighlight: true,
+        format: "M. d yyyy"
+
+      });
     });
   </script>
+
+<!-- +++++++++++++++++++++++++++  DATEPICKER ++++++++++++++++++++++++  -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/css/bootstrap-datepicker3.min.css">
+  <script type='text/javascript' src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.min.js"></script>
+
+
   {% block scripts %}
   {% endblock scripts %}
 </body>
