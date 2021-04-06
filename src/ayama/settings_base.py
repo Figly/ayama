@@ -12,6 +12,7 @@ import socket
 from pathlib import Path
 
 from django.contrib import messages
+from django.template.context_processors import csrf
 from django.urls import reverse_lazy
 
 DEBUG = os.getenv(
@@ -48,6 +49,7 @@ TEMPLATES = [
                 "django.template.context_processors.static",
                 "django.template.context_processors.tz",
                 "django.contrib.messages.context_processors.messages",
+                "django.template.context_processors.request",
             ]
         },
     }

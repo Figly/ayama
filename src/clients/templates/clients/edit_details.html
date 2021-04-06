@@ -25,9 +25,10 @@
 
         <div class="form-row">
             <div class="col-md-5 figly-left-form-input ">
-                <button type="submit" name="cancel" 
-                        class="btn figly-btn-secondary ">Cancel
-                </button>
+                <a name="cancel"
+                        class="btn figly-btn-secondary "
+                        href="{{ request.META.HTTP_REFERER }}" >Cancel
+                </a>
             </div>
 
             <div class="col-md-5 figly-right-form-input ">
@@ -35,17 +36,11 @@
                 </button>
             </div>
         </div>
-       {% comment %} <div class="col-md-5 figly-right-form-input form-group">
-
-        <button type="submit" name="submit" class="btn figly-btn-wizard-next ">Save Changes</button>
-        <button type="submit" name="cancel" class="btn figly-btn-secondary ">Cancel</button>
-
-        </div> {% endcomment %}
         </form>
     </div>
     <div class="col-md-4"></div>
 </div>
-   
+
 </div>
 
 {% endblock %}

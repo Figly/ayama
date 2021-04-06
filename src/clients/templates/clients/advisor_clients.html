@@ -8,18 +8,18 @@
     <table class="table sortable-table">
      <thead>
         <tr>
-            <th scope="col" class="sort_list_alphabetically"> Name                
+            <th scope="col" class="sort_list_alphabetically"> Name
             </th>
-            <th scope="col" class="sort_list_alphabetically">Email 
+            <th scope="col" class="sort_list_alphabetically">Email
             </th>
-            <th scope="col">Cellphone             
+            <th scope="col">Cellphone
             </th>
-            <th scope="col" class="sort_list_alphabetically">Location 
+            <th scope="col" class="sort_list_alphabetically">Location
             </th>
             <th scope="col">Last Contact
             </th>
-            <th scope="col">Status 
-            </th>            
+            <th scope="col">Status
+            </th>
         </tr>
       </thead>
         {% load client_status %}
@@ -30,7 +30,7 @@
                 <td><a href="{% url 'clients:client-summary' pk=client.id %}">{{ client.names }} {{ client.surnames }}</a>
                 </td>
                 <td><a href="{% url 'clients:client-summary' pk=client.id %}">{{ client.client_contact_fk.email_address }}</a>
-                </td>              
+                </td>
                 <td><a href="{% url 'clients:client-summary' pk=client.id %}">{{ client.client_contact_fk.cellphone_number }}</a>
                 </td>
                 <td><a href="{% url 'clients:client-summary' pk=client.id %}">{{ client.client_contact_fk.residential_city }}</a>
@@ -41,7 +41,7 @@
                             <span>UPDATE</span>
                         </i>
                     </button>
-                </td>             
+                </td>
                 <td><a class={% client_status client.client_comms_fk.last_contacted %}  href="{% url 'clients:client-summary' pk=client.id %}">{% client_status client.client_comms_fk.last_contacted %}</a>
                 </td>
                 {% if user.is_superuser %}
@@ -68,7 +68,7 @@ $('.input-group.date').datepicker({
     calendarWeeks: true,
     todayHighlight: true,
     autoclose: true
-});  
+});
 });
 
 </script>
@@ -85,6 +85,7 @@ function updateComms(e){
         data: {'client_comms_id':client_comms_id, 'date_value': dateValue},
         success: function (response) {
             e.value = dateValue
+            location.reload();
         },
         error: function (response) {
         }
