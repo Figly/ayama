@@ -64,14 +64,14 @@
             <div>
               <a class="close" data-dismiss="alert">×</a>
               {% comment %} <p class="alert-header"> {{ message|safe }}</p> {% endcomment %}
-              <p class="alert-header"> Client Successfully added</p>
+              <p class="alert-header"> {{message.tags}}</p>
             </div>
             <hr>
             <div class="alert-succes-icon">
               <img class="card-img-top profile-img" src="{% thumbnail 'success.png' 150x150 crop %}"
                 alt="Card image cap">
             </div>
-            <p>You can now view and edit newly added client from your client list!
+            <p>{{message}}
             </p>
             <div style="margin: 0px auto;">
               <button type="submit" data-dismiss="alert"

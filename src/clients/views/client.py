@@ -223,21 +223,16 @@ class EditClientDetailsView(LoginRequiredMixin, generic.UpdateView):
         "surnames",
         "names",
         "known_as",
-        "sa_id",
         "passport_no",
     )
 
     def form_valid(self, form):
-        if "cancel" in self.request.POST:
-            url = reverse_lazy("home")
-            return HttpResponseRedirect(url)
-
         model = form.save(commit=False)
         model.modified_by = self.request.user
         model.save
 
         messages.add_message(
-            self.request, messages.SUCCESS, "client details successfully edited."
+            self.request, messages.SUCCESS, "Client details successfully edited."
         )
         self.success_url = reverse_lazy("home")
         return super(EditClientDetailsView, self).form_valid(form)
@@ -277,7 +272,7 @@ class EditClientContactView(LoginRequiredMixin, generic.UpdateView):
         messages.add_message(
             self.request,
             messages.SUCCESS,
-            "client contact details successfully edited.",
+            "Client contact details successfully edited.",
         )
         self.success_url = reverse_lazy("home")
         return super(EditClientContactView, self).form_valid(form)
@@ -308,7 +303,7 @@ class EditClientEmploymentView(LoginRequiredMixin, generic.UpdateView):
         messages.add_message(
             self.request,
             messages.SUCCESS,
-            "client employment details successfully edited.",
+            "Client employment details successfully edited.",
         )
         self.success_url = reverse_lazy("home")
         return super(EditClientEmploymentView, self).form_valid(form)
@@ -335,7 +330,7 @@ class EditClientRatesView(LoginRequiredMixin, generic.UpdateView):
         messages.add_message(
             self.request,
             messages.SUCCESS,
-            "client rates and return details successfully edited.",
+            "Client rates and return details successfully edited.",
         )
         self.success_url = reverse_lazy("home")
         return super(EditClientRatesView, self).form_valid(form)
