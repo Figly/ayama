@@ -43,6 +43,7 @@ TEMPLATES = {
     "0": "practises/add_advisor_detail.html",
     "1": "practises/add_advisor_contact_detail.html",
     "2": "practises/add_advisor_employment_detail.html",
+    "3": "practises/add_advisor_products.html",
 }
 
 log = logging.getLogger(__name__)

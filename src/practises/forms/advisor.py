@@ -235,14 +235,12 @@ class AddAdvisorContactDetailForm(forms.ModelForm):
                     css_class="form-group col-md-10",
                 ),
             ),
-
             HTML("<hr/>"),
             HTML("<h3 class='figly-subheading'>Postal address</h3>"),
             HTML("<input id='same-as-residential' type='checkbox'/>"),
             HTML(
                 "<label type='checkbox' class='form-check-label' for='same-as-residential' style='margin-left:10px'>Same as residential address</label>"
             ),
-
             Row(
                 Column(
                     "postal_address_line_1",
@@ -325,8 +323,7 @@ class AddAdvisorEmploymentForm(forms.ModelForm):
                     "position",
                     placeholder="Position",
                     css_class="form-group col-md-10",
-                ),              
-               
+                ),
             ),
             Row(
                 Column(
@@ -336,12 +333,12 @@ class AddAdvisorEmploymentForm(forms.ModelForm):
                 ),
             ),
             Row(
-                 Column(
+                Column(
                     "personnel_number",
                     placeholder="Personnel Number",
                     css_class="form-group col-md-10",
                 ),
-            )
+            ),
         )
 
     class Meta:
@@ -351,3 +348,32 @@ class AddAdvisorEmploymentForm(forms.ModelForm):
             "employment_date",
             "personnel_number",
         ]
+
+
+class AddAdvisorProductsForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_tag = False
+        self.helper.layout = Layout(
+            Row(
+                Column(
+                    "Product name",
+                    placeholder="Product name",
+                    css_class="form-group col-md-10",
+                ),
+            ),
+            Row(
+                Column(
+                    "Linked", placeholder="Linked", css_class="form-group col-md-10",
+                ),
+            ),
+        )
+
+    # class Meta:
+    #     model = AdvisorEmploymentDetail
+    #     fields = [
+    #         "position",
+    #         "employment_date",
+    #         "personnel_number",
+    #     ]
