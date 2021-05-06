@@ -31,10 +31,10 @@ class ProductAdvisor(BaseModel):
     """
 
     advisor_id_fk = models.ForeignKey("AdvisorDetail", on_delete=models.CASCADE)
-    product_id_fk = models.ForeignKey("ProductDetail", on_delete=models.CASCADE)
+    product_id_fk = models.ManyToManyField("ProductDetail")
 
     def __str__(self):
-        return f"{self.product_name}"
+        return f"{self.product_id_fk}"
 
 
 class ProductClient(BaseModel):

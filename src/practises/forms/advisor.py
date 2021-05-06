@@ -1,8 +1,15 @@
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import HTML, Column, Field, Fieldset, Layout, Row, Submit
 from django import forms
+from django.db.models.functions import Lower
 
-from ..models import AdvisorContactDetail, AdvisorDetail, AdvisorEmploymentDetail
+from ..models import (
+    AdvisorContactDetail,
+    AdvisorDetail,
+    AdvisorEmploymentDetail,
+    ProductAdvisor,
+    ProductDetail,
+)
 
 
 class AddAdvisorDetailForm(forms.ModelForm):
@@ -351,29 +358,17 @@ class AddAdvisorEmploymentForm(forms.ModelForm):
 
 
 class AddAdvisorProductsForm(forms.ModelForm):
+    product_id_fk = forms.ModelMultipleChoiceField(
+        queryset=ProductDetail.objects.all().order_by(Lower("product_name")),
+        required=True,
+        widget=forms.CheckboxSelectMultiple,
+    )
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper()
         self.helper.form_tag = False
-        self.helper.layout = Layout(
-            Row(
-                Column(
-                    "Product name",
-                    placeholder="Product name",
-                    css_class="form-group col-md-10",
-                ),
-            ),
-            Row(
-                Column(
-                    "Linked", placeholder="Linked", css_class="form-group col-md-10",
-                ),
-            ),
-        )
 
-    # class Meta:
-    #     model = AdvisorEmploymentDetail
-    #     fields = [
-    #         "position",
-    #         "employment_date",
-    #         "personnel_number",
-    #     ]
+    class Meta:
+        model = ProductAdvisor
+        fields = ["product_id_fk"]
