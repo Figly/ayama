@@ -112,7 +112,9 @@ class AddAdvisorWizard(LoginRequiredMixin, UserPassesTestMixin, SessionWizardVie
             advisorContact = AdvisorContactDetail()
             advisorEmployment = AdvisorEmploymentDetail()
             advisorCommsConfig = AdvisorReminderConfig()
+            productAdvisor = ProductAdvisor()
             # form instances
+            form_data = [form.cleaned_data for form in form_list]
 
             advisor = construct_instance(
                 form_dict["0"],
@@ -135,12 +137,12 @@ class AddAdvisorWizard(LoginRequiredMixin, UserPassesTestMixin, SessionWizardVie
                 form_dict["2"]._meta.exclude,
             )
 
-            # productAdvisor = construct_instance(
-            #     form_dict["3"],
-            #     productAdvisor,
-            #     form_dict["3"]._meta.fields,
-            #     form_dict["3"]._meta.exclude,
-            # )
+            productAdvisor = construct_instance(
+                form_dict["3"],
+                productAdvisor,
+                form_dict["3"]._meta.fields,
+                form_dict["3"]._meta.exclude,
+            )
 
             existing_user = User.objects.filter(
                 Q(email=advisorContact.email_address)
@@ -171,20 +173,12 @@ class AddAdvisorWizard(LoginRequiredMixin, UserPassesTestMixin, SessionWizardVie
                 advisorEmployment.save()
                 advisor.advisor_employment_fk = advisorEmployment
 
-                # productForm = form_dict["3"].save(commit=False)
-                # productForm.modified_by = self.request.user
-                # productForm.advisor_id_fk = advisor
-                # productForm.save()
-                # form_dict["3"]
+                productAdvisor.modified_by = self.request.user
+                productAdvisor.advisor_id_fk = advisor
+                productAdvisor.save()
 
-                # selected_products = productForm.cleaned_data_get('product_id_fk')
-                # for product in selected_products:
-                #     product_obj = productAdvisor.objects.get(id=product.product_id_fk)
-                #     productForm.product_id_fk.add(product_obj)
-
-                # productAdvisor.modified_by = self.request.user
-                # productAdvisor.advisor_id_fk = advisor
-                # productAdvisor.save_m2m()
+                productAdvisor.product_id_fk.set(form_data[3]["product_id_fk"])
+                productAdvisor.save()
 
                 advisorCommsConfig.modified_by = self.request.user
                 advisorCommsConfig.save()
