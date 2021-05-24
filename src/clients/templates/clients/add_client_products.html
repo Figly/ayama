@@ -40,7 +40,7 @@
         </div>
       </div>
       <div class="vl"></div>
-      <div class="step step-active">
+      <div class="step">
         <div>
           <div class="circle"></div>
         </div>
@@ -58,7 +58,7 @@
         </div>
       </div>
       <div class="vl"></div>
-      <div class="step">
+      <div class="step  step-active">
         <div>
           <div class="circle"></div>
         </div>
@@ -94,14 +94,10 @@
             </div>
             {% endif %}
             <div class="col-md-5 figly-right-form-input form-group">
-              <button type="submit" class="btn figly-btn-wizard-next ">{% trans "Continue" %}
+              <button type="submit" formnovalidate class="btn figly-btn-wizard-next ">{% trans "Continue" %}
               </button>
             </div>
           </div>
-
-
-
-
           {% comment %} <div class="figly-form-nav">
             {% if wizard.steps.prev %}
             <button name="wizard_goto_step" formnovalidate value="{{ wizard.steps.prev }}"

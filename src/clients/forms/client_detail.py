@@ -1,9 +1,8 @@
 from __future__ import unicode_literals
 
-from django import forms
-
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Column, Field, Layout, Row, Submit
+from django import forms
 from practises.models import AdvisorDetail
 
 from ..models import ClientDetail

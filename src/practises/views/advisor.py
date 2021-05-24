@@ -243,7 +243,8 @@ class AdvisorSummaryView(LoginRequiredMixin, UserPassesTestMixin, generic.Detail
         context = super(AdvisorSummaryView, self).get_context_data(**kwargs)
         advisor_id = self.kwargs["pk"]
         advisor = AdvisorDetail.objects.get(user=advisor_id)
-        context = {"advisor": advisor}
+        products = ProductAdvisor.objects.get(advisor_id_fk=advisor_id)
+        context = {"advisor": advisor, "products": products.product_id_fk.all()}
         return context
 
 

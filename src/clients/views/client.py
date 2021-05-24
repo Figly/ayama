@@ -1,5 +1,7 @@
 from __future__ import unicode_literals
 
+import datetime
+
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -8,12 +10,13 @@ from django.http.response import HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
 from django.views import generic
 from formtools.wizard.views import SessionWizardView
-from practises.models import AdvisorDetail, AdvisorReminderConfig
+from practises.models import AdvisorDetail, AdvisorReminderConfig, ProductClient
 
 from ..forms import (
     AddClientContactDetailForm,
     AddClientDetailForm,
     AddClientEmploymentDetailForm,
+    AddClientProductsForm,
     AddClientRatesAndReturnForm,
 )
 from ..models import (
@@ -30,6 +33,7 @@ FORMS = [
     ("1", AddClientContactDetailForm),
     ("2", AddClientEmploymentDetailForm),
     ("3", AddClientRatesAndReturnForm),
+    ("4", AddClientProductsForm),
 ]
 
 TEMPLATES = {
@@ -37,6 +41,7 @@ TEMPLATES = {
     "1": "clients/add_client_contact_detail.html",
     "2": "clients/add_client_employment_detail.html",
     "3": "clients/add_client_rates_detail.html",
+    "4": "clients/add_client_products.html",
 }
 
 
@@ -44,11 +49,18 @@ class ClientWizard(LoginRequiredMixin, SessionWizardView):
     def get_template_names(self):
         return TEMPLATES[self.steps.current]
 
+    def get_form_kwargs(self, step):
+        kwargs = super(ClientWizard, self).get_form_kwargs(step)
+        if step == "4":
+            kwargs["advisor_id"] = self.request.user.id
+        return kwargs
+
     def get_form(self, step=None, data=None, files=None):
         form = super(ClientWizard, self).get_form(step, data, files)
         user = self.request.user
 
         if self.steps.current == "0" and step is None:
+            form.fields["advisor_id_fk"].queryset = AdvisorDetail.objects.all()
             if user.is_administrator and user.is_advisor:
                 practise_id = user.Advisor.practise_id_fk
                 form.fields["advisor_id_fk"].queryset = AdvisorDetail.objects.filter(
@@ -64,7 +76,6 @@ class ClientWizard(LoginRequiredMixin, SessionWizardView):
                 form.fields["advisor_id_fk"].queryset = AdvisorDetail.objects.filter(
                     user_id=advisor_id
                 )
-
         return form
 
     def get_context_data(self, form, **kwargs):
@@ -87,6 +98,9 @@ class ClientWizard(LoginRequiredMixin, SessionWizardView):
         rates = RatesAndReturn()
         clientComm = ClientCommunication()
         communicationFrequency = ClientCommunicationFrequency()
+        productClient = ProductClient()
+
+        form_data = [form.cleaned_data for form in form_list]
 
         # form instances
         contactDetail = construct_instance(
@@ -123,7 +137,15 @@ class ClientWizard(LoginRequiredMixin, SessionWizardView):
             form_dict["0"]._meta.exclude,
         )
 
+        productClient = construct_instance(
+            form_dict["4"],
+            productClient,
+            form_dict["4"]._meta.fields,
+            form_dict["4"]._meta.exclude,
+        )
+
         clientComm.modified_by = self.request.user
+        clientComm.last_contacted = datetime.date.today()
         clientComm.save()
         client.client_comms_fk = clientComm
 
@@ -144,6 +166,13 @@ class ClientWizard(LoginRequiredMixin, SessionWizardView):
         client.client_rates_fk = rates
         client.modified_by = self.request.user
         client.save()
+
+        productClient.modified_by = self.request.user
+        productClient.client_id_fk = client
+        productClient.save()
+
+        productClient.product_id_fk.set(form_data[4]["product_id_fk"])
+        productClient.save()
 
         messages.add_message(
             self.request, messages.SUCCESS, "client successfully added."
