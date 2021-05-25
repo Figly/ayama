@@ -238,8 +238,8 @@ class ClientSummaryView(LoginRequiredMixin, generic.DetailView):
         context = super(ClientSummaryView, self).get_context_data(**kwargs)
         client_id = self.kwargs["pk"]
         client = ClientDetail.objects.get(id=client_id)
-
-        context = {"client": client}
+        products = ProductClient.objects.get(client_id_fk=client_id)
+        context = {"client": client, "products": products.product_id_fk.all()}
         return context
 
 
