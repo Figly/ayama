@@ -19,11 +19,11 @@
         <div class="row dashboard_list_details">
             <div class="card-container col-lg-12">
                 <div class="row">
-                    <div class="col-lg-3"> 
+                    <div class="col-lg-3">
                         <h5 class="figly-h5 figly-bold summary-datail-row">PERSONAL INFORMATION</h5>
                     </div>
-                    <div class="col-lg-3"> 
-                        <a href="{% url 'clients:edit-client-details' pk=client.client_contact_fk.id %}"> 
+                    <div class="col-lg-3">
+                        <a href="{% url 'clients:edit-client-details' pk=client.client_contact_fk.id %}">
                         <i class="fa fa-pencil fa-sm edit-client-icon " aria-hidden="true"></i></a>
                     </div>
                </div>
@@ -66,11 +66,11 @@
         <div class="row">
             <div class="card-container col-lg-12">
              <div class="row">
-                 <div class="col-lg-3"> 
+                 <div class="col-lg-3">
                      <h5 class="figly-h5 figly-bold summary-datail-row">COMMUNICATION DETAILS</h5>
                  </div>
-                 <div class="col-lg-3"> 
-                     <a href="{% url 'clients:edit-client-communication-frequency' pk=client.client_contact_fk.id %}"> 
+                 <div class="col-lg-3">
+                     <a href="{% url 'clients:edit-client-communication-frequency' pk=client.client_contact_fk.id %}">
                      <i class="fa fa-pencil fa-sm edit-client-icon" aria-hidden="true"></i></a>
                  </div>
              </div>
@@ -103,14 +103,14 @@
         <div class="row">
             <div class="card-container col-lg-12">
              <div class="row">
-                 <div class="col-lg-3"> 
+                 <div class="col-lg-3">
                      <h5 class="figly-h5 figly-bold summary-datail-row">CONTACT DETAILS</h5>
                  </div>
-                 <div class="col-lg-3"> 
-                     <a href="{% url 'clients:edit-client-contact' pk=client.client_contact_fk.id %}"> 
+                 <div class="col-lg-3">
+                     <a href="{% url 'clients:edit-client-contact' pk=client.client_contact_fk.id %}">
                      <i class="fa fa-pencil fa-sm edit-client-icon" aria-hidden="true"></i></a>
                  </div>
-             </div>  
+             </div>
              <div class="row">
                     <div class="col-lg-3">
                         <div class="summary-datail-row">
@@ -156,13 +156,13 @@
             </div>
         </div>
         <div class="row">
-            <div class="card-container col-lg-12">               
+            <div class="card-container col-lg-12">
                 <div class="row">
-                 <div class="col-lg-3"> 
+                 <div class="col-lg-3">
                      <h5 class="figly-h5 figly-bold summary-datail-row">EMPLOYMENT DETAILS</h5>
                  </div>
-                 <div class="col-lg-3"> 
-                     <a href="{% url 'clients:edit-client-employment' pk=client.client_contact_fk.id %}"> 
+                 <div class="col-lg-3">
+                     <a href="{% url 'clients:edit-client-employment' pk=client.client_contact_fk.id %}">
                      <i class="fa fa-pencil fa-sm edit-client-icon" aria-hidden="true"></i></a>
                  </div>
              </div>
@@ -219,11 +219,11 @@
         <div class="row">
             <div class="card-container col-lg-12">
                  <div class="row">
-                 <div class="col-lg-3"> 
+                 <div class="col-lg-3">
                      <h5 class="figly-h5 figly-bold summary-datail-row">FINANCIAL DETAILS</h5>
                  </div>
-                 <div class="col-lg-3"> 
-                     <a href="{% url 'clients:edit-client-rates' pk=client.client_contact_fk.id %}"> 
+                 <div class="col-lg-3">
+                     <a href="{% url 'clients:edit-client-rates' pk=client.client_contact_fk.id %}">
                      <i class="fa fa-pencil fa-sm edit-client-icon" aria-hidden="true"></i></a>
                  </div>
              </div>
@@ -254,16 +254,39 @@
             </div>
         </div>
 
-        {% if client.dependents.count > 0%}
-        
-        <div class="row">
-             <div class="card-container col-lg-12">               
+        <div class="row dashboard_list_details">
+            <div class="card-container col-lg-12">
                 <div class="row">
-                 <div class="col-lg-3"> 
-                     <h5 class="figly-h5 figly-bold summary-datail-row">DEPENDENTS</h5>
+                        <div class="col-lg-3">
+                            <h5 class="figly-h5 figly-bold summary-datail-row">PRODUCT DETAILS</h5>
+                        </div>
+                </div>
+                   <div class="col-md-6 col-sm-6">
+                </div>
+                <div class="row">
+                <div class="col-lg-3">
+                    {% for product in products %}
+                        <div class="summary-datail-row">
+                            <p>{{product.product_name}}</p>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+        {% if client.ProductClient.count > 0%}
+
+        <div class="row">
+             <div class="card-container col-lg-12">
+                <div class="row">
+                 <div class="col-lg-3">
+                     <h5 class="figly-h5 figly-bold summary-datail-row">PRODUCT DETAILS</h5>
                  </div>
-                 <div class="col-lg-3"> 
-                     {% comment %} <a href="{% url 'clients:edit-client-dependent' pk=dependent.id %}"> 
+                 <div class="col-lg-3">
+                     {% comment %} <a href="{% url 'clients:edit-client-dependent' pk=dependent.id %}">
                      <i class="fa fa-pencil fa-sm edit-client-icon" aria-hidden="true"></i></a>  {% endcomment %}
                  </div>
              </div>
@@ -309,6 +332,8 @@
             {% endfor %}
         </div>
         {% endif %}
+
+
     </div>
 </div>
 
@@ -318,4 +343,3 @@
 {% endif %}
 {% endblock %}
 {% endblock %}
-    

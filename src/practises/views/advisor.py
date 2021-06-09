@@ -22,6 +22,7 @@ from ..forms import (
     AddAdvisorContactDetailForm,
     AddAdvisorDetailForm,
     AddAdvisorEmploymentForm,
+    AddAdvisorProductsForm,
 )
 from ..models import (
     AdministratorDetail,
@@ -30,6 +31,7 @@ from ..models import (
     AdvisorEmploymentDetail,
     AdvisorReminderConfig,
     PractiseDetail,
+    ProductAdvisor,
     User,
 )
 
@@ -37,12 +39,14 @@ FORMS = [
     ("0", AddAdvisorDetailForm),
     ("1", AddAdvisorContactDetailForm),
     ("2", AddAdvisorEmploymentForm),
+    ("3", AddAdvisorProductsForm),
 ]
 
 TEMPLATES = {
     "0": "practises/add_advisor_detail.html",
     "1": "practises/add_advisor_contact_detail.html",
     "2": "practises/add_advisor_employment_detail.html",
+    "3": "practises/add_advisor_products.html",
 }
 
 log = logging.getLogger(__name__)
@@ -108,8 +112,9 @@ class AddAdvisorWizard(LoginRequiredMixin, UserPassesTestMixin, SessionWizardVie
             advisorContact = AdvisorContactDetail()
             advisorEmployment = AdvisorEmploymentDetail()
             advisorCommsConfig = AdvisorReminderConfig()
-
+            productAdvisor = ProductAdvisor()
             # form instances
+            form_data = [form.cleaned_data for form in form_list]
 
             advisor = construct_instance(
                 form_dict["0"],
@@ -130,6 +135,13 @@ class AddAdvisorWizard(LoginRequiredMixin, UserPassesTestMixin, SessionWizardVie
                 advisorEmployment,
                 form_dict["2"]._meta.fields,
                 form_dict["2"]._meta.exclude,
+            )
+
+            productAdvisor = construct_instance(
+                form_dict["3"],
+                productAdvisor,
+                form_dict["3"]._meta.fields,
+                form_dict["3"]._meta.exclude,
             )
 
             existing_user = User.objects.filter(
@@ -161,6 +173,13 @@ class AddAdvisorWizard(LoginRequiredMixin, UserPassesTestMixin, SessionWizardVie
                 advisorEmployment.save()
                 advisor.advisor_employment_fk = advisorEmployment
 
+                productAdvisor.modified_by = self.request.user
+                productAdvisor.advisor_id_fk = advisor
+                productAdvisor.save()
+
+                productAdvisor.product_id_fk.set(form_data[3]["product_id_fk"])
+                productAdvisor.save()
+
                 advisorCommsConfig.modified_by = self.request.user
                 advisorCommsConfig.save()
 
@@ -179,9 +198,7 @@ class AddAdvisorWizard(LoginRequiredMixin, UserPassesTestMixin, SessionWizardVie
                 return HttpResponseRedirect(self.request.path_info)
         except Exception as e:
             log.info(e)
-            messages.add_message(
-                self.request, messages.ERROR, "An error occured. Please try again."
-            )
+            messages.add_message(self.request, messages.ERROR, e)
             return HttpResponseRedirect(reverse_lazy("home"))
 
         return HttpResponseRedirect(reverse_lazy("home"))
@@ -226,7 +243,8 @@ class AdvisorSummaryView(LoginRequiredMixin, UserPassesTestMixin, generic.Detail
         context = super(AdvisorSummaryView, self).get_context_data(**kwargs)
         advisor_id = self.kwargs["pk"]
         advisor = AdvisorDetail.objects.get(user=advisor_id)
-        context = {"advisor": advisor}
+        products = ProductAdvisor.objects.get(advisor_id_fk=advisor_id)
+        context = {"advisor": advisor, "products": products.product_id_fk.all()}
         return context
 
 

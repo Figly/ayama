@@ -12,18 +12,17 @@
 <div class="container">
   <div class="row">
     <div>
-      <p class="figly-form-heading">ADD CLIENT</p>
+      <p class="figly-form-heading">ADD ADVISOR</p>
     </div>
   </div>
   <hr style=" margin: 0px 0px 36px 50px;" />
 </div>
 
-
 <div class="container figly-container-main">
   <div class="row">
     <div class="col-md-3 client-stepper">
       <div class="vl"></div>
-      <div class="step">
+      <div class="step step-active">
         <div>
           <div class="circle"></div>
         </div>
@@ -51,44 +50,31 @@
         </div>
       </div>
       <div class="vl"></div>
-      <div class="step step-active">
+      <div class="step  step-active">
         <div>
           <div class="circle"></div>
         </div>
         <div>
-          <div class="title">Financial details</div>
-        </div>
-      </div>
-      <div class="vl"></div>
-      <div class="step">
-        <div>
-          <div class="circle"></div>
-        </div>
-        <div>
-          <div class="title">Products</div>
+          <div class="title">Advisor products</div>
         </div>
       </div>
       <div class="vl"></div>
     </div>
     <div class="col-md-7">
       <div class="container">
-        {% comment %} <p class="figly-heading figly-heading-h1 client-register-heading">CLIENT DETAILS Appels</p>
-        <hr /> {% endcomment %}
-        <form action="" method="POST">{% csrf_token %}
-          {{ wizard.management_form }}
-          {% if wizard.form.forms %}
-          {{ wizard.form.management_form }}
-          {% for form in wizard.form.forms %}
+    <form action="" method="POST">{% csrf_token %}
+      {{ wizard.management_form }}
+      {% if wizard.form.forms %}
+        {{ wizard.form.management_form }}
+        {% for form in wizard.form.forms %}
           {% crispy form %}
-          {% endfor %}
-          {% else %}
-          {% crispy wizard.form %}
-          {% endif %}
+        {% endfor %}
+      {% else %}
+        {% crispy wizard.form %}
+      {% endif %}
 
 
-
-
-          <div class="form-row">
+      <div class="form-row">
             {% if wizard.steps.prev %}
             <div class="col-md-5 figly-left-form-input form-group">
               <button name="wizard_goto_step" formnovalidate value="{{ wizard.steps.prev }}"
@@ -101,24 +87,15 @@
               </button>
             </div>
           </div>
-        </form>
-      </div>
-       <div class="container">
-         <hr class="figly-form-hr" />
-          <div class="text-align-center">
-          <a class="form-cancel" href="/">Cancel</a>
-          </div>
-      </div>
+
+    </form>
+  </div>
     </div>
   </div>
 </div>
 
-
 {% block footer %}
 {% include "footer.html" %}
 {% endblock footer %}
-
-
 {% endblock %}
-
 {% endblock %}

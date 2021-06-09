@@ -1,8 +1,15 @@
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import HTML, Column, Field, Fieldset, Layout, Row, Submit
 from django import forms
+from django.db.models.functions import Lower
 
-from ..models import AdvisorContactDetail, AdvisorDetail, AdvisorEmploymentDetail
+from ..models import (
+    AdvisorContactDetail,
+    AdvisorDetail,
+    AdvisorEmploymentDetail,
+    ProductAdvisor,
+    ProductDetail,
+)
 
 
 class AddAdvisorDetailForm(forms.ModelForm):
@@ -235,14 +242,12 @@ class AddAdvisorContactDetailForm(forms.ModelForm):
                     css_class="form-group col-md-10",
                 ),
             ),
-
             HTML("<hr/>"),
             HTML("<h3 class='figly-subheading'>Postal address</h3>"),
             HTML("<input id='same-as-residential' type='checkbox'/>"),
             HTML(
                 "<label type='checkbox' class='form-check-label' for='same-as-residential' style='margin-left:10px'>Same as residential address</label>"
             ),
-
             Row(
                 Column(
                     "postal_address_line_1",
@@ -325,8 +330,7 @@ class AddAdvisorEmploymentForm(forms.ModelForm):
                     "position",
                     placeholder="Position",
                     css_class="form-group col-md-10",
-                ),              
-               
+                ),
             ),
             Row(
                 Column(
@@ -336,12 +340,12 @@ class AddAdvisorEmploymentForm(forms.ModelForm):
                 ),
             ),
             Row(
-                 Column(
+                Column(
                     "personnel_number",
                     placeholder="Personnel Number",
                     css_class="form-group col-md-10",
                 ),
-            )
+            ),
         )
 
     class Meta:
@@ -351,3 +355,20 @@ class AddAdvisorEmploymentForm(forms.ModelForm):
             "employment_date",
             "personnel_number",
         ]
+
+
+class AddAdvisorProductsForm(forms.ModelForm):
+    product_id_fk = forms.ModelMultipleChoiceField(
+        queryset=ProductDetail.objects.all().order_by(Lower("product_name")),
+        required=True,
+        widget=forms.CheckboxSelectMultiple,
+    )
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_tag = False
+
+    class Meta:
+        model = ProductAdvisor
+        fields = ["product_id_fk"]

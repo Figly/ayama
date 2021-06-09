@@ -51,5 +51,10 @@ def client_scheduler(context, user):
             client_comms_fk__last_contacted__gte=datetime.now() - timedelta(days=150)
         )
 
-    context = {"over_due": over_due.count(), "due": due.count(), "happy": happy.count()}
+    context = {
+        "over_due": over_due.count(),
+        "due": due.count(),
+        "happy": happy.count(),
+        "total": clients.count(),
+    }
     return context

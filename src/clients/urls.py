@@ -6,6 +6,7 @@ from .forms import (
     AddClientDetailForm,
     AddClientEmploymentDetailForm,
     AddClientNoteForm,
+    AddClientProductsForm,
     AddClientRatesAndReturnForm,
 )
 from .views import (
@@ -37,6 +38,7 @@ urlpatterns = [
                 AddClientContactDetailForm,
                 AddClientEmploymentDetailForm,
                 AddClientRatesAndReturnForm,
+                AddClientProductsForm,
             ]
         ),
         name="add-client",

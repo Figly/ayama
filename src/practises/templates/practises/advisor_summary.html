@@ -19,11 +19,11 @@
             <div class="row dashboard_list_details">
                 <div class="card-container col-lg-12">
                     <div class="row">
-                            <div class="col-lg-3"> 
+                            <div class="col-lg-3">
                                 <h5 class="figly-h5 figly-bold summary-datail-row">PERSONAL INFORMATION</h5>
                             </div>
-                            <div class="col-lg-3"> 
-                                <a href="{% url 'practises:edit-advisor-detail' pk=advisor.user_id %}"> 
+                            <div class="col-lg-3">
+                                <a href="{% url 'practises:edit-advisor-detail' pk=advisor.user_id %}">
                                 <i class="fa fa-pencil fa-sm edit-client-icon " aria-hidden="true"></i></a>
                             </div>
                     </div>
@@ -94,17 +94,17 @@
                             <p>{{advisor.clients.count}}</p>
                         </div>
                     </div>
-                </div>                          
+                </div>
             </div>
             </div>
             <div class="row dashboard_list_details">
                 <div class="card-container col-lg-12">
                     <div class="row">
-                            <div class="col-lg-3"> 
+                            <div class="col-lg-3">
                                 <h5 class="figly-h5 figly-bold summary-datail-row">CONTACT DETAILS</h5>
                             </div>
-                            <div class="col-lg-3"> 
-                                <a href="{% url 'practises:edit-advisor-contact' pk=advisor.advisor_contact_fk.id %}"> 
+                            <div class="col-lg-3">
+                                <a href="{% url 'practises:edit-advisor-contact' pk=advisor.advisor_contact_fk.id %}">
                                 <i class="fa fa-pencil fa-sm edit-client-icon " aria-hidden="true"></i></a>
                             </div>
                     </div>
@@ -132,7 +132,7 @@
                         </div>
                         <div class="summary-datail-row">
                             <p>Residential Address</p>
-                        </div>                        
+                        </div>
                     </div>
                     <div class="col-lg-3">
                         <div class="summary-datail-row">
@@ -155,13 +155,36 @@
                         </div>
                         <div class="summary-datail-row">
                             <p>{{advisor.advisor_contact_fk.residential_address_line_1}}</p>
-                        </div>                       
+                        </div>
                     </div>
-                </div>                          
+                </div>
             </div>
-            
+    </div>
+    <div class="row dashboard_list_details">
+        <div class="card-container col-lg-12">
+            <div class="row">
+                    <div class="col-lg-3">
+                        <h5 class="figly-h5 figly-bold summary-datail-row">PRODUCT DETAILS</h5>
+                    </div>
+                    <div class="col-lg-3">
+                        <a href="{% url 'practises:edit-advisor-contact' pk=advisor.advisor_contact_fk.id %}">
+                        <i class="fa fa-pencil fa-sm edit-client-icon " aria-hidden="true"></i></a>
+                    </div>
+            </div>
+               <div class="col-md-6 col-sm-6">
+            </div>
+            <div class="row">
+            <div class="col-lg-3">
+                {% for product in products %}
+                    <div class="summary-datail-row">
+                        <p>{{product.product_name}}</p>
+                    </div>
+                {% endfor %}
+            </div>
         </div>
     </div>
+
+</div>
 </div>
 
 {% block footer %}
