@@ -318,9 +318,10 @@ body>.navbar-transparent {
 }
 
 .figly-btn-secondary {
-    background-color: #012B3A;
-    color: #ffffff;
+    background-color: #fff;
+    color: #012B3A;
     border-radius: 10px;
+    border: solid #012B3A 3px;
     width: 224px;
 }
 
@@ -540,7 +541,7 @@ hr {
     margin-bottom: 0px !important;
 }
 
-.text-align-centre {
+.text-align-center {
     text-align: center !important;
 }
 
@@ -679,6 +680,22 @@ hr {
 
 .figly-right-form-input .figly-btn-wizard-next {
     float: right;
+}
+
+.btn-row,
+.btn-row button {
+    margin-bottom: 0px !important;
+    padding-bottom: 0px !important;
+}
+
+.figly-form-hr {
+    margin: 54px 0px 54px 0px;
+}
+
+.form-cancel {
+    text-align: center;
+    text-decoration: underline;
+    color: #012B3A;
 }
 
 /* ++++++++++  +++    DASHBOARD   ++++++++++  +++      */

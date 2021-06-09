@@ -12,6 +12,10 @@ pip-delete-this-directory.txt
 # Sphinx docs:
 build
 
+/ayama/bin
+/ayama/lib
+/ayama/ayama/pyvenv.cfg
+
 # SQLite3 database files:
 *.db
 *.sqlite3
