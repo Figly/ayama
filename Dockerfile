@@ -15,4 +15,5 @@ COPY configs/files /
 
 EXPOSE 8080
 
+# TODO: make asgi
 CMD ["gunicorn" , "-c", "/etc/gunicorn/gunicorn.py", "ayama.wsgi:application"]
