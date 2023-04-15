@@ -70,6 +70,7 @@ INSTALLED_APPS = (
     "django.contrib.staticfiles",
     "authtools",
     "crispy_forms",
+    "crispy_bootstrap4",
     "easy_thumbnails",
     "profiles",
     "accounts",
@@ -96,6 +97,7 @@ ROOT_URLCONF = "ayama.urls"
 
 WSGI_APPLICATION = "ayama.wsgi.application"
 
+DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 if not os.environ.get("ENVIRONMENT", False):
     DATABASES = {
         "default": {"ENGINE": "django.db.backends.sqlite3", "NAME": "db.sqlite3"}
@@ -106,8 +108,8 @@ else:
             "ENGINE": "django.db.backends.postgresql_psycopg2",
             "NAME": os.getenv("POSTGRES_DB", "ayama"),
             "USER": os.getenv("POSTGRES_USER", "postgres"),
-            "PASSWORD": os.getenv("POSTGRES_PASSWORD", ""),
-            "HOST": os.getenv("AYAMA_POSTGRES_SERVICE_HOST", "ayama-postgres"),
+            "PASSWORD": os.getenv("POSTGRES_PASSWORD", "postgres"),
+            "HOST": os.getenv("AYAMA_POSTGRES_SERVICE_HOST", "postgres"),
             "PORT": os.getenv("AYAMA_POSTGRES_SERVICE_PORT", 5432),
         },
     }
@@ -119,7 +121,7 @@ else:
                 % (
                     os.getenv(
                         "REDIS_HOST",
-                        os.getenv("AYAMA_REDIS_SERVICE_HOST", "ayama-redis"),
+                        os.getenv("AYAMA_REDIS_SERVICE_HOST", "redis"),
                     ),
                     os.getenv(
                         "REDIS_PORT", os.getenv("AYAMA_REDIS_SERVICE_PORT", 6379)

@@ -1,5 +1,4 @@
-from django.conf.urls import url
-from django.urls import path
+from django.urls import path, re_path
 
 from .forms import (
     AddAdministratorContactDetailForm,
@@ -122,11 +121,21 @@ urlpatterns = [
         EditReminderPreferencesView.as_view(),
         name="edit-advisor-reminder-config",
     ),
-    url(r"^search/$", AdvisorSearch, name="advisor-search"),
-    path("invite_advisor", InviteAdvisor.as_view(), name="invite-advisor",),
-    path("link_advisor", LinkAdvisor.as_view(), name="link-advisor",),
+    re_path(r"^search/$", AdvisorSearch, name="advisor-search"),
     path(
-        "edit_advisor_roles/<pk>/", EditRolesView.as_view(), name="edit-advisor-roles",
+        "invite_advisor",
+        InviteAdvisor.as_view(),
+        name="invite-advisor",
+    ),
+    path(
+        "link_advisor",
+        LinkAdvisor.as_view(),
+        name="link-advisor",
+    ),
+    path(
+        "edit_advisor_roles/<pk>/",
+        EditRolesView.as_view(),
+        name="edit-advisor-roles",
     ),
     path("add_product/", AddProductView.as_view(), name="add-product"),
     path("product_list/", ProductlistView.as_view(), name="list-products"),
@@ -136,5 +145,9 @@ urlpatterns = [
         ViewClientProductView.as_view(),
         name="view-client-product",
     ),
-    path("add_client_product/", AddClientProductView, name="add-client-product",),
+    path(
+        "add_client_product/",
+        AddClientProductView,
+        name="add-client-product",
+    ),
 ]

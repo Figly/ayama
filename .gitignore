@@ -64,3 +64,6 @@ Desktop.ini
 
 # Jetbrains
 .idea/
+
+# env
+**/.env

@@ -5,6 +5,7 @@ from .settings_base import *  # noqa
 if not os.environ.get("ENVIRONMENT", False) or os.environ.get("ENVIRONMENT") in [
     "dev",
 ]:
+    print(os.environ.get("ENVIRONMENT", False))
     TEMPLATES[0]["OPTIONS"].update({"debug": True})
 
     # Django Debug Toolbar

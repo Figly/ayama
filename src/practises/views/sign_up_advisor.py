@@ -140,7 +140,7 @@ class SignUpAdvisorWizard(SessionWizardView):
         except Exception as e:
             log.info(e)
             messages.add_message(
-                self.request, messages.ERROR, "An error occured. Please try again." + e
+                self.request, messages.ERROR, "An error occured. Please try again."
             )
             return HttpResponseRedirect(reverse_lazy("home"))
         return HttpResponseRedirect(reverse_lazy("home"))

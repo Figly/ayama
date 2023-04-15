@@ -1,8 +1,7 @@
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
-from django.urls import include, path
-from django.conf.urls import url
+from django.urls import include, path, re_path
 
 import accounts.urls
 import clients.urls
@@ -17,7 +16,7 @@ admin.site.site_title = "Ayama Site Admin"
 admin.site.site_header = "Ayama Administration"
 
 urlpatterns = [
-    url(r"^healthz/", views.healthz, name="healthz"),
+    re_path(r"^healthz/", views.healthz, name="healthz"),
     path("", views.HomePage.as_view(), name="home"),
     path("about/", views.AboutPage.as_view(), name="about"),
     path("users/", include(profiles.urls)),
