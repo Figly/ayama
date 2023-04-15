@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: bitnami/postgresql:15
+    environment:
+      - POSTGRESQL_USERNAME=postgres
+      - POSTGRESQL_PASSWORD=postgres
+      - POSTGRESQL_DATABASE=ayama
+      - POSTGRESQL_WAL_LEVEL=logical
+    ports:
+      - 5432:5432
+    volumes:
+      - postgres_data:/bitnami/postgresql
+
+  redis:
+    image: docker.io/bitnami/redis:7.0
+    environment:
+      # ALLOW_EMPTY_PASSWORD is recommended only for development.
+      - ALLOW_EMPTY_PASSWORD=yes
+      - REDIS_DISABLE_COMMANDS=FLUSHDB,FLUSHALL
+    ports:
+      - 6379:6379
+    volumes:
+      - redis_data:/bitnami/redis/data
+
+volumes:
+  postgres_data:
+    driver: local
+  redis_data:
+    driver: local
