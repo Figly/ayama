@@ -1,0 +1,25 @@
+name: flake8 Lint
+
+on: [push, pull_request]
+
+jobs:
+  flake8:
+    runs-on: ubuntu-latest
+    name: Lint
+    steps:
+      - name: Check out source repository
+        uses: actions/checkout@v3
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+      - name: flake8
+        uses: py-actions/flake8@v2
+      - name: black
+        uses: psf/black@stable
+        with:
+          args: --check .
+      - name: isort
+        uses: py-actions/isort@v2
+        with:
+          args: --check-only .
