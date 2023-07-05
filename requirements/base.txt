@@ -1,5 +1,5 @@
 crispy_bootstrap4==2022.1
-django==4.2
+django==4.2.3
 django-authtools==2.0.0
 django-braces==1.15.0
 django-crispy-forms==2.0
